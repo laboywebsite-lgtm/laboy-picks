@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Laboy Picks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#080c12;
+    --card:#111827;
+    --border:#1f2937;
+    --text:#f1f5f9;
+    --muted:#64748b;
+    --accent-mlb:#e63946;
+    --accent-bsn:#f97316;
+    --accent-nba:#3b82f6;
+    --green:#22c55e;
+    --radius:14px;
+  }
+  html,body{min-height:100%;background:var(--bg);color:var(--text);
+            font-family:'Inter',system-ui,sans-serif;
+            padding-bottom:env(safe-area-inset-bottom,0)}
+
+  /* ── HEADER ── */
+  .header{
+    text-align:center;padding:32px 20px 24px;
+    background:linear-gradient(180deg,#0d1117 0%,transparent 100%);
+  }
+  .logo{
+    display:inline-flex;align-items:center;gap:10px;
+    font-size:1.7rem;font-weight:900;letter-spacing:-1px;
+  }
+  .logo .ball{font-size:1.5rem}
+  .logo .laboy{color:#f1f5f9}
+  .logo .picks{color:#f97316}
+  .tagline{font-size:0.72rem;color:var(--muted);margin-top:6px;letter-spacing:.04em;text-transform:uppercase}
+
+  /* ── SPORT SECTIONS ── */
+  .sections{display:flex;flex-direction:column;gap:0;max-width:540px;margin:0 auto;padding:0 12px}
+
+  .sport-section{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    margin-bottom:16px;
+    overflow:hidden;
+  }
+
+  .sport-header{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 18px;border-bottom:1px solid var(--border);
+  }
+  .sport-title{
+    display:flex;align-items:center;gap:10px;
+    font-size:1.05rem;font-weight:700;
+  }
+  .sport-badge{
+    width:32px;height:32px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.1rem;font-weight:900;
+  }
+  .mlb .sport-badge{background:#e6394620;color:var(--accent-mlb)}
+  .bsn .sport-badge{background:#f9731620;color:var(--accent-bsn)}
+  .nba .sport-badge{background:#3b82f620;color:var(--accent-nba)}
+
+  .refresh-btn{
+    background:transparent;border:1px solid var(--border);
+    color:var(--muted);border-radius:8px;padding:6px 12px;
+    font-size:0.75rem;font-weight:600;cursor:pointer;
+    display:flex;align-items:center;gap:5px;
+    transition:all .2s;
+  }
+  .refresh-btn:hover{border-color:#60a5fa;color:#60a5fa}
+  .refresh-btn:active{transform:scale(.95)}
+  .refresh-btn svg{width:13px;height:13px}
+
+  /* ── FILE GROUPS ── */
+  .sport-body{padding:0}
+
+  .file-group{padding:0}
+  .group-label{
+    font-size:0.68rem;font-weight:700;text-transform:uppercase;
+    letter-spacing:.08em;color:var(--muted);
+    padding:10px 18px 6px;
+  }
+
+  .file-link{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:11px 18px;text-decoration:none;color:var(--text);
+    border-top:1px solid #1a2030;
+    transition:background .15s;
+  }
+  .file-link:hover{background:#151d2a}
+  .file-link:active{background:#1c2840}
+
+  .file-info{display:flex;align-items:center;gap:10px}
+  .file-icon{font-size:1rem;width:22px;text-align:center;flex-shrink:0}
+  .file-name{font-size:0.88rem;font-weight:600}
+  .file-date{font-size:0.72rem;color:var(--muted);margin-top:1px}
+  .chevron{color:var(--muted);font-size:0.7rem;flex-shrink:0}
+
+  /* ── MODEL CARD block ── */
+  .model-card-row{
+    display:flex;gap:10px;padding:12px 18px;border-top:1px solid #1a2030;
+  }
+  .mc-link{
+    flex:1;background:#0d1520;border:1px solid var(--border);
+    border-radius:10px;padding:10px 14px;text-decoration:none;
+    color:var(--text);transition:border-color .2s,background .2s;
+  }
+  .mc-link:hover{border-color:#475569;background:#111f30}
+  .mc-label{font-size:0.68rem;font-weight:700;text-transform:uppercase;
+             letter-spacing:.06em;color:var(--muted);margin-bottom:4px}
+  .mc-val{font-size:0.82rem;font-weight:600}
+
+  /* ── LOADING / EMPTY ── */
+  .loading{
+    display:flex;align-items:center;gap:8px;
+    padding:16px 18px;font-size:0.82rem;color:var(--muted);
+  }
+  .spinner{
+    width:14px;height:14px;border:2px solid var(--border);
+    border-top-color:var(--accent-bsn);border-radius:50%;
+    animation:spin .7s linear infinite;flex-shrink:0;
+  }
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  .empty{padding:14px 18px;font-size:0.8rem;color:var(--muted);font-style:italic}
+
+  /* ── FOOTER ── */
+  .footer{
+    text-align:center;padding:24px 16px 32px;
+    font-size:0.68rem;color:#334155;
+  }
+
+  /* ── SPINNING refresh icon ── */
+  .spin-icon{display:inline-block;animation:spin .6s linear infinite}
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<div class="header">
+  <div class="logo">
+    <span class="ball">🎯</span>
+    <span><span class="laboy">Laboy</span> <span class="picks">Picks</span></span>
+  </div>
+  <div class="tagline">Dashboard privado · Analytics Model</div>
+</div>
+
+<!-- ── SECTIONS ── -->
+<div class="sections">
+
+  <!-- MLB -->
+  <div class="sport-section mlb" id="sect-mlb">
+    <div class="sport-header">
+      <div class="sport-title">
+        <div class="sport-badge">⚾</div>
+        <span>MLB</span>
+      </div>
+      <button class="refresh-btn" onclick="loadSport('mlb', true)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-5"/>
+        </svg>
+        Refresh
+      </button>
+    </div>
+    <div class="sport-body" id="body-mlb">
+      <div class="loading"><div class="spinner"></div>Cargando...</div>
+    </div>
+  </div>
+
+  <!-- BSN -->
+  <div class="sport-section bsn" id="sect-bsn">
+    <div class="sport-header">
+      <div class="sport-title">
+        <div class="sport-badge">🏀</div>
+        <span>BSN</span>
+      </div>
+      <button class="refresh-btn" onclick="loadSport('bsn', true)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-5"/>
+        </svg>
+        Refresh
+      </button>
+    </div>
+    <div class="sport-body" id="body-bsn">
+      <div class="loading"><div class="spinner"></div>Cargando...</div>
+    </div>
+  </div>
+
+  <!-- NBA -->
+  <div class="sport-section nba" id="sect-nba">
+    <div class="sport-header">
+      <div class="sport-title">
+        <div class="sport-badge">🏆</div>
+        <span>NBA</span>
+      </div>
+      <button class="refresh-btn" onclick="loadSport('nba', true)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-5"/>
+        </svg>
+        Refresh
+      </button>
+    </div>
+    <div class="sport-body" id="body-nba">
+      <div class="loading"><div class="spinner"></div>Cargando...</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">Solo tú tienes esta URL · No la compartas<br>
+  <span id="last-updated" style="margin-top:4px;display:block"></span>
+</div>
+
+<script>
+// ── Config ──────────────────────────────────────────────────────────────────
+const MANIFESTS = {
+  mlb: 'https://laboywebsite-lgtm.github.io/mlb-picks/_manifest.json',
+  bsn: 'https://laboywebsite-lgtm.github.io/bsn-picks/_manifest.json',
+  nba: 'https://laboywebsite-lgtm.github.io/nba-picks/_manifest.json',
+};
+
+const SPORT_LABELS = {
+  mlb: { picks: '⚾ Picks del Modelo', lines: '📊 Lines del Modelo', record: '🏆 Model Card' },
+  bsn: { picks: '🏀 Picks del Modelo', lines: '📊 Lines del Modelo', record: '🏆 Model Card' },
+  nba: { picks: '🏆 Picks del Modelo', lines: '📊 Lines del Modelo', record: '🎖️ Model Card' },
+};
+
+// ── Fetch manifest and render section ───────────────────────────────────────
+async function loadSport(sport, animate) {
+  const bodyEl = document.getElementById('body-' + sport);
+  const btn    = document.querySelector('#sect-' + sport + ' .refresh-btn');
+
+  if (animate && btn) {
+    btn.innerHTML = '<span class="spin-icon">↻</span>';
+    btn.disabled  = true;
+  }
+
+  bodyEl.innerHTML = '<div class="loading"><div class="spinner"></div>Cargando...</div>';
+
+  try {
+    const url  = MANIFESTS[sport] + '?cb=' + Date.now();
+    const resp = await fetch(url, { cache: 'no-store' });
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const data = await resp.json();
+    renderSport(sport, data, bodyEl);
+  } catch (e) {
+    bodyEl.innerHTML = '<div class="empty">No hay archivos publicados aún.<br><small style="color:#475569">' + e.message + '</small></div>';
+  } finally {
+    if (animate && btn) {
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-5"/></svg> Refresh';
+      btn.disabled = false;
+    }
+  }
+}
+
+// ── Render sport body ────────────────────────────────────────────────────────
+function renderSport(sport, data, el) {
+  const files  = data.files || [];
+  const labels = SPORT_LABELS[sport];
+
+  // Group by type, keep latest 3 per type
+  const groups = { picks: [], lines: [], record: [] };
+  for (const f of files) {
+    const t = f.type;
+    if (groups[t] && groups[t].length < 3) groups[t].push(f);
+  }
+
+  let html = '';
+
+  // ── Picks + Lines ─────────────────────────────────────────────────────────
+  for (const gtype of ['picks', 'lines']) {
+    const items = groups[gtype];
+    if (!items.length) continue;
+    html += `<div class="file-group"><div class="group-label">${labels[gtype]}</div>`;
+    for (const f of items) {
+      const icon = gtype === 'picks' ? '🎯' : '📊';
+      const dateLabel = f.date ? formatDate(f.date) : f.name.replace(/\.html$/, '');
+      html += `
+        <a class="file-link" href="${f.url}" target="_blank">
+          <div class="file-info">
+            <span class="file-icon">${icon}</span>
+            <div>
+              <div class="file-name">${labels[gtype].replace(/^[^ ]+ /, '')}</div>
+              <div class="file-date">${dateLabel}</div>
+            </div>
+          </div>
+          <span class="chevron">›</span>
+        </a>`;
+    }
+    html += '</div>';
+  }
+
+  // ── Model Card ────────────────────────────────────────────────────────────
+  const recordItems = groups['record'];
+  html += `<div class="file-group"><div class="group-label">${labels.record}</div>`;
+  if (recordItems.length) {
+    html += '<div class="model-card-row">';
+    for (const f of recordItems.slice(0, 2)) {
+      const isMyRecord = f.name.toLowerCase().includes('jugad') || f.name.toLowerCase().includes('personal');
+      const label = isMyRecord ? 'Mis Jugadas' : 'Récord Modelo';
+      const icon  = isMyRecord ? '📝' : '📈';
+      html += `
+        <a class="mc-link" href="${f.url}" target="_blank">
+          <div class="mc-label">${icon} ${label}</div>
+          <div class="mc-val">${formatDate(f.date || '')}</div>
+        </a>`;
+    }
+    // If only one record file, fill second slot with a "Ver más" that points to the sport's dashboard
+    if (recordItems.length === 1) {
+      html += `
+        <a class="mc-link" href="${data.base_url}/dashboard-Lb9x3Kw.html" target="_blank">
+          <div class="mc-label">📊 Ver todos</div>
+          <div class="mc-val">${sport.toUpperCase()}</div>
+        </a>`;
+    }
+    html += '</div>';
+  } else {
+    html += `<div class="empty" style="padding:10px 18px">Sin datos publicados</div>`;
+  }
+  html += '</div>';
+
+  if (!html) {
+    el.innerHTML = '<div class="empty">No hay archivos publicados aún.</div>';
+  } else {
+    el.innerHTML = html;
+  }
+}
+
+// ── Date formatter ───────────────────────────────────────────────────────────
+function formatDate(d) {
+  if (!d) return '—';
+  try {
+    const [y, m, day] = d.split('-').map(Number);
+    const months = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+    return `${months[m-1]} ${day}, ${y}`;
+  } catch { return d; }
+}
+
+// ── Init ─────────────────────────────────────────────────────────────────────
+(function init() {
+  loadSport('mlb');
+  loadSport('bsn');
+  loadSport('nba');
+  document.getElementById('last-updated').textContent =
+    'Cargado: ' + new Date().toLocaleTimeString('es-PR', {hour:'2-digit',minute:'2-digit'});
+})();
+</script>
+</body>
+</html>
