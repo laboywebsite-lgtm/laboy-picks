@@ -110,6 +110,7 @@
     color:var(--text);transition:border-color .2s,background .2s;
   }
   .mc-link:hover{border-color:#475569;background:#111f30}
+  .mc-empty{opacity:.45;pointer-events:none;cursor:default}
   .mc-label{font-size:0.68rem;font-weight:700;text-transform:uppercase;
              letter-spacing:.06em;color:var(--muted);margin-bottom:4px}
   .mc-val{font-size:0.82rem;font-weight:600}
@@ -296,26 +297,35 @@ function renderSport(sport, data, el) {
 
   // ── Model Card ────────────────────────────────────────────────────────────
   const recordItems = groups['record'];
+  const myRecords    = recordItems.filter(f => f.subtype === 'my_record'    || (!f.subtype && !f.name.includes('Model Record')));
+  const modelRecords = recordItems.filter(f => f.subtype === 'model_record' || (!f.subtype &&  f.name.includes('Model Record')));
+
   html += `<div class="file-group"><div class="group-label">${labels.record}</div>`;
-  if (recordItems.length) {
+
+  // Row: Record - Mis Picks
+  const myRec = myRecords[0];
+  // Row: Record - Picks del Modelo
+  const modRec = modelRecords[0];
+
+  if (myRec || modRec) {
     html += '<div class="model-card-row">';
-    for (const f of recordItems.slice(0, 2)) {
-      const isMyRecord = f.name.toLowerCase().includes('jugad') || f.name.toLowerCase().includes('personal');
-      const label = isMyRecord ? 'Mis Jugadas' : 'Récord Modelo';
-      const icon  = isMyRecord ? '📝' : '📈';
+    if (myRec) {
       html += `
-        <a class="mc-link" href="${f.url}" target="_blank">
-          <div class="mc-label">${icon} ${label}</div>
-          <div class="mc-val">${formatDate(f.date || '')}</div>
+        <a class="mc-link" href="${myRec.url}" target="_blank">
+          <div class="mc-label">📝 Record — Mis Picks</div>
+          <div class="mc-val">${formatDate(myRec.date || '')}</div>
         </a>`;
+    } else {
+      html += `<div class="mc-link mc-empty"><div class="mc-label" style="color:#475569">📝 Record — Mis Picks</div><div class="mc-val">—</div></div>`;
     }
-    // If only one record file, fill second slot with a "Ver más" that points to the sport's dashboard
-    if (recordItems.length === 1) {
+    if (modRec) {
       html += `
-        <a class="mc-link" href="${data.base_url}/dashboard-Lb9x3Kw.html" target="_blank">
-          <div class="mc-label">📊 Ver todos</div>
-          <div class="mc-val">${sport.toUpperCase()}</div>
+        <a class="mc-link" href="${modRec.url}" target="_blank">
+          <div class="mc-label">📈 Record — Modelo</div>
+          <div class="mc-val">${formatDate(modRec.date || '')}</div>
         </a>`;
+    } else {
+      html += `<div class="mc-link mc-empty"><div class="mc-label" style="color:#475569">📈 Record — Modelo</div><div class="mc-val">—</div></div>`;
     }
     html += '</div>';
   } else {
