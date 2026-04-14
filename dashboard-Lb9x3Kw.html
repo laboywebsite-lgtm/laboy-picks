@@ -55,13 +55,14 @@
     font-size:1.05rem;font-weight:700;
   }
   .sport-badge{
-    width:32px;height:32px;border-radius:8px;
+    width:36px;height:36px;border-radius:8px;
     display:flex;align-items:center;justify-content:center;
-    font-size:1.1rem;font-weight:900;
+    overflow:hidden;flex-shrink:0;
   }
-  .mlb .sport-badge{background:#e6394620;color:var(--accent-mlb)}
-  .bsn .sport-badge{background:#f9731620;color:var(--accent-bsn)}
-  .nba .sport-badge{background:#3b82f620;color:var(--accent-nba)}
+  .sport-badge img{width:28px;height:28px;object-fit:contain}
+  .mlb .sport-badge{background:#e6394615}
+  .bsn .sport-badge{background:#f9731615}
+  .nba .sport-badge{background:#3b82f615}
 
   .refresh-btn{
     background:transparent;border:1px solid var(--border);
@@ -152,7 +153,7 @@
   <div class="sport-section mlb" id="sect-mlb">
     <div class="sport-header">
       <div class="sport-title">
-        <div class="sport-badge">⚾</div>
+        <div class="sport-badge"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Major_League_Baseball_logo.svg" alt="MLB" onerror="this.parentNode.textContent='⚾'"></div>
         <span>MLB</span>
       </div>
       <button class="refresh-btn" onclick="loadSport('mlb', true)">
@@ -171,7 +172,7 @@
   <div class="sport-section bsn" id="sect-bsn">
     <div class="sport-header">
       <div class="sport-title">
-        <div class="sport-badge">🏀</div>
+        <div class="sport-badge"><img src="https://upload.wikimedia.org/wikipedia/en/a/ab/BSN-PR-NEW-LOGO.png" alt="BSN" onerror="this.parentNode.textContent='🏀'"></div>
         <span>BSN</span>
       </div>
       <button class="refresh-btn" onclick="loadSport('bsn', true)">
@@ -190,7 +191,7 @@
   <div class="sport-section nba" id="sect-nba">
     <div class="sport-header">
       <div class="sport-title">
-        <div class="sport-badge">🏆</div>
+        <div class="sport-badge"><img src="https://cdn.nba.com/logos/leagues/logo-nba.svg" alt="NBA" onerror="this.parentNode.textContent='🏀'"></div>
         <span>NBA</span>
       </div>
       <button class="refresh-btn" onclick="loadSport('nba', true)">
@@ -274,14 +275,17 @@ function renderSport(sport, data, el) {
     html += `<div class="file-group"><div class="group-label">${labels[gtype]}</div>`;
     for (const f of items) {
       const icon = gtype === 'picks' ? '🎯' : '📊';
-      const dateLabel = f.date ? formatDate(f.date) : f.name.replace(/\.html$/, '');
+      const fileDateFmt = f.date
+        ? (([y,m,d]) => `${m}-${d}-${y}`)(f.date.split('-'))
+        : f.name.replace(/\.html$/, '');
+      const typeLabel = gtype === 'picks' ? 'Picks' : 'Líneas';
       html += `
         <a class="file-link" href="${f.url}" target="_blank">
           <div class="file-info">
             <span class="file-icon">${icon}</span>
             <div>
-              <div class="file-name">${labels[gtype].replace(/^[^ ]+ /, '')}</div>
-              <div class="file-date">${dateLabel}</div>
+              <div class="file-name">${fileDateFmt}</div>
+              <div class="file-date">${typeLabel}</div>
             </div>
           </div>
           <span class="chevron">›</span>
