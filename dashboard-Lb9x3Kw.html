@@ -125,8 +125,25 @@
   }
   .pick-img-tile:hover{border-color:#f97316}
   .pick-img-tile img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block}
-  .pick-img-label{font-size:0.65rem;font-weight:700;padding:3px 6px 0;color:var(--text)}
-  .pick-img-date{font-size:0.6rem;color:var(--muted);padding:0 6px 6px}
+  .pick-img-label{font-size:0.58rem;font-weight:700;padding:3px 5px 0;color:var(--text);
+                  text-align:center;line-height:1.2;word-break:break-word}
+  .pick-img-date{font-size:0.56rem;color:var(--muted);padding:0 6px 6px}
+  /* ── ARCHIVO toggle ── */
+  .archivo-toggle{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:10px 18px;border-top:1px solid #1a2030;
+    cursor:pointer;user-select:none;
+    background:#0a1020;transition:background .15s;
+  }
+  .archivo-toggle:hover{background:#0f1830}
+  .archivo-toggle-label{font-size:0.7rem;font-weight:700;color:var(--muted);
+                         text-transform:uppercase;letter-spacing:.08em;
+                         display:flex;align-items:center;gap:6px}
+  .archivo-toggle-arrow{font-size:0.8rem;color:var(--muted);
+                         transition:transform .2s;display:inline-block}
+  .archivo-toggle.open .archivo-toggle-arrow{transform:rotate(90deg)}
+  .archivo-body{display:none}
+  .archivo-body.open{display:block}
   .mc-label{font-size:0.68rem;font-weight:700;text-transform:uppercase;
              letter-spacing:.06em;color:var(--muted);margin-bottom:4px}
   .mc-val{font-size:0.82rem;font-weight:600}
@@ -361,8 +378,10 @@ function renderSport(sport, data, el) {
       const fileDateFmt = f.date
         ? (([y,m,d]) => `${m}-${d}-${y}`)(f.date.split('-'))
         : f.name.replace(/\.(jpg|png)$/i, '');
-      const numMatch = f.name.match(/#(\d+)/);
-      const label = numMatch ? `Pick #${numMatch[1]}` : fileDateFmt;
+      // Use game name if available, otherwise "Pick #N" fallback
+      const label = (f.game && f.game.trim())
+        ? f.game.trim().toUpperCase().replace(' @ ', ' vs ').replace(' VS. ', ' vs ')
+        : (f.name.match(/#(\d+)/) ? `Pick #${f.name.match(/#(\d+)/)[1]}` : fileDateFmt);
       g += `
         <a class="pick-img-tile" href="${f.url}" target="_blank" download="${f.name}">
           <img src="${f.url}" alt="${label}" loading="lazy" onerror="this.parentNode.style.display='none'">
@@ -380,9 +399,17 @@ function renderSport(sport, data, el) {
   }
 
   if (archiveImgs.length) {
+    // Unique toggle ID per sport section to avoid conflicts
+    const archId = 'arch-' + (data.sport || Math.random().toString(36).slice(2));
     html += `<div class="file-group">
-      <div class="group-label">📁 Archivo de Picks</div>
-      <div class="picks-img-grid">${renderImgGrid(archiveImgs)}</div></div>`;
+      <div class="archivo-toggle" id="toggle-${archId}" onclick="toggleArchivo('${archId}')">
+        <span class="archivo-toggle-label">📁 Archivo de Picks <span style="color:#334155;font-weight:400">(${archiveImgs.length})</span></span>
+        <span class="archivo-toggle-arrow">›</span>
+      </div>
+      <div class="archivo-body" id="body-${archId}">
+        <div class="picks-img-grid">${renderImgGrid(archiveImgs)}</div>
+      </div>
+    </div>`;
   }
 
   if (!html) {
@@ -390,6 +417,15 @@ function renderSport(sport, data, el) {
   } else {
     el.innerHTML = html;
   }
+}
+
+// ── Archivo toggle ───────────────────────────────────────────────────────────
+function toggleArchivo(id) {
+  const toggle = document.getElementById('toggle-' + id);
+  const body   = document.getElementById('body-'   + id);
+  if (!toggle || !body) return;
+  toggle.classList.toggle('open');
+  body.classList.toggle('open');
 }
 
 // ── Date formatter ───────────────────────────────────────────────────────────
