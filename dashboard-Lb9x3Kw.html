@@ -350,26 +350,39 @@ function renderSport(sport, data, el) {
   html += '</div>';
 
   // ── Mis Picks (images) ────────────────────────────────────────────────────
-  const imgItems = (data.files || []).filter(f => f.type === 'mypick_img');
-  if (imgItems.length) {
-    html += `<div class="file-group">
-      <div class="group-label">📸 Mis Picks</div>
-      <div class="picks-img-grid">`;
-    for (const f of imgItems) {
+  const allImgs     = (data.files || []).filter(f => f.type === 'mypick_img');
+  const hasSubtype  = allImgs.some(f => f.subtype === 'today' || f.subtype === 'archive');
+  const todayImgs   = hasSubtype ? allImgs.filter(f => f.subtype === 'today')   : allImgs;
+  const archiveImgs = hasSubtype ? allImgs.filter(f => f.subtype === 'archive') : [];
+
+  function renderImgGrid(imgs) {
+    let g = '';
+    for (const f of imgs) {
       const fileDateFmt = f.date
         ? (([y,m,d]) => `${m}-${d}-${y}`)(f.date.split('-'))
         : f.name.replace(/\.(jpg|png)$/i, '');
-      // Extract pick number if present (#N)
       const numMatch = f.name.match(/#(\d+)/);
       const label = numMatch ? `Pick #${numMatch[1]}` : fileDateFmt;
-      html += `
+      g += `
         <a class="pick-img-tile" href="${f.url}" target="_blank" download="${f.name}">
           <img src="${f.url}" alt="${label}" loading="lazy" onerror="this.parentNode.style.display='none'">
           <div class="pick-img-label">${label}</div>
           <div class="pick-img-date">${fileDateFmt} ↓</div>
         </a>`;
     }
-    html += `</div></div>`;
+    return g;
+  }
+
+  if (todayImgs.length) {
+    html += `<div class="file-group">
+      <div class="group-label">📸 Mis Picks</div>
+      <div class="picks-img-grid">${renderImgGrid(todayImgs)}</div></div>`;
+  }
+
+  if (archiveImgs.length) {
+    html += `<div class="file-group">
+      <div class="group-label">📁 Archivo de Picks</div>
+      <div class="picks-img-grid">${renderImgGrid(archiveImgs)}</div></div>`;
   }
 
   if (!html) {
