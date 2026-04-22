@@ -255,9 +255,9 @@ const MANIFESTS = {
 };
 
 const SPORT_LABELS = {
-  mlb: { picks: '⚾ Picks del Modelo', lines: '📊 Lines del Modelo', record: '🏆 Model Card' },
-  bsn: { picks: '🏀 Picks del Modelo', lines: '📊 Lines del Modelo', record: '🏆 Model Card' },
-  nba: { picks: '🏆 Picks del Modelo', lines: '📊 Lines del Modelo', record: '🎖️ Model Card' },
+  mlb: { picks: '⚾ Picks del Modelo', lines: '📊 Lines del Modelo', record: '🏆 Model Card', debug: '🔬 Debug Report' },
+  bsn: { picks: '🏀 Picks del Modelo', lines: '📊 Lines del Modelo', record: '🏆 Model Card', debug: '🔬 Debug Report' },
+  nba: { picks: '🏆 Picks del Modelo', lines: '📊 Lines del Modelo', record: '🎖️ Model Card', debug: '🔬 Debug Report' },
 };
 
 // ── Fetch manifest and render section ───────────────────────────────────────
@@ -294,7 +294,7 @@ function renderSport(sport, data, el) {
   const labels = SPORT_LABELS[sport];
 
   // Group by type, keep latest 3 per type
-  const groups = { picks: [], lines: [], record: [] };
+  const groups = { picks: [], lines: [], record: [], debug: [] };
   for (const f of files) {
     const t = f.type;
     if (groups[t] && groups[t].length < 3) groups[t].push(f);
@@ -320,6 +320,28 @@ function renderSport(sport, data, el) {
             <div>
               <div class="file-name">${fileDateFmt}</div>
               <div class="file-date">${typeLabel}</div>
+            </div>
+          </div>
+          <span class="chevron">›</span>
+        </a>`;
+    }
+    html += '</div>';
+  }
+
+  // ── Debug Reports ─────────────────────────────────────────────────────────
+  if (groups['debug'].length) {
+    html += `<div class="file-group"><div class="group-label">${labels.debug}</div>`;
+    for (const f of groups['debug']) {
+      const fileDateFmt = f.date
+        ? (([y,m,d]) => `${m}-${d}-${y}`)(f.date.split('-'))
+        : f.name.replace(/\.html$/, '');
+      html += `
+        <a class="file-link" href="${f.url}" target="_blank">
+          <div class="file-info">
+            <span class="file-icon">🔬</span>
+            <div>
+              <div class="file-name">${fileDateFmt}</div>
+              <div class="file-date">Debug</div>
             </div>
           </div>
           <span class="chevron">›</span>
