@@ -1,0 +1,62 @@
+{
+  "ATLETICOS": {
+    "ortg": 116.8,
+    "drtg": 109.4,
+    "pace": 78.4
+  },
+  "CANGREJEROS": {
+    "ortg": 113.3,
+    "drtg": 114.5,
+    "pace": 82.5
+  },
+  "CAPITANES": {
+    "ortg": 117.6,
+    "drtg": 114.6,
+    "pace": 79.8
+  },
+  "CRIOLLOS": {
+    "ortg": 116.6,
+    "drtg": 115.0,
+    "pace": 81.7
+  },
+  "GIGANTES": {
+    "ortg": 119.2,
+    "drtg": 118.9,
+    "pace": 79.5
+  },
+  "INDIOS": {
+    "ortg": 117.4,
+    "drtg": 115.9,
+    "pace": 78.4
+  },
+  "LEONES": {
+    "ortg": 118.2,
+    "drtg": 118.4,
+    "pace": 77.6
+  },
+  "METS": {
+    "ortg": 113.6,
+    "drtg": 119.2,
+    "pace": 77.5
+  },
+  "OSOS": {
+    "ortg": 112.1,
+    "drtg": 115.8,
+    "pace": 79.6
+  },
+  "PIRATAS": {
+    "ortg": 111.8,
+    "drtg": 119.3,
+    "pace": 77.4
+  },
+  "SANTEROS": {
+    "ortg": 111.5,
+    "drtg": 116.2,
+    "pace": 75.2
+  },
+  "VAQUEROS": {
+    "ortg": 113.7,
+    "drtg": 106.1,
+    "pace": 78.8
+  }
+}
