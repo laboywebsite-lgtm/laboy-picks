@@ -877,8 +877,8 @@
     "odds": -125,
     "stake": 30.0,
     "book": "BetMGM",
-    "result": null,
-    "pnl": null,
+    "result": "L",
+    "pnl": -30.0,
     "analysis": "Ambos equipos tienen piezas claves fuera por lesión... Santeros no contará con Ralat ni Holland y Leones no contará con Alejandro ni Ford. \n\nSo, esto son puntos que faltarán en la mesa y por eso el under coje peso. Adicional a que ambos equipos tienen negativo en net rating, específicamente en sus ofensivas, que son bastante pobres."
   },
   {
@@ -889,8 +889,8 @@
     "odds": -120,
     "stake": 25.0,
     "book": "BetMGM",
-    "result": null,
-    "pnl": null,
+    "result": "L",
+    "pnl": -25.0,
     "analysis": "Mets sigue su camino sólido desde la llegada de Craig. Aunque vienen de perder contra Carolina, hoy tienen la oportunidad de volver a caer en ruta en casa... Manatí en la carretera tienen problemas serios ya que solo han podido ganar 1 en 8 juegos. Mi modelo tiene una proyección de Guaynabo ganando al menos por 8 puntos, así que consideren este pick un discount."
   }
 ]

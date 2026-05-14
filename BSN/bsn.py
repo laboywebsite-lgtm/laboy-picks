@@ -151,10 +151,11 @@ if "--help" in sys.argv or "-h" in sys.argv:
   ──────────────────────────────────────────────────────────────
   python3 bsn.py --gp EQUIPO1 N1 EQUIPO2 N2 ...
                                      Registra juegos jugados por equipo para blend dinámico.
-                                     El modelo usa peso_2026 = GP / (GP + 15).
-                                     Ejemplo: python3 bsn.py --gp SANTEROS 6 CAPITANES 8
-                                     Con 6 GP → 29% 2026 / 71% 2025
-                                     Con 8 GP → 35% 2026 / 65% 2025
+                                     El modelo usa peso_2026 = GP / (GP + 7).
+                                     Ejemplo: python3 bsn.py --gp SANTEROS 7 CAPITANES 15
+                                     Con 7 GP  → 50% 2026 / 50% 2025
+                                     Con 15 GP → 68% 2026 / 32% 2025
+                                     Con 20 GP → 100% 2026 (credibilidad plena)
 
   OTROS
   ──────────────────────────────────────────────────────────────
@@ -390,24 +391,28 @@ def _parse_time_sort(t):
 # BSN temporada regular = 34 juegos.
 # Filosofía del blend:
 #   - Inicio de temporada: datos previos dominan (alta incertidumbre)
-#   - Ramp-up Bayesiano hasta el juego ~10 (crossover 50/50)
-#   - A partir del juego 25 (74% de la temporada): 100% temporada actual
-#     porque un equipo que ha jugado 25 de 34 juegos ya te dijo quién es.
-#     El año pasado en ese punto es esencialmente irrelevante.
+#   - Ramp-up Bayesiano acelerado hasta el juego ~7 (crossover 50/50)
+#   - A partir del juego 20 (59% de la temporada): 100% temporada actual
+#     porque a mitad de temporada los equipos BSN ya mostraron su nivel real.
+#     El año pasado en ese punto empieza a ser ruido, no señal.
 #
-# Curva resultante:
+# Curva resultante (GP_REGRESSION=7):
 #   0 GP → 10% actual  (sin GP registrado: casi todo prior year)
-#   4 GP → 29% actual
-#   8 GP → 44% actual
-#  10 GP → 50% actual  ← crossover
-#  15 GP → 60% actual
-#  20 GP → 67% actual
-#  25 GP → 100% actual ← credibilidad plena (74% de temporada)
+#   4 GP → 36% actual
+#   7 GP → 50% actual  ← crossover
+#  10 GP → 59% actual
+#  15 GP → 68% actual
+#  17 GP → 71% actual
+#  20 GP → 100% actual ← credibilidad plena (59% de temporada)
 #  34 GP → 100% actual
+#
+# Cambio vs anterior (GP_REGRESSION=10, BSN_FULL_CRED_GP=25):
+#   A 17GP: 63% → 71% 2026 (+8pp)
+#   A 20GP: 67% → 100% 2026 (+33pp)  ← mayor impacto
 
 BSN_SEASON_GP    = 34   # juegos totales temporada regular BSN
-BSN_FULL_CRED_GP = 25   # GP mínimo para credibilidad plena (100% temporada actual)
-GP_REGRESSION    = 10   # factor Bayesiano: crossover 50/50 en juego 10
+BSN_FULL_CRED_GP = 20   # GP mínimo para credibilidad plena (100% temporada actual)
+GP_REGRESSION    = 7    # factor Bayesiano: crossover 50/50 en juego 7
 
 def _load_gp():
     """Carga juegos jugados por equipo desde bsn_gp.json."""
@@ -425,16 +430,16 @@ def _blend_weight(gp):
     Retorna peso temporada actual (2026) basado en juegos jugados.
 
     Dos fases:
-      1. Ramp-up Bayesiano (0–24 GP): GP / (GP + GP_REGRESSION)
-         Crossover 50/50 en el juego 10 (~30% de temporada).
-      2. Credibilidad plena (≥25 GP): 100% temporada actual.
-         Después de 25 juegos de una temporada de 34, el año pasado
+      1. Ramp-up Bayesiano (0–19 GP): GP / (GP + GP_REGRESSION)
+         Crossover 50/50 en el juego 7 (~21% de temporada).
+      2. Credibilidad plena (≥20 GP): 100% temporada actual.
+         Después de 20 juegos de una temporada de 34, el año pasado
          ya no agrega señal útil.
     """
     if not gp or gp <= 0:
         return 0.10   # inicio de temporada: 90% prior year
     if gp >= BSN_FULL_CRED_GP:
-        return 1.0    # ≥25 GP → 100% temporada actual
+        return 1.0    # ≥20 GP → 100% temporada actual
     return round(gp / (gp + GP_REGRESSION), 4)
 
 def cmd_set_gp():
@@ -498,8 +503,8 @@ def cmd_set_gp():
 def load_bsn_advanced(wb):
     """Lee stats blended desde BSN - Advanced (col C-F, filas 5+).
     El blend es DINÁMICO por equipo según GP registrado en bsn_gp.json:
-        0–24 GP : GP / (GP + GP_REGRESSION)  [Bayesiano, crossover en GP=10]
-        ≥25 GP  : 100% temporada actual       [credibilidad plena]
+        0–19 GP : GP / (GP + GP_REGRESSION)  [Bayesiano, crossover en GP=7]
+        ≥20 GP  : 100% temporada actual       [credibilidad plena]
     Si D-F tienen None/fórmula sin caché, recalcula blend desde cols I-K/N-P.
     PACE siempre usa 100% 2026 (col K).
     """
@@ -3028,6 +3033,11 @@ def _ev_str(win_prob_pct, odds_str):
         return "—", "#94a3b8"
 
 
+MAX_MARKET_SPREAD = 5.5   # filtro: no apostar spread cuando el mercado da ≥6 pts
+                          # Análisis histórico BSN: juegos con spread grande (±6+)
+                          # muestran 50% win rate (-70u) → sin edge del modelo.
+                          # Preferir ML o Total en esos partidos si hay señal.
+
 def _find_value_picks(games_data, min_spread_diff=1.5, min_ml_edge=3.0, min_total_diff=3.0):
     """
     Motor principal de picks con valor real.
@@ -3037,6 +3047,7 @@ def _find_value_picks(games_data, min_spread_diff=1.5, min_ml_edge=3.0, min_tota
         - Mercado infla al favorito más que el modelo → apostar al UNDERDOG + puntos
         - Mercado da menos puntos al favorito que el modelo → apostar al favorito
         - Modelos y mercados discrepan en quién gana → pick fuerte en la dirección del modelo
+        - FILTRO: mercado ≥6 pts → spread suprimido (sin edge histórico en BSN)
       • ML edge      — modelo win% supera implícita del mercado ≥ min_ml_edge %
       • Total edge   — diferencia modelo/mkt ≥ min_total_diff pts
         (BSN: 3.0 pts es edge real — mercado menos eficiente que NBA)
@@ -3107,6 +3118,12 @@ def _find_value_picks(games_data, min_spread_diff=1.5, min_ml_edge=3.0, min_tota
         if mkt_sp_fav and mkt_sp_line:
             try:
                 mkt_sp_abs = abs(float(mkt_sp_line))
+
+                # ── Filtro spread grande: sin edge en BSN cuando mkt ≥6 pts ──────
+                # Históricamente 50% W rate en spreads grandes → no apostar spread.
+                # Sí podemos seguir evaluando ML y Total para ese juego.
+                if mkt_sp_abs > MAX_MARKET_SPREAD:
+                    raise ValueError(f"spread {mkt_sp_abs} > MAX_MARKET_SPREAD — omitido")
 
                 if mkt_sp_fav == model_fav.upper():
                     market_for_fav = mkt_sp_abs
@@ -4490,7 +4507,7 @@ def show_stats(stats, injury_impact):
     print(f"\n{'═'*68}")
     print(f"  LABOY PICKS — BSN TEAM STATS")
     if has_gp:
-        print(f"  Blend dinámico por equipo  │  GP/(GP+{GP_REGRESSION})  │  Pythagorean exp={PYTH_EXP}")
+        print(f"  Blend dinámico por equipo  │  GP/(GP+{GP_REGRESSION}), pleno≥{BSN_FULL_CRED_GP}GP  │  Pythagorean exp={PYTH_EXP}")
     else:
         print(f"  Blend: default 40% 2026 + 60% 2025   │   Pythagorean exp={PYTH_EXP}")
     print(f"{'═'*68}\n")

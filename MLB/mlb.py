@@ -4027,7 +4027,7 @@ def cmd_log_pick():
             print(f"     → {os.path.basename(html_path)}")
     except Exception as e:
         print(f"     ⚠️  HTML export falló: {e}")
-    if PUBLISH_MODE and html_path:
+    if html_path:   # siempre publica al loguear
         cmd_publish([html_path])
     print()
 

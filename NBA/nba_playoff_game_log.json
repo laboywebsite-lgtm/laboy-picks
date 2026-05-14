@@ -1,5 +1,5 @@
 {
-  "fetch_date": "2026-05-13",
+  "fetch_date": "2026-05-14",
   "games": [
     {
       "away": "TOR",
@@ -519,6 +519,14 @@
       "away_pts": 97,
       "home_pts": 126,
       "date": "2026-05-12",
+      "manual": false
+    },
+    {
+      "away": "CLE",
+      "home": "DET",
+      "away_pts": 117,
+      "home_pts": 113,
+      "date": "2026-05-13",
       "manual": false
     }
   ]

@@ -21,7 +21,7 @@ NBA_IR   = os.path.join(NBA_DIR, "nba_injuries.json")
 BSN_GP   = os.path.join(BSN_DIR, "bsn_gp.json")
 MLB_PICKS = os.path.join(MLB_DIR, "mlb_model_picks.json")
 
-PORT = 5001
+PORT = int(os.environ.get("PORT", 5001))   # Railway/cloud usa $PORT; local usa 5001
 for i, a in enumerate(sys.argv):
     if a in ("--port","-p") and i+1 < len(sys.argv):
         try: PORT = int(sys.argv[i+1])
