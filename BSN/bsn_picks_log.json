@@ -904,5 +904,17 @@
     "result": null,
     "pnl": null,
     "analysis": ""
+  },
+  {
+    "id": 73,
+    "date": "2026-05-14",
+    "game": "LAS PIEDRAS vs. JUNCOS",
+    "pick": "JUNCOS ML",
+    "odds": -110,
+    "stake": 15.0,
+    "book": "BetMGM",
+    "result": null,
+    "pnl": null,
+    "analysis": ""
   }
 ]
