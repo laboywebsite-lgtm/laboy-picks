@@ -6,6 +6,25 @@ BACKUP_*.zip
 *.zip
 zimZnoSE
 
+# ── Archivos históricos de picks (tarjetas individuales) ──
+# Solo excluye las tarjetas de picks publicadas — NO logos ni assets
+# Patrón: "Laboy Pick YYYY-MM-DD #N.html" y sus JPGs
+MLB/Laboy Pick *.html
+MLB/Laboy Pick *.jpg
+BSN/Laboy BSN Picks *.html
+BSN/Laboy BSN Lines *.html
+BSN/Laboy BSN Record Card *.html
+BSN/Laboy BSN Record Card *.jpg
+NBA/Laboy NBA Picks *.html
+NBA/Laboy NBA Record Card *.html
+NBA/Laboy NBA Playoffs *.html
+Laboy Record General *.html
+Laboy Record Dia *.html
+Laboy Record General *.jpg
+Laboy Record Dia *.jpg
+dashboard-*.BACKUP.html
+record_preview.html
+
 # ── Python cache ──────────────────────────────────────
 __pycache__/
 *.pyc
