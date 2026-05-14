@@ -7906,6 +7906,9 @@ class Handler(BaseHTTPRequestHandler):
                     except ValueError:
                         cmd = cmd_str.split()
                     out = _run(cmd, cwd=cwd)
+                    # Autopush si el comando modificó estado (solo en cloud)
+                    if any(sc in cmd_str for sc in _GIT_STATE_CMDS):
+                        _git_autopush_bg(cmd_str)
                     self._send_json(200, {"out": out})
                 except Exception as ex:
                     self._send_json(200, {"out": f"Error: {ex}"})
@@ -7959,6 +7962,7 @@ class Handler(BaseHTTPRequestHandler):
                         existing_today[key] = entry
                     all_lines[today_str] = list(existing_today.values())
                     _wj(lines_file, all_lines)
+                    _git_autopush_bg("--set-lines BSN")
                     self._send_json(200, {"ok": True,
                         "msg": f"✅ Líneas guardadas: {len(entries)} juego(s)"})
                 except Exception as ex:
@@ -7983,6 +7987,95 @@ class Handler(BaseHTTPRequestHandler):
 
 
 # ══════════════════════════════════════════════════════════════════════
+# GIT AUTOPUSH — persiste estado JSON en GitHub después de cada acción
+# ══════════════════════════════════════════════════════════════════════
+#
+# Solo activo cuando existe GITHUB_TOKEN en el entorno (Render/cloud).
+# En local no hace nada — el usuario hace push manualmente.
+#
+# Archivos de estado que se persisten:
+_GIT_STATE_FILES = [
+    "BSN/bsn_picks_log.json",
+    "BSN/bsn_gp.json",
+    "BSN/bsn_market_lines.json",
+    "BSN/bsn_model_picks.json",
+    "BSN/manual_games.json",
+    "MLB/laboy_picks_log.json",
+    "MLB/mlb_model_picks.json",
+    "MLB/mlb_log_state.json",
+    "MLB/mlb_debug_state.json",
+    "NBA/nba_picks_log.json",
+    "NBA/nba_injuries.json",
+    "NBA/nba_playoff_game_log.json",
+]
+
+# Comandos que modifican estado y deben triggear autopush:
+_GIT_STATE_CMDS = [
+    "--log", "--grade", "--remove", "--edit", "--gp",
+    "--refresh", "--set-lines", "--clear-lines",
+    "--log-parlay", "--log-special", "--log-retro",
+    "--grade-picks", "--add-injury", "--remove-injury",
+    "--add-game", "--remove-game",
+]
+
+def _setup_git_autopush():
+    """
+    Configura git remote con token para push automático.
+    Solo corre si GITHUB_TOKEN está definido (entorno cloud).
+    """
+    token = os.environ.get("GITHUB_TOKEN", "")
+    if not token:
+        return
+    user = os.environ.get("GITHUB_USER", "laboywebsite-lgtm")
+    repo = os.environ.get("GITHUB_REPO", "laboy-picks")
+    remote_url = f"https://{user}:{token}@github.com/{user}/{repo}.git"
+    try:
+        subprocess.run(["git", "remote", "set-url", "origin", remote_url],
+                       cwd=BASE_DIR, capture_output=True, timeout=10)
+        subprocess.run(["git", "config", "user.email", "laboywebsite@gmail.com"],
+                       cwd=BASE_DIR, capture_output=True, timeout=10)
+        subprocess.run(["git", "config", "user.name", "Laboy Picks Bot"],
+                       cwd=BASE_DIR, capture_output=True, timeout=10)
+        print("  ✅ Git autopush configurado (modo cloud).")
+    except Exception as e:
+        print(f"  ⚠️  Git autopush setup error: {e}")
+
+def _git_autopush_bg(trigger_cmd=""):
+    """
+    Hace git add + commit + push en background thread (no bloquea la respuesta).
+    Solo activo si GITHUB_TOKEN está definido.
+    """
+    def _push():
+        token = os.environ.get("GITHUB_TOKEN", "")
+        if not token:
+            return
+        try:
+            # Solo los archivos que existen
+            files = [f for f in _GIT_STATE_FILES
+                     if os.path.exists(os.path.join(BASE_DIR, f))]
+            if not files:
+                return
+            subprocess.run(["git", "add"] + files,
+                           cwd=BASE_DIR, capture_output=True, timeout=15)
+            # Verificar si hay cambios reales antes de commitear
+            r = subprocess.run(["git", "diff", "--cached", "--quiet"],
+                                cwd=BASE_DIR, capture_output=True, timeout=10)
+            if r.returncode == 0:
+                return  # nada cambió — skip
+            # Mensaje de commit con comando que lo disparó
+            short_cmd = trigger_cmd[:60] if trigger_cmd else "state update"
+            msg = f"auto: {short_cmd}"
+            subprocess.run(["git", "commit", "-m", msg],
+                           cwd=BASE_DIR, capture_output=True, timeout=15)
+            subprocess.run(["git", "push", "origin", "main"],
+                           cwd=BASE_DIR, capture_output=True, timeout=30)
+            print(f"  ☁️  Autopush OK: {msg}")
+        except Exception as e:
+            print(f"  ⚠️  Autopush error: {e}")
+    threading.Thread(target=_push, daemon=True).start()
+
+
+# ══════════════════════════════════════════════════════════════════════
 # MAIN
 # ══════════════════════════════════════════════════════════════════════
 if __name__ == "__main__":
@@ -7994,6 +8087,7 @@ if __name__ == "__main__":
     except:
         local_ip = "127.0.0.1"
 
+    _setup_git_autopush()   # configura git remote con token si estamos en cloud
     server = HTTPServer(("0.0.0.0", PORT), Handler)
 
     print(f"\n{'═'*58}")
