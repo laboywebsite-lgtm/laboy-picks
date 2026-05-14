@@ -3437,6 +3437,7 @@ def bsn_panel():
     ('🖼', 'Record',  "openRecordModal('BSN','bsn.py','BSN','#f5a623')"),
     ('🃏', 'Parlay',  "openModal('bsn-parlay')"),
     ('🏥', 'IR',      "openBsnIrModal()"),
+    ('✏️', 'Stats ⚙',"openBsnStatsEditor()"),
     ('🎯', 'GP',      "openModal('bsn-gp')"),
   ]
 )}
@@ -4537,6 +4538,147 @@ def full_page(alert="", alert_type=""):
   <div class="panel active" id="panel-bsn">{bsn_panel()}</div>
   <div class="panel" id="panel-nba">{nba_panel()}</div>
   <div class="panel" id="panel-mlb">{mlb_panel()}</div>
+
+<!-- BSN Stats Editor Modal (static) -->
+<div id="bsn-stats-editor-v3-static" style="display:none;position:fixed;inset:0;z-index:9000;
+  background:rgba(0,0,0,.9);backdrop-filter:blur(10px);overflow-y:auto;padding:20px 12px;
+  -webkit-overflow-scrolling:touch">
+  <div style="max-width:460px;margin:0 auto;background:#0a0f1a;border-radius:22px;
+    border:1px solid rgba(245,166,35,.3);padding:22px;box-shadow:0 40px 120px rgba(0,0,0,.8)">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+      <div>
+        <div style="font-size:.58rem;color:#f5a623;letter-spacing:2.5px;font-family:monospace">
+          BSN &middot; TEAM STATS 2026</div>
+        <div style="font-size:1rem;font-weight:800;color:#f1f5f9;margin-top:3px">
+          Editar Stats de Equipos</div>
+      </div>
+      <button onclick="closeBsnStatsEditor()"
+        style="background:rgba(255,255,255,.08);border:none;color:#94a3b8;
+          font-size:1.1rem;padding:7px 14px;border-radius:10px;cursor:pointer">&#x2715;</button>
+    </div>
+    <div style="font-size:.63rem;color:#475569;margin-bottom:16px;padding:9px 12px;
+      background:rgba(245,166,35,.05);border-radius:10px;border:1px solid rgba(245,166,35,.12)">
+      Valores actuales pre-cargados desde realgm.com. Edita los que cambiaron y guarda.
+    </div>
+    <div id="bse-cards-container" style="display:flex;flex-direction:column;gap:8px">
+      <div style="padding:30px;text-align:center;color:#475569;font-size:.8rem">Cargando...</div>
+    </div>
+    <button onclick="saveBsnStats()"
+      style="width:100%;margin-top:16px;padding:14px;font-size:.88rem;border-radius:14px;
+        font-weight:800;letter-spacing:.5px;background:linear-gradient(135deg,#f5a623,#e08c00);
+        border:none;color:#000;cursor:pointer">
+      &#x1F4BE;&nbsp; Guardar Cambios
+    </button>
+    <div id="bse-save-msg" style="margin-top:10px;text-align:center;font-size:.8rem;
+      color:#22c55e;min-height:18px"></div>
+  </div>
+</div>
+
+<style>
+.bse-team-row{background:#111827;border-radius:12px;overflow:hidden;margin-bottom:0}
+.bse-row-hdr{display:flex;align-items:center;justify-content:space-between;
+  padding:9px 12px;font-size:.7rem;font-weight:700;color:#f1f5f9;border-bottom:1px solid rgba(255,255,255,.05)}
+.bse-row-net{font-size:.65rem;font-family:monospace;font-weight:700}
+.bse-row-inputs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:10px 12px}
+.bse-row-inputs label{display:flex;flex-direction:column;gap:3px;
+  font-size:.58rem;color:#475569;letter-spacing:.8px}
+.bse-num-inp{background:#1e293b;border:1px solid rgba(245,166,35,.15);border-radius:8px;
+  color:#f1f5f9;font-size:.9rem;padding:7px 4px;width:100%;text-align:center;
+  font-family:monospace;outline:none;box-sizing:border-box;-webkit-appearance:none}
+.bse-num-inp:focus{border-color:#f5a623;box-shadow:0 0 0 2px rgba(245,166,35,.15)}
+</style>
+
+<script>
+var _bseLoaded = false;
+var _bseData = {};
+
+async function openBsnStatsEditor() {
+  document.getElementById('bsn-stats-editor-v3-static').style.display = 'block';
+  document.body.style.overflow = 'hidden';
+  if (!_bseLoaded) { await _bseLoadCards(); }
+}
+
+function closeBsnStatsEditor() {
+  document.getElementById('bsn-stats-editor-v3-static').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+async function _bseLoadCards() {
+  var container = document.getElementById('bse-cards-container');
+  try {
+    var r = await fetch('/api/bsn/get-team-stats');
+    var d = await r.json();
+    _bseData = d.stats || {};
+    var teams = Object.keys(_bseData).sort();
+    var html = '';
+    teams.forEach(function(t) {
+      var s = _bseData[t] || {};
+      var ortg = (s.ortg || 100).toFixed(1);
+      var drtg = (s.drtg || 100).toFixed(1);
+      var pace = (s.pace || 78.5).toFixed(1);
+      var net = (s.ortg || 100) - (s.drtg || 100);
+      var netStr = (net >= 0 ? '+' : '') + net.toFixed(1);
+      var netCol = net > 2 ? '#22c55e' : (net < -2 ? '#f43f5e' : '#94a3b8');
+      html += '<div class="bse-team-row" data-team="' + t + '">' +
+        '<div class="bse-row-hdr">' +
+          '<span>' + t + '</span>' +
+          '<span class="bse-row-net" style="color:' + netCol + '">' + netStr + '</span>' +
+        '</div>' +
+        '<div class="bse-row-inputs">' +
+          '<label>OFF RTG<input class="bse-num-inp" type="number" step="0.1" data-f="ortg" value="' + ortg + '"></label>' +
+          '<label>DEF RTG<input class="bse-num-inp" type="number" step="0.1" data-f="drtg" value="' + drtg + '"></label>' +
+          '<label>PACE<input class="bse-num-inp" type="number" step="0.1" data-f="pace" value="' + pace + '"></label>' +
+        '</div></div>';
+    });
+    container.innerHTML = html;
+    _bseLoaded = true;
+
+    // Live net update
+    container.querySelectorAll('.bse-num-inp').forEach(function(inp) {
+      inp.addEventListener('input', function() {
+        var row = this.closest('[data-team]');
+        var o = parseFloat(row.querySelector('[data-f="ortg"]').value) || 0;
+        var d = parseFloat(row.querySelector('[data-f="drtg"]').value) || 0;
+        var net = o - d;
+        var netEl = row.querySelector('.bse-row-net');
+        netEl.textContent = (net >= 0 ? '+' : '') + net.toFixed(1);
+        netEl.style.color = net > 2 ? '#22c55e' : (net < -2 ? '#f43f5e' : '#94a3b8');
+      });
+    });
+  } catch(e) {
+    container.innerHTML = '<div style="color:#f43f5e;padding:20px;text-align:center">Error: ' + e + '</div>';
+  }
+}
+
+async function saveBsnStats() {
+  var msg = document.getElementById('bse-save-msg');
+  msg.textContent = 'Guardando...';
+  msg.style.color = '#f5a623';
+  var payload = {};
+  document.querySelectorAll('#bse-cards-container [data-team]').forEach(function(row) {
+    var t = row.dataset.team;
+    payload[t] = {
+      ortg: parseFloat(row.querySelector('[data-f="ortg"]').value) || 0,
+      drtg: parseFloat(row.querySelector('[data-f="drtg"]').value) || 0,
+      pace: parseFloat(row.querySelector('[data-f="pace"]').value) || 0
+    };
+  });
+  try {
+    var r = await fetch('/api/bsn/update-team-stats', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(payload)
+    });
+    var d = await r.json();
+    msg.textContent = d.msg;
+    msg.style.color = d.ok ? '#22c55e' : '#f43f5e';
+    if (d.ok) { _bseLoaded = false; setTimeout(function() { closeBsnStatsEditor(); }, 1500); }
+  } catch(e) {
+    msg.textContent = 'Error: ' + e;
+    msg.style.color = '#f43f5e';
+  }
+}
+</script>
 </main>
 
 <!-- ── Detail Panel (slide-in) ── -->
