@@ -7678,6 +7678,32 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         if self.path == "/favicon.ico":
             self.send_response(204); self.end_headers(); return
+
+        # ── /api/test-autopush — diagnóstico del autopush ─────────────────
+        if self.path == "/api/test-autopush":
+            import base64 as _b64, urllib.request as _ur, urllib.error as _ue
+            token = os.environ.get("GITHUB_TOKEN","")
+            user  = os.environ.get("GITHUB_USER","laboywebsite-lgtm")
+            repo  = os.environ.get("GITHUB_REPO","laboy-picks")
+            result = {"token_set": bool(token), "user": user, "repo": repo, "steps": []}
+            if token:
+                hdrs = {"Authorization": f"token {token}",
+                        "Accept": "application/vnd.github.v3+json"}
+                try:
+                    req = _ur.Request(
+                        f"https://api.github.com/repos/{user}/{repo}/git/ref/heads/main",
+                        headers=hdrs)
+                    with _ur.urlopen(req, timeout=10) as r:
+                        data = json.loads(r.read())
+                        result["steps"].append(f"✅ GitHub API OK — SHA: {data['object']['sha'][:7]}")
+                except _ue.HTTPError as e:
+                    result["steps"].append(f"❌ GitHub API error {e.code}: {e.read().decode()[:200]}")
+                except Exception as e:
+                    result["steps"].append(f"❌ Exception: {str(e)}")
+            else:
+                result["steps"].append("❌ GITHUB_TOKEN no está definido en el entorno")
+            self._send_json(200, result)
+            return
         # ── Rich view endpoints (return {"html": "..."}) ─────────────────
         if self.path.startswith("/api/view/"):
             _clean_path = self.path.split("?")[0]  # strip query string for routing
