@@ -6617,7 +6617,7 @@ def _nba_stats_html():
 
 
     edit_btn = ('<div style="margin-bottom:12px;text-align:right">'
-                '<button class="btn gold" style="font-size:.72rem;padding:7px 14px;border-radius:20px" '
+                '<button style="background:#f5a623;color:#000;border:none;cursor:pointer;font-weight:700;font-size:.72rem;padding:8px 16px;border-radius:20px;letter-spacing:.3px" '
                 'onclick="openBsnStatsEditor()">✏️ Editar Stats</button></div>')
 
     team_cards = ""
