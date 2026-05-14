@@ -7418,6 +7418,7 @@ def handle_api(path, data):
     if path == "/api/bsn/log":
         ok, msg = _log_pick(BSN_LOG, data)
         if ok:
+            _git_autopush_bg("bsn --log")
             try:
                 log_now = _rj(BSN_LOG)
                 pick_idx = len(log_now) - 1
@@ -7433,10 +7434,12 @@ def handle_api(path, data):
 
     if path == "/api/bsn/log-parlay":
         ok, msg = _log_parlay(BSN_LOG, data)
+        if ok: _git_autopush_bg("bsn --log-parlay")
         return 200, j(ok, msg)
 
     if path == "/api/bsn/grade":
         ok, msg = _grade_pick(BSN_LOG, data)
+        if ok: _git_autopush_bg("bsn --grade")
         return 200, j(ok, msg)
 
     if path == "/api/bsn/gp":
@@ -7450,6 +7453,7 @@ def handle_api(path, data):
                 if isinstance(gp_data, list): gp_data = {}
             gp_data[team] = int(gp_s)
             _wj(BSN_GP, gp_data)
+            _git_autopush_bg("bsn --gp")
             return 200, j(True, f"✅ {team} → {gp_s} GP guardado")
         except Exception as ex:
             return 200, j(False, f"⚠️ Error: {ex}")
@@ -7510,10 +7514,12 @@ def handle_api(path, data):
     # ── NBA ──────────────────────────────────────────────────────
     if path == "/api/nba/log":
         ok, msg = _log_pick(NBA_LOG, data)
+        if ok: _git_autopush_bg("nba --log")
         return 200, j(ok, msg)
 
     if path == "/api/nba/grade":
         ok, msg = _grade_pick(NBA_LOG, data)
+        if ok: _git_autopush_bg("nba --grade")
         return 200, j(ok, msg)
 
     if path == "/api/nba/auto-grade":
@@ -7579,7 +7585,7 @@ def handle_api(path, data):
     if path == "/api/mlb/log":
         ok, msg = _log_pick(MLB_LOG, data)
         if ok:
-            # Auto-publish en background después de loguear
+            _git_autopush_bg("mlb --log")
             try:
                 log_now = _rj(MLB_LOG)
                 pick_idx = len(log_now) - 1
@@ -7595,6 +7601,7 @@ def handle_api(path, data):
 
     if path == "/api/mlb/grade":
         ok, msg = _grade_pick(MLB_LOG, data)
+        if ok: _git_autopush_bg("mlb --grade")
         return 200, j(ok, msg)
 
     if path == "/api/mlb/auto-grade":
