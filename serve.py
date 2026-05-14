@@ -8019,59 +8019,106 @@ _GIT_STATE_CMDS = [
 ]
 
 def _setup_git_autopush():
-    """
-    Configura git remote con token para push automático.
-    Solo corre si GITHUB_TOKEN está definido (entorno cloud).
-    """
+    """No-op — autopush ahora usa GitHub API, no git CLI."""
     token = os.environ.get("GITHUB_TOKEN", "")
-    if not token:
-        return
-    user = os.environ.get("GITHUB_USER", "laboywebsite-lgtm")
-    repo = os.environ.get("GITHUB_REPO", "laboy-picks")
-    remote_url = f"https://{user}:{token}@github.com/{user}/{repo}.git"
-    try:
-        subprocess.run(["git", "remote", "set-url", "origin", remote_url],
-                       cwd=BASE_DIR, capture_output=True, timeout=10)
-        subprocess.run(["git", "config", "user.email", "laboywebsite@gmail.com"],
-                       cwd=BASE_DIR, capture_output=True, timeout=10)
-        subprocess.run(["git", "config", "user.name", "Laboy Picks Bot"],
-                       cwd=BASE_DIR, capture_output=True, timeout=10)
-        print("  ✅ Git autopush configurado (modo cloud).")
-    except Exception as e:
-        print(f"  ⚠️  Git autopush setup error: {e}")
+    if token:
+        print("  ✅ GitHub API autopush activo (modo cloud).")
 
 def _git_autopush_bg(trigger_cmd=""):
     """
-    Hace git add + commit + push en background thread (no bloquea la respuesta).
-    Solo activo si GITHUB_TOKEN está definido.
+    Persiste archivos de estado en GitHub via REST API.
+    Un solo commit con todos los archivos cambiados.
+    No depende de git CLI — funciona en cualquier entorno cloud.
     """
     def _push():
+        import base64 as _b64, urllib.request as _ur, urllib.error as _ue
         token = os.environ.get("GITHUB_TOKEN", "")
+        user  = os.environ.get("GITHUB_USER", "laboywebsite-lgtm")
+        repo  = os.environ.get("GITHUB_REPO",  "laboy-picks")
         if not token:
             return
+
+        hdrs = {
+            "Authorization": f"token {token}",
+            "Accept":        "application/vnd.github.v3+json",
+            "Content-Type":  "application/json",
+        }
+        base = f"https://api.github.com/repos/{user}/{repo}"
+
+        def _api(method, path, payload=None, timeout=15):
+            data = json.dumps(payload).encode() if payload else None
+            req  = _ur.Request(f"{base}{path}", data=data,
+                               headers=hdrs, method=method)
+            try:
+                with _ur.urlopen(req, timeout=timeout) as r:
+                    return json.loads(r.read()), r.status
+            except _ue.HTTPError as e:
+                return json.loads(e.read() or b"{}"), e.code
+            except Exception as e:
+                return {}, 0
+
         try:
-            # Solo los archivos que existen
-            files = [f for f in _GIT_STATE_FILES
-                     if os.path.exists(os.path.join(BASE_DIR, f))]
-            if not files:
+            # 1. SHA del último commit en main
+            ref, st = _api("GET", "/git/ref/heads/main")
+            if st != 200:
+                print(f"  ⚠️ Autopush: no se pudo leer ref ({st})")
                 return
-            subprocess.run(["git", "add"] + files,
-                           cwd=BASE_DIR, capture_output=True, timeout=15)
-            # Verificar si hay cambios reales antes de commitear
-            r = subprocess.run(["git", "diff", "--cached", "--quiet"],
-                                cwd=BASE_DIR, capture_output=True, timeout=10)
-            if r.returncode == 0:
-                return  # nada cambió — skip
-            # Mensaje de commit con comando que lo disparó
-            short_cmd = trigger_cmd[:60] if trigger_cmd else "state update"
-            msg = f"auto: {short_cmd}"
-            subprocess.run(["git", "commit", "-m", msg],
-                           cwd=BASE_DIR, capture_output=True, timeout=15)
-            subprocess.run(["git", "push", "origin", "main"],
-                           cwd=BASE_DIR, capture_output=True, timeout=30)
-            print(f"  ☁️  Autopush OK: {msg}")
+            base_commit_sha = ref["object"]["sha"]
+
+            # 2. SHA del árbol base
+            commit, st = _api("GET", f"/git/commits/{base_commit_sha}")
+            if st != 200: return
+            base_tree_sha = commit["tree"]["sha"]
+
+            # 3. Crear blobs para cada archivo de estado
+            tree_items = []
+            for rel_path in _GIT_STATE_FILES:
+                abs_path = os.path.join(BASE_DIR, rel_path)
+                if not os.path.exists(abs_path):
+                    continue
+                with open(abs_path, "rb") as f:
+                    content_b64 = _b64.b64encode(f.read()).decode()
+                blob, st = _api("POST", "/git/blobs",
+                                {"content": content_b64, "encoding": "base64"})
+                if st not in (200, 201):
+                    continue
+                tree_items.append({
+                    "path": rel_path, "mode": "100644",
+                    "type": "blob", "sha": blob["sha"]
+                })
+
+            if not tree_items:
+                return
+
+            # 4. Nuevo árbol
+            tree, st = _api("POST", "/git/trees",
+                            {"base_tree": base_tree_sha, "tree": tree_items})
+            if st not in (200, 201):
+                print(f"  ⚠️ Autopush: error creando tree ({st})")
+                return
+
+            # 5. Nuevo commit
+            short = (trigger_cmd or "state update")[:60]
+            new_commit, st = _api("POST", "/git/commits", {
+                "message": f"auto: {short}",
+                "tree":    tree["sha"],
+                "parents": [base_commit_sha]
+            })
+            if st not in (200, 201):
+                print(f"  ⚠️ Autopush: error creando commit ({st})")
+                return
+
+            # 6. Actualizar ref de main
+            _, st = _api("PATCH", "/git/refs/heads/main",
+                         {"sha": new_commit["sha"]})
+            if st in (200, 201):
+                print(f"  ☁️  GitHub autopush OK: auto: {short}")
+            else:
+                print(f"  ⚠️ Autopush: error actualizando ref ({st})")
+
         except Exception as e:
             print(f"  ⚠️  Autopush error: {e}")
+
     threading.Thread(target=_push, daemon=True).start()
 
 
