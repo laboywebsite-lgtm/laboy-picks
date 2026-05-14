@@ -250,6 +250,7 @@ def _grade_rows(log_path, endpoint):
     <button class="btn green" style="flex:1;padding:7px 4px;font-size:0.75rem" onclick="gradePick('{endpoint}',{eid},'W')">✅ WIN</button>
     <button class="btn red" style="flex:1;padding:7px 4px;font-size:0.75rem" onclick="gradePick('{endpoint}',{eid},'L')">❌ LOSS</button>
     <button class="btn gray" style="flex:1;padding:7px 4px;font-size:0.75rem" onclick="gradePick('{endpoint}',{eid},'P')">🔄 PUSH</button>
+    <button class="btn gray" style="padding:7px 8px;font-size:0.75rem;opacity:0.6" onclick="removePick('{endpoint.replace('/grade','/remove-pick')}',{eid})">🗑</button>
   </div>
 </div>"""
     return rows
@@ -291,10 +292,26 @@ def _grade_rows_mlb(log_path, endpoint):
             f'<button class="btn green" style="flex:1;padding:7px 4px;font-size:0.75rem" onclick="gradePick(\'{endpoint}\',{eid},\'W\',{_cl_arg})">✅ WIN</button>'
             f'<button class="btn red"   style="flex:1;padding:7px 4px;font-size:0.75rem" onclick="gradePick(\'{endpoint}\',{eid},\'L\',{_cl_arg})">❌ LOSS</button>'
             f'<button class="btn gray"  style="flex:1;padding:7px 4px;font-size:0.75rem" onclick="gradePick(\'{endpoint}\',{eid},\'P\',{_cl_arg})">🔄 PUSH</button>'
+            f'<button class="btn gray"  style="padding:7px 8px;font-size:0.75rem;opacity:0.6" onclick="removePick(\'{endpoint.replace("/grade","/remove-pick")}\',{eid})">🗑</button>'
             f'</div></div>'
         )
     return rows
 
+
+def _remove_pick(log_path, data):
+    id_s = data.get("id","").strip()
+    if not id_s:
+        return False, "⚠️ ID requerido."
+    try:
+        pick_id = int(id_s)
+        log = _rj(log_path)
+        new_log = [e for e in log if e.get("id") != pick_id]
+        if len(new_log) == len(log):
+            return False, f"⚠️ Pick #{pick_id} no encontrado."
+        _wj(log_path, new_log)
+        return True, f"🗑 Pick #{pick_id} eliminado."
+    except Exception as ex:
+        return False, f"⚠️ Error: {ex}"
 
 def _grade_pick(log_path, data):
     id_s   = data.get("id","").strip()
@@ -2281,6 +2298,18 @@ async function gradePick(endpoint, id, result, closingInputId){
   try{
     const r=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},
       body:'id='+id+'&result='+result+extra});
+    const d=await r.json();
+    alert(d.msg);
+    if(d.ok) location.reload();
+  }catch(e){alert('Error: '+e);}
+}
+
+// Remove pick from log
+async function removePick(endpoint, id){
+  if(!confirm('⚠️ Eliminar pick #'+id+' del log? Esta acción no se puede deshacer.')) return;
+  try{
+    const r=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},
+      body:'id='+id});
     const d=await r.json();
     alert(d.msg);
     if(d.ok) location.reload();
@@ -7442,6 +7471,11 @@ def handle_api(path, data):
         if ok: _git_autopush_bg("bsn --grade")
         return 200, j(ok, msg)
 
+    if path == "/api/bsn/remove-pick":
+        ok, msg = _remove_pick(BSN_LOG, data)
+        if ok: _git_autopush_bg("bsn --remove")
+        return 200, j(ok, msg)
+
     if path == "/api/bsn/gp":
         team = data.get("team","").strip().upper()
         gp_s = data.get("gp","").strip()
@@ -7520,6 +7554,11 @@ def handle_api(path, data):
     if path == "/api/nba/grade":
         ok, msg = _grade_pick(NBA_LOG, data)
         if ok: _git_autopush_bg("nba --grade")
+        return 200, j(ok, msg)
+
+    if path == "/api/nba/remove-pick":
+        ok, msg = _remove_pick(NBA_LOG, data)
+        if ok: _git_autopush_bg("nba --remove")
         return 200, j(ok, msg)
 
     if path == "/api/nba/auto-grade":
@@ -7602,6 +7641,11 @@ def handle_api(path, data):
     if path == "/api/mlb/grade":
         ok, msg = _grade_pick(MLB_LOG, data)
         if ok: _git_autopush_bg("mlb --grade")
+        return 200, j(ok, msg)
+
+    if path == "/api/mlb/remove-pick":
+        ok, msg = _remove_pick(MLB_LOG, data)
+        if ok: _git_autopush_bg("mlb --remove")
         return 200, j(ok, msg)
 
     if path == "/api/mlb/auto-grade":
