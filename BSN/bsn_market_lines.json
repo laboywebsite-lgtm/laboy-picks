@@ -1,0 +1,936 @@
+{
+  "2026-04-13": [
+    {
+      "team1": "INDIOS",
+      "team2": "VAQUEROS",
+      "ml1": "+165",
+      "ml2": "-250",
+      "spread_fav": "VAQUEROS",
+      "spread_line": "-5.5",
+      "spread_odds": "-120",
+      "spread_dog_odds": "-120",
+      "total": "164.5",
+      "over_odds": "-118",
+      "under_odds": "-120"
+    },
+    {
+      "team1": "CRIOLLOS",
+      "team2": "METS",
+      "ml1": "-155",
+      "ml2": "+105",
+      "spread_fav": "CRIOLLOS",
+      "spread_line": "-1.5",
+      "spread_odds": "-135",
+      "spread_dog_odds": "-110",
+      "total": "185.5",
+      "over_odds": "-130",
+      "under_odds": "-110"
+    },
+    {
+      "team1": "CANGREJEROS",
+      "team2": "CAPITANES",
+      "ml1": "+135",
+      "ml2": "-200",
+      "spread_fav": "CAPITANES",
+      "spread_line": "-4.5",
+      "spread_odds": "-115",
+      "spread_dog_odds": "-125",
+      "total": "185.5",
+      "over_odds": "-120",
+      "under_odds": "-120"
+    }
+  ],
+  "2026-04-14": [
+    {
+      "team1": "PIRATAS",
+      "team2": "GIGANTES",
+      "ml1": "+160",
+      "ml2": "-235",
+      "spread_fav": "GIGANTES",
+      "spread_line": "-5.5",
+      "spread_odds": "-120",
+      "spread_dog_odds": "-118",
+      "total": "185.5",
+      "over_odds": "-120",
+      "under_odds": "-120"
+    }
+  ],
+  "2026-04-15": [
+    {
+      "team1": "CRIOLLOS",
+      "team2": "CANGREJEROS",
+      "ml1": "-105",
+      "ml2": "-140",
+      "spread_fav": "CANGREJEROS",
+      "spread_line": "-1.5",
+      "spread_odds": "-120",
+      "spread_dog_odds": "-120",
+      "total": "189.5",
+      "over_odds": "-130",
+      "under_odds": "-110"
+    },
+    {
+      "team1": "LEONES",
+      "team2": "SANTEROS",
+      "ml1": "-105",
+      "ml2": "-140",
+      "spread_fav": "SANTEROS",
+      "spread_line": "-1.5",
+      "spread_odds": "-120",
+      "spread_dog_odds": "-120",
+      "total": "180.5",
+      "over_odds": "-118",
+      "under_odds": "-120"
+    },
+    {
+      "team1": "VAQUEROS",
+      "team2": "METS",
+      "ml1": "-170",
+      "ml2": "+118",
+      "spread_fav": "VAQUEROS",
+      "spread_line": "-3.5",
+      "spread_odds": "-115",
+      "spread_dog_odds": "-125",
+      "total": "166.5",
+      "over_odds": "-130",
+      "under_odds": "-110"
+    }
+  ],
+  "2026-04-16": [
+    {
+      "team1": "GIGANTES",
+      "team2": "OSOS",
+      "ml1": "+140",
+      "ml2": "-210",
+      "spread_fav": "OSOS",
+      "spread_line": "-4.5",
+      "spread_odds": "-120",
+      "spread_dog_odds": "-118",
+      "total": "190.5",
+      "over_odds": "-115",
+      "under_odds": "-125"
+    },
+    {
+      "team1": "PIRATAS",
+      "team2": "CAPITANES",
+      "ml1": "+240",
+      "ml2": "-375",
+      "spread_fav": "CAPITANES",
+      "spread_line": "-8.5",
+      "spread_odds": "-130",
+      "spread_dog_odds": "-110",
+      "total": "182.5",
+      "over_odds": "-125",
+      "under_odds": "-115"
+    }
+  ],
+  "2026-04-17": [
+    {
+      "team1": "CANGREJEROS",
+      "team2": "LEONES",
+      "ml1": "-150",
+      "ml2": "+105",
+      "spread_fav": "CANGREJEROS",
+      "spread_line": "-2.5",
+      "spread_odds": "-115",
+      "spread_dog_odds": "-125",
+      "total": "184.5",
+      "over_odds": "-120",
+      "under_odds": "-120"
+    },
+    {
+      "team1": "ATLETICOS",
+      "team2": "INDIOS",
+      "ml1": "-140",
+      "ml2": "-105",
+      "spread_fav": "ATLETICOS",
+      "spread_line": "-1.5",
+      "spread_odds": "-120",
+      "spread_dog_odds": "-118",
+      "total": "171.5",
+      "over_odds": "-118",
+      "under_odds": "-120"
+    }
+  ],
+  "2026-04-18": [
+    {
+      "team1": "OSOS",
+      "team2": "VAQUEROS",
+      "ml1": "+210",
+      "ml2": "-325",
+      "spread_fav": "VAQUEROS",
+      "spread_line": "-7.5",
+      "spread_odds": "-118",
+      "spread_dog_odds": "-120",
+      "total": "169.5",
+      "over_odds": "-120",
+      "under_odds": "-120"
+    },
+    {
+      "team1": "CRIOLLOS",
+      "team2": "GIGANTES",
+      "ml1": "-140",
+      "ml2": "-105",
+      "spread_fav": "CRIOLLOS",
+      "spread_line": "-1.5",
+      "spread_odds": "-120",
+      "spread_dog_odds": "-120",
+      "total": "196.5",
+      "over_odds": "-130",
+      "under_odds": "-110"
+    },
+    {
+      "team1": "CAPITANES",
+      "team2": "SANTEROS",
+      "ml1": "-225",
+      "ml2": "+154",
+      "spread_fav": "CAPITANES",
+      "spread_line": "-5.5",
+      "spread_odds": "-115",
+      "spread_dog_odds": "-125",
+      "total": "184.5",
+      "over_odds": "-118",
+      "under_odds": "-120"
+    }
+  ],
+  "2026-04-19": [
+    {
+      "team1": "METS",
+      "team2": "CANGREJEROS",
+      "ml1": "+200",
+      "ml2": "-300",
+      "spread_fav": "CANGREJEROS",
+      "spread_line": "-7.5",
+      "spread_odds": "-120",
+      "spread_dog_odds": "-120",
+      "total": "183.5",
+      "over_odds": "-120",
+      "under_odds": "-120"
+    },
+    {
+      "team1": "LEONES",
+      "team2": "ATLETICOS",
+      "ml1": "+154",
+      "ml2": "-225",
+      "spread_fav": "ATLETICOS",
+      "spread_line": "-5.5",
+      "spread_odds": "-120",
+      "spread_dog_odds": "-120",
+      "total": "177.5",
+      "over_odds": "-118",
+      "under_odds": "-120"
+    },
+    {
+      "team1": "INDIOS",
+      "team2": "PIRATAS",
+      "ml1": "+100",
+      "ml2": "-145",
+      "spread_fav": "PIRATAS",
+      "spread_line": "-1.5",
+      "spread_odds": "-130",
+      "spread_dog_odds": "-110",
+      "total": "177.5",
+      "over_odds": "-125",
+      "under_odds": "-115"
+    }
+  ],
+  "2026-04-20": [
+    {
+      "team1": "GIGANTES",
+      "team2": "VAQUEROS",
+      "ml1": "+180",
+      "ml2": "-275",
+      "spread_fav": "VAQUEROS",
+      "spread_line": "-6.5",
+      "spread_odds": "-120",
+      "spread_dog_odds": "-120",
+      "total": "178.5",
+      "over_odds": "-120",
+      "under_odds": "-120"
+    }
+  ],
+  "2026-04-21": [
+    {
+      "team1": "METS",
+      "team2": "INDIOS",
+      "ml1": "+154",
+      "ml2": "-225",
+      "spread_fav": "INDIOS",
+      "spread_line": "-5.5",
+      "spread_odds": "-118",
+      "spread_dog_odds": "-120",
+      "total": "179.5",
+      "over_odds": "-125",
+      "under_odds": "-115"
+    },
+    {
+      "team1": "ATLETICOS",
+      "team2": "CRIOLLOS",
+      "ml1": "+120",
+      "ml2": "-175",
+      "spread_fav": "CRIOLLOS",
+      "spread_line": "-3.5",
+      "spread_odds": "-118",
+      "spread_dog_odds": "-120",
+      "total": "190.5",
+      "over_odds": "-115",
+      "under_odds": "-125"
+    }
+  ],
+  "2026-04-22": [
+    {
+      "team1": "VAQUEROS",
+      "team2": "CANGREJEROS",
+      "ml1": "-165",
+      "ml2": "+115",
+      "spread_fav": "VAQUEROS",
+      "spread_line": "-2.5",
+      "spread_odds": "-125",
+      "spread_dog_odds": "-115",
+      "total": "177.5",
+      "over_odds": "-130",
+      "under_odds": "-110"
+    }
+  ],
+  "2026-04-23": [
+    {
+      "team1": "CRIOLLOS",
+      "team2": "INDIOS",
+      "ml1": "-102",
+      "ml2": "-140",
+      "spread_fav": "INDIOS",
+      "spread_line": "-1.5",
+      "spread_odds": "-120",
+      "spread_dog_odds": "-118",
+      "total": "189.5",
+      "over_odds": "-115",
+      "under_odds": "-125"
+    },
+    {
+      "team1": "GIGANTES",
+      "team2": "METS",
+      "ml1": "-170",
+      "ml2": "+118",
+      "spread_fav": "GIGANTES",
+      "spread_line": "-2.5",
+      "spread_odds": "-130",
+      "spread_dog_odds": "-110",
+      "total": "192.5",
+      "over_odds": "-120",
+      "under_odds": "-120"
+    },
+    {
+      "team1": "ATLETICOS",
+      "team2": "PIRATAS",
+      "ml1": "-155",
+      "ml2": "+105",
+      "spread_fav": "ATLETICOS",
+      "spread_line": "-2.5",
+      "spread_odds": "-120",
+      "spread_dog_odds": "-118",
+      "total": "181.5",
+      "over_odds": "-120",
+      "under_odds": "-118"
+    },
+    {
+      "team1": "SANTEROS",
+      "team2": "OSOS",
+      "ml1": "+154",
+      "ml2": "-225",
+      "spread_fav": "OSOS",
+      "spread_line": "-5.5",
+      "spread_odds": "-120",
+      "spread_dog_odds": "-118",
+      "total": "184.5",
+      "over_odds": "-118",
+      "under_odds": "-120"
+    }
+  ],
+  "2026-04-24": [
+    {
+      "team1": "CAPITANES",
+      "team2": "LEONES",
+      "ml1": "-235",
+      "ml2": "+160",
+      "spread_fav": "CAPITANES",
+      "spread_line": "-4.5",
+      "spread_odds": "-145",
+      "spread_dog_odds": "+100",
+      "total": "187.5",
+      "over_odds": "-110",
+      "under_odds": "-130"
+    },
+    {
+      "team1": "CANGREJEROS",
+      "team2": "VAQUEROS",
+      "ml1": "+150",
+      "ml2": "-220",
+      "spread_fav": "VAQUEROS",
+      "spread_line": "-4.5",
+      "spread_odds": "-125",
+      "spread_dog_odds": "-115",
+      "total": "180.5",
+      "over_odds": "-145",
+      "under_odds": "+100"
+    }
+  ],
+  "2026-04-25": [
+    {
+      "team1": "METS",
+      "team2": "OSOS",
+      "ml1": "+165",
+      "ml2": "-250",
+      "spread_fav": "OSOS",
+      "spread_line": "-5.5",
+      "spread_odds": "-130",
+      "spread_dog_odds": "-110",
+      "total": "185.5",
+      "over_odds": "-120",
+      "under_odds": "-120"
+    },
+    {
+      "team1": "INDIOS",
+      "team2": "ATLETICOS",
+      "ml1": "+130",
+      "ml2": "-190",
+      "spread_fav": "ATLETICOS",
+      "spread_line": "-3.5",
+      "spread_odds": "-125",
+      "spread_dog_odds": "-115",
+      "total": "183.5",
+      "over_odds": "-120",
+      "under_odds": "-120"
+    }
+  ],
+  "2026-04-26": [
+    {
+      "team1": "SANTEROS",
+      "team2": "LEONES",
+      "ml1": "+105",
+      "ml2": "-155",
+      "spread_fav": "LEONES",
+      "spread_line": "-1.5",
+      "spread_odds": "-140",
+      "spread_dog_odds": "-105",
+      "total": "184.5",
+      "over_odds": "-125",
+      "under_odds": "-115"
+    },
+    {
+      "team1": "PIRATAS",
+      "team2": "CANGREJEROS",
+      "ml1": "+350",
+      "ml2": "-650",
+      "spread_fav": "CANGREJEROS",
+      "spread_line": "-12.5",
+      "spread_odds": "-118",
+      "spread_dog_odds": "-120",
+      "total": "196.5",
+      "over_odds": "-130",
+      "under_odds": "-110"
+    },
+    {
+      "team1": "CAPITANES",
+      "team2": "GIGANTES",
+      "ml1": "-118",
+      "ml2": "-120",
+      "spread_fav": "CAPITANES",
+      "spread_line": "-1.5",
+      "spread_odds": "-102",
+      "spread_dog_odds": "-140",
+      "total": "196.5",
+      "over_odds": "-115",
+      "under_odds": "-125"
+    }
+  ],
+  "2026-04-27": [
+    {
+      "team1": "VAQUEROS",
+      "team2": "CRIOLLOS",
+      "ml1": "-125",
+      "ml2": "-115",
+      "spread_fav": "VAQUEROS",
+      "spread_line": "-1.5",
+      "spread_odds": "-110",
+      "spread_dog_odds": "-130",
+      "total": "184.5",
+      "over_odds": "-120",
+      "under_odds": "-120"
+    }
+  ],
+  "2026-04-28": [
+    {
+      "team1": "CANGREJEROS",
+      "team2": "METS",
+      "ml1": "-150",
+      "ml2": "+105",
+      "spread_fav": "CANGREJEROS",
+      "spread_line": "-3.5",
+      "spread_odds": "-102",
+      "spread_dog_odds": "-140",
+      "total": "193.5",
+      "over_odds": "-115",
+      "under_odds": "-125"
+    },
+    {
+      "team1": "INDIOS",
+      "team2": "OSOS",
+      "ml1": "-150",
+      "ml2": "+105",
+      "spread_fav": "INDIOS",
+      "spread_line": "-2.5",
+      "spread_odds": "-118",
+      "spread_dog_odds": "-120",
+      "total": "188.5",
+      "over_odds": "-120",
+      "under_odds": "-118"
+    }
+  ],
+  "2026-04-29": [
+    {
+      "team1": "SANTEROS",
+      "team2": "ATLETICOS",
+      "ml1": "+250",
+      "ml2": "-425",
+      "spread_fav": "ATLETICOS",
+      "spread_line": "-9.5",
+      "spread_odds": "-120",
+      "spread_dog_odds": "-120",
+      "total": "182.5",
+      "over_odds": "-120",
+      "under_odds": "-120"
+    },
+    {
+      "team1": "CRIOLLOS",
+      "team2": "CAPITANES"
+    },
+    {
+      "team1": "GIGANTES",
+      "team2": "PIRATAS",
+      "ml1": "-150",
+      "ml2": "+105",
+      "spread_fav": "GIGANTES",
+      "spread_line": "-2.5",
+      "spread_odds": "-115",
+      "spread_dog_odds": "-125",
+      "total": "195.5",
+      "over_odds": "-125",
+      "under_odds": "-115"
+    }
+  ],
+  "2026-04-30": [
+    {
+      "team1": "LEONES",
+      "team2": "VAQUEROS",
+      "ml1": "+225",
+      "ml2": "-350",
+      "spread_fav": "VAQUEROS",
+      "spread_line": "-8.5",
+      "spread_odds": "-120",
+      "spread_dog_odds": "-120",
+      "total": "186.5",
+      "over_odds": "-120",
+      "under_odds": "-118"
+    },
+    {
+      "team1": "OSOS",
+      "team2": "CANGREJEROS",
+      "ml1": "+160",
+      "ml2": "-235",
+      "spread_fav": "CANGREJEROS",
+      "spread_line": "-5.5",
+      "spread_odds": "-120",
+      "spread_dog_odds": "-118",
+      "total": "192.5",
+      "over_odds": "-115",
+      "under_odds": "-125"
+    }
+  ],
+  "2026-05-01": [
+    {
+      "team1": "CRIOLLOS",
+      "team2": "GIGANTES",
+      "ml1": "+100",
+      "ml2": "-145",
+      "spread_fav": "GIGANTES",
+      "spread_line": "-2.5",
+      "spread_odds": "-115",
+      "spread_dog_odds": "-125",
+      "total": "199.5",
+      "over_odds": "-125",
+      "under_odds": "-115"
+    },
+    {
+      "team1": "INDIOS",
+      "team2": "SANTEROS",
+      "ml1": "-150",
+      "ml2": "+105",
+      "spread_fav": "INDIOS",
+      "spread_line": "-2.5",
+      "spread_odds": "-115",
+      "spread_dog_odds": "-125",
+      "total": "183.5",
+      "over_odds": "-120",
+      "under_odds": "-120"
+    },
+    {
+      "team1": "ATLETICOS",
+      "team2": "PIRATAS",
+      "ml1": "-300",
+      "ml2": "+200",
+      "spread_fav": "ATLETICOS",
+      "spread_line": "-4.5",
+      "spread_odds": "-175",
+      "spread_dog_odds": "+120",
+      "total": "185.5",
+      "over_odds": "-118",
+      "under_odds": "-120"
+    },
+    {
+      "team1": "CAPITANES",
+      "team2": "METS",
+      "ml1": "-235",
+      "ml2": "+160",
+      "spread_fav": "CAPITANES",
+      "spread_line": "-6.5",
+      "spread_odds": "-110",
+      "spread_dog_odds": "-135",
+      "total": "190.5",
+      "over_odds": "-118",
+      "under_odds": "-120"
+    }
+  ],
+  "2026-05-02": [
+    {
+      "team1": "OSOS",
+      "team2": "VAQUEROS",
+      "ml1": "+140",
+      "ml2": "-210",
+      "spread_fav": "VAQUEROS",
+      "spread_line": "-4.5",
+      "spread_odds": "-135",
+      "spread_dog_odds": "-110",
+      "total": "180.5",
+      "over_odds": "-120",
+      "under_odds": "-118"
+    },
+    {
+      "team1": "LEONES",
+      "team2": "CANGREJEROS",
+      "ml1": "+190",
+      "ml2": "-295",
+      "spread_fav": "CANGREJEROS",
+      "spread_line": "-6.5",
+      "spread_odds": "-135",
+      "spread_dog_odds": "-110",
+      "total": "192.5",
+      "over_odds": "-135",
+      "under_odds": "-110"
+    }
+  ],
+  "2026-05-03": [
+    {
+      "team1": "SANTEROS",
+      "team2": "GIGANTES",
+      "ml1": "+180",
+      "ml2": "-275",
+      "spread_fav": "GIGANTES",
+      "spread_line": "-6.5",
+      "spread_odds": "-120",
+      "spread_dog_odds": "-118",
+      "total": "191.5",
+      "over_odds": "-120",
+      "under_odds": "-120"
+    },
+    {
+      "team1": "CAPITANES",
+      "team2": "ATLETICOS",
+      "ml1": "+100",
+      "ml2": "-145",
+      "spread_fav": "ATLETICOS",
+      "spread_line": "-1.5",
+      "spread_odds": "-125",
+      "spread_dog_odds": "-115",
+      "total": "185.5",
+      "over_odds": "-130",
+      "under_odds": "-110"
+    }
+  ],
+  "2026-05-04": [
+    {
+      "team1": "OSOS",
+      "team2": "METS",
+      "ml1": "+110",
+      "ml2": "-160",
+      "spread_fav": "METS",
+      "spread_line": "-2.5",
+      "spread_odds": "-120",
+      "spread_dog_odds": "-118",
+      "total": "183.5",
+      "over_odds": "-120",
+      "under_odds": "-120"
+    },
+    {
+      "team1": "CAPITANES",
+      "team2": "INDIOS",
+      "ml1": "-110",
+      "ml2": "-130",
+      "spread_fav": "INDIOS",
+      "spread_line": "-1.5",
+      "spread_odds": "-115",
+      "spread_dog_odds": "-125",
+      "total": "187.5",
+      "over_odds": "-110",
+      "under_odds": "-130"
+    }
+  ],
+  "2026-05-05": [
+    {
+      "team1": "VAQUEROS",
+      "team2": "CRIOLLOS",
+      "ml1": "+115",
+      "ml2": "-165",
+      "spread_fav": "CRIOLLOS",
+      "spread_line": "-2.5",
+      "spread_odds": "-125",
+      "spread_dog_odds": "-115",
+      "total": "183.5",
+      "over_odds": "-120",
+      "under_odds": "-120"
+    }
+  ],
+  "2026-05-06": [
+    {
+      "team1": "SANTEROS",
+      "team2": "ATLETICOS",
+      "ml1": "+180",
+      "ml2": "-275",
+      "spread_fav": "ATLETICOS",
+      "spread_line": "-7.5",
+      "spread_odds": "-105",
+      "spread_dog_odds": "-140",
+      "total": "180.5",
+      "over_odds": "-120",
+      "under_odds": "-120"
+    },
+    {
+      "team1": "GIGANTES",
+      "team2": "LEONES",
+      "ml1": "-105",
+      "ml2": "-140",
+      "spread_fav": "LEONES",
+      "spread_line": "-1.5",
+      "spread_odds": "-120",
+      "spread_dog_odds": "-120",
+      "total": "195.5",
+      "over_odds": "-120",
+      "under_odds": "-120"
+    },
+    {
+      "team1": "PIRATAS",
+      "team2": "INDIOS",
+      "ml1": "+125",
+      "ml2": "-185",
+      "spread_fav": "INDIOS",
+      "total": "187.5",
+      "over_odds": "-125",
+      "under_odds": "-115"
+    }
+  ],
+  "2026-05-07": [
+    {
+      "team1": "METS",
+      "team2": "VAQUEROS",
+      "ml1": "+225",
+      "ml2": "-350",
+      "spread_fav": "VAQUEROS",
+      "spread_line": "-10.5",
+      "spread_odds": "+105",
+      "spread_dog_odds": "-155",
+      "total": "181.5",
+      "over_odds": "-125",
+      "under_odds": "-115"
+    },
+    {
+      "team1": "CANGREJEROS",
+      "team2": "CRIOLLOS",
+      "ml1": "+165",
+      "ml2": "-250",
+      "spread_fav": "CRIOLLOS",
+      "spread_line": "-5.5",
+      "spread_odds": "-130",
+      "spread_dog_odds": "-110",
+      "total": "198.5",
+      "over_odds": "-110",
+      "under_odds": "-130"
+    }
+  ],
+  "2026-05-08": [
+    {
+      "team1": "ATLETICOS",
+      "team2": "INDIOS",
+      "ml1": "-115",
+      "ml2": "-125",
+      "spread_fav": "INDIOS",
+      "spread_line": "-1.5",
+      "spread_odds": "-110",
+      "spread_dog_odds": "-130",
+      "total": "182.5",
+      "over_odds": "-120",
+      "under_odds": "-120"
+    },
+    {
+      "team1": "SANTEROS",
+      "team2": "CAPITANES",
+      "ml1": "+200",
+      "ml2": "-300",
+      "spread_fav": "CAPITANES",
+      "spread_line": "-7.5",
+      "spread_odds": "-120",
+      "spread_dog_odds": "-120",
+      "total": "183.5",
+      "over_odds": "-120",
+      "under_odds": "-120"
+    },
+    {
+      "team1": "LEONES",
+      "team2": "PIRATAS",
+      "ml1": "-118",
+      "ml2": "-120",
+      "spread_fav": "PIRATAS",
+      "spread_line": "-2.5",
+      "spread_odds": "+105",
+      "spread_dog_odds": "-150",
+      "total": "190.5",
+      "over_odds": "-110",
+      "under_odds": "-130"
+    }
+  ],
+  "2026-05-09": [
+    {
+      "team1": "METS",
+      "team2": "GIGANTES",
+      "ml1": "+225",
+      "ml2": "-350",
+      "spread_fav": "GIGANTES",
+      "spread_line": "-8.5",
+      "spread_odds": "-120",
+      "spread_dog_odds": "-118",
+      "total": "190.5",
+      "over_odds": "-130",
+      "under_odds": "-110"
+    },
+    {
+      "team1": "CRIOLLOS",
+      "team2": "OSOS",
+      "ml1": "-185",
+      "ml2": "+125",
+      "spread_fav": "CRIOLLOS",
+      "spread_line": "-3.5",
+      "spread_odds": "-125",
+      "spread_dog_odds": "-115",
+      "total": "190.5",
+      "over_odds": "-125",
+      "under_odds": "-115"
+    }
+  ],
+  "2026-05-10": [
+    {
+      "team1": "INDIOS",
+      "team2": "CAPITANES",
+      "ml1": "+130",
+      "ml2": "-190",
+      "spread_fav": "CAPITANES",
+      "spread_line": "-3.5",
+      "spread_odds": "-130",
+      "spread_dog_odds": "-110",
+      "total": "185.5",
+      "over_odds": "-120",
+      "under_odds": "-120"
+    },
+    {
+      "team1": "VAQUEROS",
+      "team2": "CANGREJEROS",
+      "ml1": "-135",
+      "ml2": "-110",
+      "spread_fav": "VAQUEROS",
+      "spread_line": "-1.5",
+      "spread_odds": "-115",
+      "spread_dog_odds": "-125",
+      "total": "185.5",
+      "over_odds": "-120",
+      "under_odds": "-120"
+    },
+    {
+      "team1": "PIRATAS",
+      "team2": "SANTEROS",
+      "ml1": "+135",
+      "ml2": "-200",
+      "spread_fav": "SANTEROS",
+      "spread_line": "-4.5",
+      "spread_odds": "-118",
+      "spread_dog_odds": "-120",
+      "total": "182.5",
+      "over_odds": "-120",
+      "under_odds": "-118"
+    }
+  ],
+  "2026-05-11": [
+    {
+      "team1": "OSOS",
+      "team2": "ATLETICOS",
+      "ml1": "+154",
+      "ml2": "-225",
+      "spread_fav": "ATLETICOS",
+      "spread_line": "-5.5",
+      "spread_odds": "-118",
+      "spread_dog_odds": "-120",
+      "total": "178.5",
+      "over_odds": "-120",
+      "under_odds": "-120"
+    }
+  ],
+  "2026-05-12": [
+    {
+      "team1": "CRIOLLOS",
+      "team2": "VAQUEROS",
+      "ml1": "+165",
+      "ml2": "-250",
+      "spread_fav": "VAQUEROS",
+      "spread_line": "-6.5",
+      "spread_odds": "-115",
+      "spread_dog_odds": "-125",
+      "total": "182.5",
+      "over_odds": "-120",
+      "under_odds": "-120"
+    }
+  ],
+  "2026-05-13": [
+    {
+      "team1": "LEONES",
+      "team2": "SANTEROS",
+      "ml1": "+165",
+      "ml2": "-250",
+      "spread_fav": "SANTEROS",
+      "spread_line": "-5.5",
+      "spread_odds": "-130",
+      "spread_dog_odds": "-110",
+      "total": "181.5",
+      "over_odds": "-115",
+      "under_odds": "-125"
+    },
+    {
+      "team1": "OSOS",
+      "team2": "METS",
+      "ml1": "+140",
+      "ml2": "-210",
+      "spread_fav": "METS",
+      "spread_line": "-4.5",
+      "spread_odds": "-120",
+      "spread_dog_odds": "-118",
+      "total": "174.5",
+      "over_odds": "-125",
+      "under_odds": "-115"
+    }
+  ]
+}

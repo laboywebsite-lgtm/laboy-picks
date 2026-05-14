@@ -1,0 +1,5290 @@
+{
+  "2026-05-10": [
+    {
+      "game": "NATIONALS @ MARLINS",
+      "away": "NATIONALS",
+      "home": "MARLINS",
+      "away_sp": "CADE CAVALLI",
+      "home_sp": "SANDY ALCANTARA",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "12:15 PM ET",
+      "lineup_away": true,
+      "lineup_home": true,
+      "lineup_confirmed": true,
+      "ump_hp": "CHRIS GUCCIONE",
+      "ump_factor": 1.03,
+      "weather": {
+        "dome": true,
+        "name": "loanDepot Park"
+      },
+      "model": {
+        "total": 9.71,
+        "mTotals": "O 9.5",
+        "mSpread": "NATIONALS -1.5",
+        "mSpreadTeam": "AWAY",
+        "ml_pct": "-184 / +184",
+        "wp_away": 64.8,
+        "wp_home": 35.2,
+        "tA": 5.657,
+        "tB": 4.054
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_MARLINS": -170,
+            "ML_NATIONALS": 132,
+            "Spread_MARLINS": {
+              "line": -1.5,
+              "odds": 128
+            },
+            "Spread_NATIONALS": {
+              "line": 1.5,
+              "odds": -172
+            },
+            "Total_Over": {
+              "line": 7.5,
+              "odds": -118
+            },
+            "Total_Under": {
+              "line": 7.5,
+              "odds": -112
+            }
+          },
+          "DraftKings": {
+            "ML_MARLINS": -174,
+            "ML_NATIONALS": 133,
+            "Spread_MARLINS": {
+              "line": -1.5,
+              "odds": 122
+            },
+            "Spread_NATIONALS": {
+              "line": 1.5,
+              "odds": -159
+            },
+            "Total_Over": {
+              "line": 7.5,
+              "odds": -112
+            },
+            "Total_Under": {
+              "line": 7.5,
+              "odds": -116
+            }
+          },
+          "BetMGM": {
+            "ML_MARLINS": -180,
+            "ML_NATIONALS": 140,
+            "Spread_MARLINS": {
+              "line": -1.5,
+              "odds": 125
+            },
+            "Spread_NATIONALS": {
+              "line": 1.5,
+              "odds": -160
+            },
+            "Total_Over": {
+              "line": 7.5,
+              "odds": -110
+            },
+            "Total_Under": {
+              "line": 7.5,
+              "odds": -118
+            }
+          },
+          "Pinnacle": {
+            "ML_MARLINS": -121,
+            "ML_NATIONALS": 112,
+            "Spread_MARLINS": {
+              "line": -1.5,
+              "odds": 167
+            },
+            "Spread_NATIONALS": {
+              "line": 1.5,
+              "odds": -188
+            },
+            "Total_Over": {
+              "line": 8.0,
+              "odds": -113
+            },
+            "Total_Under": {
+              "line": 8.0,
+              "odds": 101
+            }
+          }
+        }
+      }
+    },
+    {
+      "game": "ATHLETICS @ ORIOLES",
+      "away": "ATHLETICS",
+      "home": "ORIOLES",
+      "away_sp": "LUIS SEVERINO",
+      "home_sp": "KEEGAN AKIN",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "1:35 PM ET",
+      "lineup_away": true,
+      "lineup_home": true,
+      "lineup_confirmed": true,
+      "ump_hp": "CARLOS TORRES",
+      "ump_factor": 0.9969,
+      "weather": {
+        "dome": false,
+        "temp": 81,
+        "dir": "CROSS",
+        "mph": 7,
+        "raw_dir": "W"
+      },
+      "model": {
+        "total": 10.54,
+        "mTotals": "O 10.5",
+        "mSpread": "ATHLETICS -1.5",
+        "mSpreadTeam": "AWAY",
+        "ml_pct": "-191 / +191",
+        "wp_away": 65.7,
+        "wp_home": 34.3,
+        "tA": 6.195,
+        "tB": 4.346
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_ATHLETICS": -108,
+            "ML_ORIOLES": -108,
+            "Spread_ATHLETICS": {
+              "line": -1.5,
+              "odds": 136
+            },
+            "Spread_ORIOLES": {
+              "line": 1.5,
+              "odds": -164
+            },
+            "Total_Over": {
+              "line": 10.0,
+              "odds": -112
+            },
+            "Total_Under": {
+              "line": 10.0,
+              "odds": -108
+            }
+          },
+          "DraftKings": {
+            "ML_ATHLETICS": -102,
+            "ML_ORIOLES": -118,
+            "Spread_ATHLETICS": {
+              "line": -1.5,
+              "odds": 139
+            },
+            "Spread_ORIOLES": {
+              "line": 1.5,
+              "odds": -168
+            },
+            "Total_Over": {
+              "line": 10.5,
+              "odds": -107
+            },
+            "Total_Under": {
+              "line": 10.5,
+              "odds": -112
+            }
+          },
+          "BetMGM": {
+            "ML_ATHLETICS": -110,
+            "ML_ORIOLES": -110,
+            "Spread_ATHLETICS": {
+              "line": -1.5,
+              "odds": 140
+            },
+            "Spread_ORIOLES": {
+              "line": 1.5,
+              "odds": -170
+            },
+            "Total_Over": {
+              "line": 10.0,
+              "odds": -115
+            },
+            "Total_Under": {
+              "line": 10.0,
+              "odds": -105
+            }
+          },
+          "Pinnacle": {
+            "ML_ATHLETICS": -105,
+            "ML_ORIOLES": -103,
+            "Spread_ATHLETICS": {
+              "line": 1.5,
+              "odds": -207
+            },
+            "Spread_ORIOLES": {
+              "line": -1.5,
+              "odds": 183
+            },
+            "Total_Over": {
+              "line": 10.0,
+              "odds": -114
+            },
+            "Total_Under": {
+              "line": 10.0,
+              "odds": 101
+            }
+          }
+        }
+      }
+    },
+    {
+      "game": "RAYS @ RED SOX",
+      "away": "RAYS",
+      "home": "RED SOX",
+      "away_sp": "NICK MARTINEZ",
+      "home_sp": "PAYTON TOLLE",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "1:35 PM ET",
+      "lineup_away": true,
+      "lineup_home": true,
+      "lineup_confirmed": true,
+      "ump_hp": "JOHN LIBKA",
+      "ump_factor": 0.976,
+      "weather": {
+        "dome": false,
+        "temp": 73,
+        "dir": "OUT",
+        "mph": 10,
+        "raw_dir": "SW"
+      },
+      "model": {
+        "total": 7.53,
+        "mTotals": "O 7.5",
+        "mSpread": "RAYS ML",
+        "mSpreadTeam": "AWAY",
+        "ml_pct": "-142 / +142",
+        "wp_away": 58.6,
+        "wp_home": 41.4,
+        "tA": 4.121,
+        "tB": 3.405
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_RED SOX": -144,
+            "ML_RAYS": 122,
+            "Spread_RED SOX": {
+              "line": -1.5,
+              "odds": 140
+            },
+            "Spread_RAYS": {
+              "line": 1.5,
+              "odds": -170
+            },
+            "Total_Over": {
+              "line": 8.5,
+              "odds": 100
+            },
+            "Total_Under": {
+              "line": 8.5,
+              "odds": -122
+            }
+          },
+          "BetMGM": {
+            "ML_RED SOX": -140,
+            "ML_RAYS": 115,
+            "Spread_RED SOX": {
+              "line": -1.5,
+              "odds": 150
+            },
+            "Spread_RAYS": {
+              "line": 1.5,
+              "odds": -185
+            },
+            "Total_Over": {
+              "line": 8.5,
+              "odds": -102
+            },
+            "Total_Under": {
+              "line": 8.5,
+              "odds": -118
+            }
+          },
+          "DraftKings": {
+            "ML_RED SOX": -149,
+            "ML_RAYS": 123,
+            "Spread_RED SOX": {
+              "line": -1.5,
+              "odds": 149
+            },
+            "Spread_RAYS": {
+              "line": 1.5,
+              "odds": -181
+            },
+            "Total_Over": {
+              "line": 8.5,
+              "odds": -105
+            },
+            "Total_Under": {
+              "line": 8.5,
+              "odds": -115
+            }
+          },
+          "Pinnacle": {
+            "ML_RED SOX": -140,
+            "ML_RAYS": 129,
+            "Spread_RED SOX": {
+              "line": -1.5,
+              "odds": 153
+            },
+            "Spread_RAYS": {
+              "line": 1.5,
+              "odds": -170
+            },
+            "Total_Over": {
+              "line": 8.5,
+              "odds": -106
+            },
+            "Total_Under": {
+              "line": 8.5,
+              "odds": -106
+            }
+          }
+        }
+      }
+    },
+    {
+      "game": "ROCKIES @ PHILLIES",
+      "away": "ROCKIES",
+      "home": "PHILLIES",
+      "away_sp": "TOMOYUKI SUGANO",
+      "home_sp": "CRISTOPHER SÁNCHEZ",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "1:35 PM ET",
+      "lineup_away": true,
+      "lineup_home": true,
+      "lineup_confirmed": true,
+      "ump_hp": "EDWIN MOSCOSO",
+      "ump_factor": 0.9736,
+      "weather": {
+        "dome": false,
+        "temp": 79,
+        "dir": "CROSS",
+        "mph": 10,
+        "raw_dir": "W"
+      },
+      "model": {
+        "total": 8.85,
+        "mTotals": "U 9.0",
+        "mSpread": "PHILLIES -1.5",
+        "mSpreadTeam": "HOME",
+        "ml_pct": "+241 / -241",
+        "wp_away": 29.3,
+        "wp_home": 70.7,
+        "tA": 3.378,
+        "tB": 5.468
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_ROCKIES": 250,
+            "ML_PHILLIES": -310,
+            "Spread_ROCKIES": {
+              "line": 1.5,
+              "odds": 118
+            },
+            "Spread_PHILLIES": {
+              "line": -1.5,
+              "odds": -142
+            },
+            "Total_Over": {
+              "line": 8.5,
+              "odds": -110
+            },
+            "Total_Under": {
+              "line": 8.5,
+              "odds": -110
+            }
+          },
+          "DraftKings": {
+            "ML_ROCKIES": 244,
+            "ML_PHILLIES": -308,
+            "Spread_ROCKIES": {
+              "line": 1.5,
+              "odds": 119
+            },
+            "Spread_PHILLIES": {
+              "line": -1.5,
+              "odds": -143
+            },
+            "Total_Over": {
+              "line": 8.5,
+              "odds": -108
+            },
+            "Total_Under": {
+              "line": 8.5,
+              "odds": -112
+            }
+          },
+          "BetMGM": {
+            "ML_ROCKIES": 240,
+            "ML_PHILLIES": -300,
+            "Spread_ROCKIES": {
+              "line": 1.5,
+              "odds": 110
+            },
+            "Spread_PHILLIES": {
+              "line": -1.5,
+              "odds": -135
+            },
+            "Total_Over": {
+              "line": 8.5,
+              "odds": -110
+            },
+            "Total_Under": {
+              "line": 8.5,
+              "odds": -110
+            }
+          },
+          "Pinnacle": {
+            "ML_ROCKIES": 255,
+            "ML_PHILLIES": -286,
+            "Spread_ROCKIES": {
+              "line": 1.5,
+              "odds": 120
+            },
+            "Spread_PHILLIES": {
+              "line": -1.5,
+              "odds": -132
+            },
+            "Total_Over": {
+              "line": 8.5,
+              "odds": -103
+            },
+            "Total_Under": {
+              "line": 8.5,
+              "odds": -110
+            }
+          }
+        }
+      }
+    },
+    {
+      "game": "ANGELS @ BLUE JAYS",
+      "away": "ANGELS",
+      "home": "BLUE JAYS",
+      "away_sp": "JOSÉ SORIANO",
+      "home_sp": "SPENCER MILES",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "1:37 PM ET",
+      "lineup_away": true,
+      "lineup_home": true,
+      "lineup_confirmed": true,
+      "ump_hp": "LANCE BARRETT",
+      "ump_factor": 0.9803,
+      "weather": {
+        "dome": true,
+        "name": "Rogers Centre"
+      },
+      "model": {
+        "total": 7.24,
+        "mTotals": "O 7.0",
+        "mSpread": "BLUE JAYS ML",
+        "mSpreadTeam": "HOME",
+        "ml_pct": "+108 / -108",
+        "wp_away": 48.1,
+        "wp_home": 51.9,
+        "tA": 3.542,
+        "tB": 3.693
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_ANGELS": -110,
+            "ML_BLUE JAYS": -106,
+            "Spread_ANGELS": {
+              "line": -1.5,
+              "odds": 150
+            },
+            "Spread_BLUE JAYS": {
+              "line": 1.5,
+              "odds": -182
+            },
+            "Total_Over": {
+              "line": 8.0,
+              "odds": -114
+            },
+            "Total_Under": {
+              "line": 8.0,
+              "odds": -106
+            }
+          },
+          "DraftKings": {
+            "ML_ANGELS": -112,
+            "ML_BLUE JAYS": -108,
+            "Spread_ANGELS": {
+              "line": -1.5,
+              "odds": 153
+            },
+            "Spread_BLUE JAYS": {
+              "line": 1.5,
+              "odds": -186
+            },
+            "Total_Over": {
+              "line": 8.0,
+              "odds": -115
+            },
+            "Total_Under": {
+              "line": 8.0,
+              "odds": -105
+            }
+          },
+          "BetMGM": {
+            "ML_ANGELS": -110,
+            "ML_BLUE JAYS": -110,
+            "Spread_ANGELS": {
+              "line": -1.5,
+              "odds": 150
+            },
+            "Spread_BLUE JAYS": {
+              "line": 1.5,
+              "odds": -185
+            },
+            "Total_Over": {
+              "line": 8.0,
+              "odds": -115
+            },
+            "Total_Under": {
+              "line": 8.0,
+              "odds": -105
+            }
+          },
+          "Pinnacle": {
+            "ML_ANGELS": 100,
+            "ML_BLUE JAYS": -108,
+            "Spread_ANGELS": {
+              "line": -1.5,
+              "odds": 161
+            },
+            "Spread_BLUE JAYS": {
+              "line": 1.5,
+              "odds": -180
+            },
+            "Total_Over": {
+              "line": 8.0,
+              "odds": -108
+            },
+            "Total_Under": {
+              "line": 8.0,
+              "odds": -104
+            }
+          }
+        }
+      }
+    },
+    {
+      "game": "ASTROS @ REDS",
+      "away": "ASTROS",
+      "home": "REDS",
+      "away_sp": "KAI-WEI TENG",
+      "home_sp": "ANDREW ABBOTT",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "1:40 PM ET",
+      "lineup_away": true,
+      "lineup_home": true,
+      "lineup_confirmed": true,
+      "ump_hp": "ADAM BECK",
+      "ump_factor": 0.9929,
+      "weather": {
+        "dome": false,
+        "temp": 63,
+        "dir": "CROSS",
+        "mph": 5,
+        "raw_dir": "N"
+      },
+      "model": {
+        "total": 9.29,
+        "mTotals": "U 9.5",
+        "mSpread": "ASTROS -1.5",
+        "mSpreadTeam": "AWAY",
+        "ml_pct": "-201 / +201",
+        "wp_away": 66.8,
+        "wp_home": 33.2,
+        "tA": 5.521,
+        "tB": 3.767
+      },
+      "mkt": {
+        "books": {
+          "DraftKings": {
+            "ML_REDS": -121,
+            "ML_ASTROS": 100,
+            "Spread_REDS": {
+              "line": 1.5,
+              "odds": -187
+            },
+            "Spread_ASTROS": {
+              "line": -1.5,
+              "odds": 154
+            },
+            "Total_Over": {
+              "line": 9.5,
+              "odds": 100
+            },
+            "Total_Under": {
+              "line": 9.5,
+              "odds": -120
+            }
+          },
+          "BetMGM": {
+            "ML_REDS": -118,
+            "ML_ASTROS": -102,
+            "Spread_REDS": {
+              "line": 1.5,
+              "odds": -190
+            },
+            "Spread_ASTROS": {
+              "line": -1.5,
+              "odds": 155
+            },
+            "Total_Over": {
+              "line": 9.0,
+              "odds": -120
+            },
+            "Total_Under": {
+              "line": 9.0,
+              "odds": 100
+            }
+          },
+          "FanDuel": {
+            "ML_REDS": -112,
+            "ML_ASTROS": -104,
+            "Spread_REDS": {
+              "line": 1.5,
+              "odds": -184
+            },
+            "Spread_ASTROS": {
+              "line": -1.5,
+              "odds": 152
+            },
+            "Total_Over": {
+              "line": 9.5,
+              "odds": 102
+            },
+            "Total_Under": {
+              "line": 9.5,
+              "odds": -124
+            }
+          },
+          "Pinnacle": {
+            "ML_REDS": -109,
+            "ML_ASTROS": 101,
+            "Spread_REDS": {
+              "line": -1.5,
+              "odds": 177
+            },
+            "Spread_ASTROS": {
+              "line": 1.5,
+              "odds": -199
+            },
+            "Total_Over": {
+              "line": 9.0,
+              "odds": -115
+            },
+            "Total_Under": {
+              "line": 9.0,
+              "odds": 102
+            }
+          }
+        }
+      }
+    },
+    {
+      "game": "TWINS @ GUARDIANS",
+      "away": "TWINS",
+      "home": "GUARDIANS",
+      "away_sp": "ANDREW MORRIS",
+      "home_sp": "GAVIN WILLIAMS",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "1:40 PM ET",
+      "lineup_away": true,
+      "lineup_home": true,
+      "lineup_confirmed": true,
+      "ump_hp": "QUINN WOLCOTT",
+      "ump_factor": 1.0284,
+      "weather": {
+        "dome": false,
+        "temp": 56,
+        "dir": "IN",
+        "mph": 8,
+        "raw_dir": "NW"
+      },
+      "model": {
+        "total": 6.75,
+        "mTotals": "U 7.0",
+        "mSpread": "TWINS ML",
+        "mSpreadTeam": "AWAY",
+        "ml_pct": "-127 / +127",
+        "wp_away": 56.0,
+        "wp_home": 44.0,
+        "tA": 3.596,
+        "tB": 3.155
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_GUARDIANS": -158,
+            "ML_TWINS": 134,
+            "Spread_GUARDIANS": {
+              "line": -1.5,
+              "odds": 138
+            },
+            "Spread_TWINS": {
+              "line": 1.5,
+              "odds": -166
+            },
+            "Total_Over": {
+              "line": 7.5,
+              "odds": 100
+            },
+            "Total_Under": {
+              "line": 7.5,
+              "odds": -122
+            }
+          },
+          "DraftKings": {
+            "ML_GUARDIANS": -168,
+            "ML_TWINS": 139,
+            "Spread_GUARDIANS": {
+              "line": -1.5,
+              "odds": 129
+            },
+            "Spread_TWINS": {
+              "line": 1.5,
+              "odds": -156
+            },
+            "Total_Over": {
+              "line": 7.5,
+              "odds": 100
+            },
+            "Total_Under": {
+              "line": 7.5,
+              "odds": -120
+            }
+          },
+          "BetMGM": {
+            "ML_GUARDIANS": -165,
+            "ML_TWINS": 140,
+            "Total_Over": {
+              "line": 7.5,
+              "odds": -102
+            },
+            "Total_Under": {
+              "line": 7.5,
+              "odds": -118
+            }
+          },
+          "Pinnacle": {
+            "ML_GUARDIANS": -157,
+            "ML_TWINS": 144,
+            "Spread_GUARDIANS": {
+              "line": -1.5,
+              "odds": 139
+            },
+            "Spread_TWINS": {
+              "line": 1.5,
+              "odds": -155
+            },
+            "Total_Over": {
+              "line": 7.5,
+              "odds": 104
+            },
+            "Total_Under": {
+              "line": 7.5,
+              "odds": -116
+            }
+          }
+        }
+      }
+    },
+    {
+      "game": "MARINERS @ WHITE SOX",
+      "away": "MARINERS",
+      "home": "WHITE SOX",
+      "away_sp": "LOGAN GILBERT",
+      "home_sp": "DAVIS MARTIN",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "1:10 PM CT",
+      "lineup_away": true,
+      "lineup_home": true,
+      "lineup_confirmed": true,
+      "ump_hp": "SHANE LIVENSPARGER",
+      "ump_factor": 0.97,
+      "weather": {
+        "dome": false,
+        "temp": 63,
+        "dir": "CROSS",
+        "mph": 10,
+        "raw_dir": "N"
+      },
+      "model": {
+        "total": 7.75,
+        "mTotals": "O 7.5",
+        "mSpread": "WHITE SOX ML",
+        "mSpreadTeam": "HOME",
+        "ml_pct": "+135 / -135",
+        "wp_away": 42.5,
+        "wp_home": 57.5,
+        "tA": 3.555,
+        "tB": 4.19
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_WHITE SOX": 114,
+            "ML_MARINERS": -134,
+            "Spread_WHITE SOX": {
+              "line": 1.5,
+              "odds": -146
+            },
+            "Spread_MARINERS": {
+              "line": -1.5,
+              "odds": 122
+            },
+            "Total_Over": {
+              "line": 8.0,
+              "odds": -106
+            },
+            "Total_Under": {
+              "line": 8.0,
+              "odds": -114
+            }
+          },
+          "DraftKings": {
+            "ML_WHITE SOX": 117,
+            "ML_MARINERS": -141,
+            "Spread_WHITE SOX": {
+              "line": 1.5,
+              "odds": -144
+            },
+            "Spread_MARINERS": {
+              "line": -1.5,
+              "odds": 119
+            },
+            "Total_Over": {
+              "line": 8.0,
+              "odds": -110
+            },
+            "Total_Under": {
+              "line": 8.0,
+              "odds": -110
+            }
+          },
+          "BetMGM": {
+            "ML_WHITE SOX": 110,
+            "ML_MARINERS": -135,
+            "Spread_WHITE SOX": {
+              "line": 1.5,
+              "odds": -155
+            },
+            "Spread_MARINERS": {
+              "line": -1.5,
+              "odds": 125
+            },
+            "Total_Over": {
+              "line": 8.0,
+              "odds": -110
+            },
+            "Total_Under": {
+              "line": 8.0,
+              "odds": -110
+            }
+          },
+          "Pinnacle": {
+            "ML_WHITE SOX": 117,
+            "ML_MARINERS": -127,
+            "Spread_WHITE SOX": {
+              "line": 1.5,
+              "odds": -147
+            },
+            "Spread_MARINERS": {
+              "line": -1.5,
+              "odds": 133
+            },
+            "Total_Over": {
+              "line": 8.0,
+              "odds": 102
+            },
+            "Total_Under": {
+              "line": 8.0,
+              "odds": -114
+            }
+          }
+        }
+      }
+    },
+    {
+      "game": "YANKEES @ BREWERS",
+      "away": "YANKEES",
+      "home": "BREWERS",
+      "away_sp": "CARLOS RODÓN",
+      "home_sp": "LOGAN HENDERSON",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "1:10 PM CT",
+      "lineup_away": true,
+      "lineup_home": true,
+      "lineup_confirmed": true,
+      "ump_hp": "ALEX MACKAY",
+      "ump_factor": 0.9834,
+      "weather": {
+        "dome": true,
+        "name": "American Family Field"
+      },
+      "model": {
+        "total": 8.66,
+        "mTotals": "O 8.5",
+        "mSpread": "BREWERS ML",
+        "mSpreadTeam": "HOME",
+        "ml_pct": "+121 / -121",
+        "wp_away": 45.3,
+        "wp_home": 54.7,
+        "tA": 4.108,
+        "tB": 4.556
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_BREWERS": -112,
+            "ML_YANKEES": -104,
+            "Spread_BREWERS": {
+              "line": 1.5,
+              "odds": -196
+            },
+            "Spread_YANKEES": {
+              "line": -1.5,
+              "odds": 162
+            },
+            "Total_Over": {
+              "line": 8.0,
+              "odds": -115
+            },
+            "Total_Under": {
+              "line": 8.0,
+              "odds": -105
+            }
+          },
+          "DraftKings": {
+            "ML_BREWERS": -120,
+            "ML_YANKEES": 100,
+            "Spread_BREWERS": {
+              "line": 1.5,
+              "odds": -194
+            },
+            "Spread_YANKEES": {
+              "line": -1.5,
+              "odds": 159
+            },
+            "Total_Over": {
+              "line": 8.0,
+              "odds": -118
+            },
+            "Total_Under": {
+              "line": 8.0,
+              "odds": -102
+            }
+          },
+          "BetMGM": {
+            "ML_BREWERS": -115,
+            "ML_YANKEES": -105,
+            "Spread_BREWERS": {
+              "line": 1.5,
+              "odds": -190
+            },
+            "Spread_YANKEES": {
+              "line": -1.5,
+              "odds": 154
+            },
+            "Total_Over": {
+              "line": 8.0,
+              "odds": -115
+            },
+            "Total_Under": {
+              "line": 8.0,
+              "odds": -105
+            }
+          },
+          "Pinnacle": {
+            "ML_BREWERS": -110,
+            "ML_YANKEES": 102,
+            "Spread_BREWERS": {
+              "line": 1.5,
+              "odds": -177
+            },
+            "Spread_YANKEES": {
+              "line": -1.5,
+              "odds": 159
+            },
+            "Total_Over": {
+              "line": 8.5,
+              "odds": 101
+            },
+            "Total_Under": {
+              "line": 8.5,
+              "odds": -113
+            }
+          }
+        }
+      }
+    },
+    {
+      "game": "CUBS @ RANGERS",
+      "away": "CUBS",
+      "home": "RANGERS",
+      "away_sp": "JAMESON TAILLON",
+      "home_sp": "JACOB DEGROM",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "1:35 PM CT",
+      "lineup_away": true,
+      "lineup_home": true,
+      "lineup_confirmed": true,
+      "ump_hp": "ADAM HAMARI",
+      "ump_factor": 1.0224,
+      "weather": {
+        "dome": true,
+        "name": "Globe Life Field"
+      },
+      "model": {
+        "total": 9.14,
+        "mTotals": "O 9.0",
+        "mSpread": "CUBS ML",
+        "mSpreadTeam": "AWAY",
+        "ml_pct": "-130 / +130",
+        "wp_away": 56.6,
+        "wp_home": 43.4,
+        "tA": 4.9,
+        "tB": 4.243
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_CUBS": 104,
+            "ML_RANGERS": -122,
+            "Spread_CUBS": {
+              "line": 1.5,
+              "odds": -210
+            },
+            "Spread_RANGERS": {
+              "line": -1.5,
+              "odds": 172
+            },
+            "Total_Over": {
+              "line": 8.0,
+              "odds": 100
+            },
+            "Total_Under": {
+              "line": 8.0,
+              "odds": -122
+            }
+          },
+          "DraftKings": {
+            "ML_CUBS": 100,
+            "ML_RANGERS": -120,
+            "Spread_CUBS": {
+              "line": -1.5,
+              "odds": 165
+            },
+            "Spread_RANGERS": {
+              "line": 1.5,
+              "odds": -201
+            },
+            "Total_Over": {
+              "line": 7.5,
+              "odds": -112
+            },
+            "Total_Under": {
+              "line": 7.5,
+              "odds": -108
+            }
+          },
+          "BetMGM": {
+            "ML_CUBS": 100,
+            "ML_RANGERS": -120,
+            "Spread_CUBS": {
+              "line": -1.5,
+              "odds": 170
+            },
+            "Spread_RANGERS": {
+              "line": 1.5,
+              "odds": -210
+            },
+            "Total_Over": {
+              "line": 7.5,
+              "odds": -110
+            },
+            "Total_Under": {
+              "line": 7.5,
+              "odds": -110
+            }
+          },
+          "Pinnacle": {
+            "ML_CUBS": 106,
+            "ML_RANGERS": -114,
+            "Spread_CUBS": {
+              "line": 1.5,
+              "odds": -200
+            },
+            "Spread_RANGERS": {
+              "line": -1.5,
+              "odds": 178
+            },
+            "Total_Over": {
+              "line": 7.5,
+              "odds": -111
+            },
+            "Total_Under": {
+              "line": 7.5,
+              "odds": -102
+            }
+          }
+        }
+      }
+    },
+    {
+      "game": "PIRATES @ GIANTS",
+      "away": "PIRATES",
+      "home": "GIANTS",
+      "away_sp": "BUBBA CHANDLER",
+      "home_sp": "TYLER MAHLE",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "1:05 PM PT",
+      "lineup_away": false,
+      "lineup_home": false,
+      "lineup_confirmed": false,
+      "ump_hp": "",
+      "ump_factor": 1.0,
+      "weather": {
+        "dome": false,
+        "temp": 71,
+        "dir": "OUT",
+        "mph": 7,
+        "raw_dir": "NW"
+      },
+      "model": {
+        "total": 8.15,
+        "mTotals": "O 8.0",
+        "mSpread": "PIRATES -1.5",
+        "mSpreadTeam": "AWAY",
+        "ml_pct": "-198 / +198",
+        "wp_away": 66.4,
+        "wp_home": 33.6,
+        "tA": 4.825,
+        "tB": 3.324
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_PIRATES": -104,
+            "ML_GIANTS": -112,
+            "Spread_PIRATES": {
+              "line": -1.5,
+              "odds": 162
+            },
+            "Spread_GIANTS": {
+              "line": 1.5,
+              "odds": -196
+            },
+            "Total_Over": {
+              "line": 8.0,
+              "odds": -118
+            },
+            "Total_Under": {
+              "line": 8.0,
+              "odds": -104
+            }
+          },
+          "DraftKings": {
+            "ML_PIRATES": -105,
+            "ML_GIANTS": -115,
+            "Spread_PIRATES": {
+              "line": -1.5,
+              "odds": 149
+            },
+            "Spread_GIANTS": {
+              "line": 1.5,
+              "odds": -181
+            },
+            "Total_Over": {
+              "line": 8.0,
+              "odds": -115
+            },
+            "Total_Under": {
+              "line": 8.0,
+              "odds": -105
+            }
+          },
+          "BetMGM": {
+            "ML_PIRATES": -102,
+            "ML_GIANTS": -118,
+            "Spread_PIRATES": {
+              "line": -1.5,
+              "odds": 165
+            },
+            "Spread_GIANTS": {
+              "line": 1.5,
+              "odds": -200
+            },
+            "Total_Over": {
+              "line": 8.0,
+              "odds": -115
+            },
+            "Total_Under": {
+              "line": 8.0,
+              "odds": -105
+            }
+          },
+          "Pinnacle": {
+            "ML_PIRATES": 102,
+            "ML_GIANTS": -111,
+            "Spread_PIRATES": {
+              "line": 1.5,
+              "odds": -205
+            },
+            "Spread_GIANTS": {
+              "line": -1.5,
+              "odds": 182
+            },
+            "Total_Over": {
+              "line": 8.0,
+              "odds": -114
+            },
+            "Total_Under": {
+              "line": 8.0,
+              "odds": 101
+            }
+          }
+        }
+      }
+    },
+    {
+      "game": "METS @ D-BACKS",
+      "away": "METS",
+      "home": "D-BACKS",
+      "away_sp": "HUASCAR BRAZOBÁN",
+      "home_sp": "EDUARDO RODRIGUEZ",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "1:10 PM PT",
+      "lineup_away": false,
+      "lineup_home": false,
+      "lineup_confirmed": false,
+      "ump_hp": "",
+      "ump_factor": 1.0,
+      "weather": {
+        "dome": true,
+        "name": "Chase Field"
+      },
+      "model": {
+        "total": 7.32,
+        "mTotals": "U 7.5",
+        "mSpread": "D-BACKS ML",
+        "mSpreadTeam": "HOME",
+        "ml_pct": "+130 / -130",
+        "wp_away": 43.5,
+        "wp_home": 56.5,
+        "tA": 3.402,
+        "tB": 3.922
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_D-BACKS": -112,
+            "ML_METS": -104,
+            "Spread_D-BACKS": {
+              "line": 1.5,
+              "odds": -188
+            },
+            "Spread_METS": {
+              "line": -1.5,
+              "odds": 155
+            },
+            "Total_Over": {
+              "line": 8.5,
+              "odds": -122
+            },
+            "Total_Under": {
+              "line": 8.5,
+              "odds": 100
+            }
+          },
+          "BetMGM": {
+            "ML_D-BACKS": -110,
+            "ML_METS": -110,
+            "Spread_D-BACKS": {
+              "line": 1.5,
+              "odds": -190
+            },
+            "Spread_METS": {
+              "line": -1.5,
+              "odds": 154
+            },
+            "Total_Over": {
+              "line": 8.5,
+              "odds": -120
+            },
+            "Total_Under": {
+              "line": 8.5,
+              "odds": 100
+            }
+          },
+          "DraftKings": {
+            "ML_D-BACKS": -115,
+            "ML_METS": -105,
+            "Spread_D-BACKS": {
+              "line": 1.5,
+              "odds": -176
+            },
+            "Spread_METS": {
+              "line": -1.5,
+              "odds": 145
+            },
+            "Total_Over": {
+              "line": 8.5,
+              "odds": -120
+            },
+            "Total_Under": {
+              "line": 8.5,
+              "odds": 100
+            }
+          },
+          "Pinnacle": {
+            "ML_D-BACKS": -108,
+            "ML_METS": 100,
+            "Spread_D-BACKS": {
+              "line": -1.5,
+              "odds": 186
+            },
+            "Spread_METS": {
+              "line": 1.5,
+              "odds": -209
+            },
+            "Total_Over": {
+              "line": 8.5,
+              "odds": -113
+            },
+            "Total_Under": {
+              "line": 8.5,
+              "odds": 100
+            }
+          }
+        }
+      }
+    },
+    {
+      "game": "CARDINALS @ PADRES",
+      "away": "CARDINALS",
+      "home": "PADRES",
+      "away_sp": "KYLE LEAHY",
+      "home_sp": "WALKER BUEHLER",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "1:10 PM PT",
+      "lineup_away": false,
+      "lineup_home": false,
+      "lineup_confirmed": false,
+      "ump_hp": "",
+      "ump_factor": 1.0,
+      "weather": {
+        "dome": false,
+        "temp": 67,
+        "dir": "OUT",
+        "mph": 5,
+        "raw_dir": "SW"
+      },
+      "model": {
+        "total": 8.63,
+        "mTotals": "O 8.5",
+        "mSpread": "PADRES +1.5",
+        "mSpreadTeam": "HOME",
+        "ml_pct": "-156 / +156",
+        "wp_away": 61.0,
+        "wp_home": 39.0,
+        "tA": 4.839,
+        "tB": 3.789
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_PADRES": -136,
+            "ML_CARDINALS": 116,
+            "Spread_PADRES": {
+              "line": -1.5,
+              "odds": 155
+            },
+            "Spread_CARDINALS": {
+              "line": 1.5,
+              "odds": -188
+            },
+            "Total_Over": {
+              "line": 8.0,
+              "odds": -115
+            },
+            "Total_Under": {
+              "line": 8.0,
+              "odds": -105
+            }
+          },
+          "DraftKings": {
+            "ML_PADRES": -131,
+            "ML_CARDINALS": 109,
+            "Spread_PADRES": {
+              "line": -1.5,
+              "odds": 159
+            },
+            "Spread_CARDINALS": {
+              "line": 1.5,
+              "odds": -194
+            },
+            "Total_Over": {
+              "line": 8.0,
+              "odds": -115
+            },
+            "Total_Under": {
+              "line": 8.0,
+              "odds": -105
+            }
+          },
+          "BetMGM": {
+            "ML_PADRES": -135,
+            "ML_CARDINALS": 110,
+            "Spread_PADRES": {
+              "line": -1.5,
+              "odds": 165
+            },
+            "Spread_CARDINALS": {
+              "line": 1.5,
+              "odds": -200
+            },
+            "Total_Over": {
+              "line": 8.0,
+              "odds": -118
+            },
+            "Total_Under": {
+              "line": 8.0,
+              "odds": -102
+            }
+          },
+          "Pinnacle": {
+            "ML_PADRES": -127,
+            "ML_CARDINALS": 117,
+            "Spread_PADRES": {
+              "line": -1.5,
+              "odds": 162
+            },
+            "Spread_CARDINALS": {
+              "line": 1.5,
+              "odds": -181
+            },
+            "Total_Over": {
+              "line": 8.0,
+              "odds": -114
+            },
+            "Total_Under": {
+              "line": 8.0,
+              "odds": 101
+            }
+          }
+        }
+      }
+    },
+    {
+      "game": "BRAVES @ DODGERS",
+      "away": "BRAVES",
+      "home": "DODGERS",
+      "away_sp": "BRYCE ELDER",
+      "home_sp": "JUSTIN WROBLESKI",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "1:10 PM PT",
+      "lineup_away": false,
+      "lineup_home": true,
+      "lineup_confirmed": false,
+      "ump_hp": "JOHN TUMPANE",
+      "ump_factor": 1.0038,
+      "weather": {
+        "dome": false,
+        "temp": 76,
+        "dir": "OUT",
+        "mph": 5,
+        "raw_dir": "SSW"
+      },
+      "model": {
+        "total": 9.56,
+        "mTotals": "O 9.5",
+        "mSpread": "DODGERS +1.5",
+        "mSpreadTeam": "HOME",
+        "ml_pct": "-135 / +135",
+        "wp_away": 57.5,
+        "wp_home": 42.5,
+        "tA": 5.174,
+        "tB": 4.387
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_BRAVES": 116,
+            "ML_DODGERS": -134,
+            "Spread_BRAVES": {
+              "line": 1.5,
+              "odds": -178
+            },
+            "Spread_DODGERS": {
+              "line": -1.5,
+              "odds": 146
+            },
+            "Total_Over": {
+              "line": 9.0,
+              "odds": -115
+            },
+            "Total_Under": {
+              "line": 9.0,
+              "odds": -105
+            }
+          },
+          "DraftKings": {
+            "ML_BRAVES": 113,
+            "ML_DODGERS": -136,
+            "Spread_BRAVES": {
+              "line": 1.5,
+              "odds": -181
+            },
+            "Spread_DODGERS": {
+              "line": -1.5,
+              "odds": 149
+            },
+            "Total_Over": {
+              "line": 9.0,
+              "odds": -118
+            },
+            "Total_Under": {
+              "line": 9.0,
+              "odds": -102
+            }
+          },
+          "BetMGM": {
+            "ML_BRAVES": 110,
+            "ML_DODGERS": -130,
+            "Total_Over": {
+              "line": 9.0,
+              "odds": -118
+            },
+            "Total_Under": {
+              "line": 9.0,
+              "odds": -102
+            }
+          },
+          "Pinnacle": {
+            "ML_BRAVES": 117,
+            "ML_DODGERS": -127,
+            "Spread_BRAVES": {
+              "line": 1.5,
+              "odds": -177
+            },
+            "Spread_DODGERS": {
+              "line": -1.5,
+              "odds": 159
+            },
+            "Total_Over": {
+              "line": 9.5,
+              "odds": 107
+            },
+            "Total_Under": {
+              "line": 9.5,
+              "odds": -120
+            }
+          }
+        }
+      }
+    },
+    {
+      "game": "TIGERS @ ROYALS",
+      "away": "TIGERS",
+      "home": "ROYALS",
+      "away_sp": "BRENAN HANIFEE",
+      "home_sp": "NOAH CAMERON",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "6:20 PM CT",
+      "lineup_away": false,
+      "lineup_home": false,
+      "lineup_confirmed": false,
+      "ump_hp": "",
+      "ump_factor": 1.0,
+      "weather": {
+        "dome": false,
+        "temp": 69,
+        "dir": "IN",
+        "mph": 5,
+        "raw_dir": "N"
+      },
+      "model": {
+        "total": 7.51,
+        "mTotals": "O 7.5",
+        "mSpread": "TIGERS ML",
+        "mSpreadTeam": "AWAY",
+        "ml_pct": "-116 / +116",
+        "wp_away": 53.8,
+        "wp_home": 46.2,
+        "tA": 3.909,
+        "tB": 3.598
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_TIGERS": 104,
+            "ML_ROYALS": -122,
+            "Spread_TIGERS": {
+              "line": -1.5,
+              "odds": 164
+            },
+            "Spread_ROYALS": {
+              "line": 1.5,
+              "odds": -200
+            },
+            "Total_Over": {
+              "line": 8.5,
+              "odds": -114
+            },
+            "Total_Under": {
+              "line": 8.5,
+              "odds": -106
+            }
+          },
+          "BetMGM": {
+            "ML_TIGERS": 105,
+            "ML_ROYALS": -125,
+            "Spread_TIGERS": {
+              "line": -1.5,
+              "odds": 165
+            },
+            "Spread_ROYALS": {
+              "line": 1.5,
+              "odds": -200
+            },
+            "Total_Over": {
+              "line": 8.5,
+              "odds": -110
+            },
+            "Total_Under": {
+              "line": 8.5,
+              "odds": -110
+            }
+          },
+          "DraftKings": {
+            "ML_TIGERS": 104,
+            "ML_ROYALS": -126,
+            "Spread_TIGERS": {
+              "line": 1.5,
+              "odds": -199
+            },
+            "Spread_ROYALS": {
+              "line": -1.5,
+              "odds": 163
+            },
+            "Total_Over": {
+              "line": 8.5,
+              "odds": -108
+            },
+            "Total_Under": {
+              "line": 8.5,
+              "odds": -112
+            }
+          },
+          "Pinnacle": {
+            "ML_TIGERS": 111,
+            "ML_ROYALS": -120,
+            "Spread_TIGERS": {
+              "line": 1.5,
+              "odds": -189
+            },
+            "Spread_ROYALS": {
+              "line": -1.5,
+              "odds": 169
+            },
+            "Total_Over": {
+              "line": 8.5,
+              "odds": -105
+            },
+            "Total_Under": {
+              "line": 8.5,
+              "odds": -107
+            }
+          }
+        }
+      }
+    }
+  ],
+  "2026-05-11": [
+    {
+      "game": "ANGELS @ GUARDIANS",
+      "away": "ANGELS",
+      "home": "GUARDIANS",
+      "away_sp": "BRENT SUTER",
+      "home_sp": "JOEY CANTILLO",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "6:10 PM ET",
+      "lineup_away": true,
+      "lineup_home": true,
+      "lineup_confirmed": true,
+      "ump_hp": "JONATHAN PARRA",
+      "ump_factor": 0.9709,
+      "weather": {
+        "dome": false,
+        "temp": 53,
+        "dir": "IN",
+        "mph": 8,
+        "raw_dir": "N"
+      },
+      "model": {
+        "total": 7.2,
+        "mTotals": "O 7.0",
+        "mSpread": "GUARDIANS ML",
+        "mSpreadTeam": "HOME",
+        "ml_pct": "+121 / -121",
+        "wp_away": 45.3,
+        "wp_home": 54.7,
+        "tA": 3.459,
+        "tB": 3.744
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_GUARDIANS": -174,
+            "ML_ANGELS": 146,
+            "Spread_GUARDIANS": {
+              "line": -1.5,
+              "odds": 126
+            },
+            "Spread_ANGELS": {
+              "line": 1.5,
+              "odds": -152
+            },
+            "Total_Over": {
+              "line": 7.5,
+              "odds": -105
+            },
+            "Total_Under": {
+              "line": 7.5,
+              "odds": -115
+            }
+          },
+          "BetMGM": {
+            "ML_GUARDIANS": -165,
+            "ML_ANGELS": 140,
+            "Spread_GUARDIANS": {
+              "line": -1.5,
+              "odds": 135
+            },
+            "Spread_ANGELS": {
+              "line": 1.5,
+              "odds": -160
+            },
+            "Total_Over": {
+              "line": 7.5,
+              "odds": -105
+            },
+            "Total_Under": {
+              "line": 7.5,
+              "odds": -115
+            }
+          },
+          "DraftKings": {
+            "ML_GUARDIANS": -168,
+            "ML_ANGELS": 139,
+            "Spread_GUARDIANS": {
+              "line": -1.5,
+              "odds": 129
+            },
+            "Spread_ANGELS": {
+              "line": 1.5,
+              "odds": -156
+            },
+            "Total_Over": {
+              "line": 7.5,
+              "odds": -105
+            },
+            "Total_Under": {
+              "line": 7.5,
+              "odds": -115
+            }
+          },
+          "Pinnacle": {
+            "ML_GUARDIANS": -165,
+            "ML_ANGELS": 151,
+            "Spread_GUARDIANS": {
+              "line": -1.5,
+              "odds": 130
+            },
+            "Spread_ANGELS": {
+              "line": 1.5,
+              "odds": -144
+            },
+            "Total_Over": {
+              "line": 7.5,
+              "odds": -106
+            },
+            "Total_Under": {
+              "line": 7.5,
+              "odds": -106
+            }
+          }
+        }
+      }
+    },
+    {
+      "game": "YANKEES @ ORIOLES",
+      "away": "YANKEES",
+      "home": "ORIOLES",
+      "away_sp": "RYAN WEATHERS",
+      "home_sp": "BRANDON YOUNG",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "6:35 PM ET",
+      "lineup_away": true,
+      "lineup_home": true,
+      "lineup_confirmed": true,
+      "ump_hp": "NIC LENTZ",
+      "ump_factor": 1.03,
+      "weather": {
+        "dome": false,
+        "temp": 62,
+        "dir": "CROSS",
+        "mph": 5,
+        "raw_dir": "W"
+      },
+      "model": {
+        "total": 9.13,
+        "mTotals": "O 9.0",
+        "mSpread": "YANKEES -1.5",
+        "mSpreadTeam": "AWAY",
+        "ml_pct": "-242 / +242",
+        "wp_away": 70.7,
+        "wp_home": 29.3,
+        "tA": 5.695,
+        "tB": 3.43
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_ORIOLES": 126,
+            "ML_YANKEES": -148,
+            "Spread_ORIOLES": {
+              "line": 1.5,
+              "odds": -134
+            },
+            "Spread_YANKEES": {
+              "line": -1.5,
+              "odds": 112
+            },
+            "Total_Over": {
+              "line": 9.0,
+              "odds": -102
+            },
+            "Total_Under": {
+              "line": 9.0,
+              "odds": -120
+            }
+          },
+          "BetMGM": {
+            "ML_ORIOLES": 125,
+            "ML_YANKEES": -150,
+            "Spread_ORIOLES": {
+              "line": 1.5,
+              "odds": -130
+            },
+            "Spread_YANKEES": {
+              "line": -1.5,
+              "odds": 105
+            },
+            "Total_Over": {
+              "line": 9.0,
+              "odds": -105
+            },
+            "Total_Under": {
+              "line": 9.0,
+              "odds": -115
+            }
+          },
+          "DraftKings": {
+            "ML_ORIOLES": 124,
+            "ML_YANKEES": -149,
+            "Spread_ORIOLES": {
+              "line": 1.5,
+              "odds": -126
+            },
+            "Spread_YANKEES": {
+              "line": -1.5,
+              "odds": 105
+            },
+            "Total_Over": {
+              "line": 9.0,
+              "odds": -110
+            },
+            "Total_Under": {
+              "line": 9.0,
+              "odds": -110
+            }
+          },
+          "Pinnacle": {
+            "ML_ORIOLES": 131,
+            "ML_YANKEES": -142,
+            "Spread_ORIOLES": {
+              "line": 1.5,
+              "odds": -118
+            },
+            "Spread_YANKEES": {
+              "line": -1.5,
+              "odds": 107
+            },
+            "Total_Over": {
+              "line": 9.0,
+              "odds": 103
+            },
+            "Total_Under": {
+              "line": 9.0,
+              "odds": -116
+            }
+          }
+        }
+      }
+    },
+    {
+      "game": "RAYS @ BLUE JAYS",
+      "away": "RAYS",
+      "home": "BLUE JAYS",
+      "away_sp": "DREW RASMUSSEN",
+      "home_sp": "KEVIN GAUSMAN",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "7:07 PM ET",
+      "lineup_away": true,
+      "lineup_home": true,
+      "lineup_confirmed": true,
+      "ump_hp": "BRIAN O'NORA",
+      "ump_factor": 1.0185,
+      "weather": {
+        "dome": true,
+        "name": "Rogers Centre"
+      },
+      "model": {
+        "total": 8.39,
+        "mTotals": "U 8.5",
+        "mSpread": "RAYS ML",
+        "mSpreadTeam": "AWAY",
+        "ml_pct": "-128 / +128",
+        "wp_away": 56.1,
+        "wp_home": 43.9,
+        "tA": 4.527,
+        "tB": 3.866
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_RAYS": 108,
+            "ML_BLUE JAYS": -126,
+            "Spread_RAYS": {
+              "line": 1.5,
+              "odds": -210
+            },
+            "Spread_BLUE JAYS": {
+              "line": -1.5,
+              "odds": 172
+            },
+            "Total_Over": {
+              "line": 7.0,
+              "odds": -115
+            },
+            "Total_Under": {
+              "line": 7.0,
+              "odds": -105
+            }
+          },
+          "DraftKings": {
+            "ML_RAYS": 102,
+            "ML_BLUE JAYS": -122,
+            "Spread_RAYS": {
+              "line": -1.5,
+              "odds": 173
+            },
+            "Spread_BLUE JAYS": {
+              "line": 1.5,
+              "odds": -211
+            },
+            "Total_Over": {
+              "line": 7.0,
+              "odds": -115
+            },
+            "Total_Under": {
+              "line": 7.0,
+              "odds": -105
+            }
+          },
+          "BetMGM": {
+            "ML_RAYS": 105,
+            "ML_BLUE JAYS": -125,
+            "Spread_RAYS": {
+              "line": 1.5,
+              "odds": -200
+            },
+            "Spread_BLUE JAYS": {
+              "line": -1.5,
+              "odds": 165
+            },
+            "Total_Over": {
+              "line": 7.0,
+              "odds": -118
+            },
+            "Total_Under": {
+              "line": 7.0,
+              "odds": -102
+            }
+          },
+          "Pinnacle": {
+            "ML_RAYS": 111,
+            "ML_BLUE JAYS": -120,
+            "Spread_RAYS": {
+              "line": 1.5,
+              "odds": -196
+            },
+            "Spread_BLUE JAYS": {
+              "line": -1.5,
+              "odds": 174
+            },
+            "Total_Over": {
+              "line": 7.0,
+              "odds": -112
+            },
+            "Total_Under": {
+              "line": 7.0,
+              "odds": 100
+            }
+          }
+        }
+      }
+    },
+    {
+      "game": "D-BACKS @ RANGERS",
+      "away": "D-BACKS",
+      "home": "RANGERS",
+      "away_sp": "MICHAEL SOROKA",
+      "home_sp": "JAKOB JUNIS",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "7:05 PM CT",
+      "lineup_away": false,
+      "lineup_home": true,
+      "lineup_confirmed": false,
+      "ump_hp": "ALEX TOSI",
+      "ump_factor": 0.9841,
+      "weather": {
+        "dome": true,
+        "name": "Globe Life Field"
+      },
+      "model": {
+        "total": 7.58,
+        "mTotals": "O 7.5",
+        "mSpread": "RANGERS ML",
+        "mSpreadTeam": "HOME",
+        "ml_pct": "+145 / -145",
+        "wp_away": 40.8,
+        "wp_home": 59.2,
+        "tA": 3.452,
+        "tB": 4.124
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_D-BACKS": -106,
+            "ML_RANGERS": -110,
+            "Spread_D-BACKS": {
+              "line": -1.5,
+              "odds": 162
+            },
+            "Spread_RANGERS": {
+              "line": 1.5,
+              "odds": -194
+            },
+            "Total_Over": {
+              "line": 8.0,
+              "odds": 100
+            },
+            "Total_Under": {
+              "line": 8.0,
+              "odds": -122
+            }
+          },
+          "DraftKings": {
+            "ML_D-BACKS": -105,
+            "ML_RANGERS": -115,
+            "Spread_D-BACKS": {
+              "line": -1.5,
+              "odds": 158
+            },
+            "Spread_RANGERS": {
+              "line": 1.5,
+              "odds": -192
+            },
+            "Total_Over": {
+              "line": 8.0,
+              "odds": -102
+            },
+            "Total_Under": {
+              "line": 8.0,
+              "odds": -118
+            }
+          },
+          "BetMGM": {
+            "ML_D-BACKS": -110,
+            "ML_RANGERS": -110,
+            "Spread_D-BACKS": {
+              "line": -1.5,
+              "odds": 155
+            },
+            "Spread_RANGERS": {
+              "line": 1.5,
+              "odds": -190
+            },
+            "Total_Over": {
+              "line": 8.0,
+              "odds": -102
+            },
+            "Total_Under": {
+              "line": 8.0,
+              "odds": -118
+            }
+          },
+          "Pinnacle": {
+            "ML_D-BACKS": 100,
+            "ML_RANGERS": -108,
+            "Spread_D-BACKS": {
+              "line": 1.5,
+              "odds": -215
+            },
+            "Spread_RANGERS": {
+              "line": -1.5,
+              "odds": 190
+            },
+            "Total_Over": {
+              "line": 7.5,
+              "odds": -114
+            },
+            "Total_Under": {
+              "line": 7.5,
+              "odds": 102
+            }
+          }
+        }
+      }
+    },
+    {
+      "game": "MARINERS @ ASTROS",
+      "away": "MARINERS",
+      "home": "ASTROS",
+      "away_sp": "GEORGE KIRBY",
+      "home_sp": "PETER LAMBERT",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "7:10 PM CT",
+      "lineup_away": true,
+      "lineup_home": true,
+      "lineup_confirmed": true,
+      "ump_hp": "DILLON WILSON",
+      "ump_factor": 1.0,
+      "weather": {
+        "dome": true,
+        "name": "Minute Maid Park"
+      },
+      "model": {
+        "total": 7.1,
+        "mTotals": "O 7.0",
+        "mSpread": "ASTROS ML",
+        "mSpreadTeam": "HOME",
+        "ml_pct": "+116 / -116",
+        "wp_away": 46.4,
+        "wp_home": 53.6,
+        "tA": 3.451,
+        "tB": 3.646
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_ASTROS": 120,
+            "ML_MARINERS": -142,
+            "Spread_ASTROS": {
+              "line": 1.5,
+              "odds": -142
+            },
+            "Spread_MARINERS": {
+              "line": -1.5,
+              "odds": 118
+            },
+            "Total_Over": {
+              "line": 8.5,
+              "odds": -118
+            },
+            "Total_Under": {
+              "line": 8.5,
+              "odds": -104
+            }
+          },
+          "DraftKings": {
+            "ML_ASTROS": 119,
+            "ML_MARINERS": -143,
+            "Spread_ASTROS": {
+              "line": 1.5,
+              "odds": -143
+            },
+            "Spread_MARINERS": {
+              "line": -1.5,
+              "odds": 119
+            },
+            "Total_Over": {
+              "line": 8.5,
+              "odds": -122
+            },
+            "Total_Under": {
+              "line": 8.5,
+              "odds": 102
+            }
+          },
+          "BetMGM": {
+            "ML_ASTROS": 115,
+            "ML_MARINERS": -140,
+            "Spread_ASTROS": {
+              "line": 1.5,
+              "odds": -155
+            },
+            "Spread_MARINERS": {
+              "line": -1.5,
+              "odds": 125
+            },
+            "Total_Over": {
+              "line": 8.5,
+              "odds": -118
+            },
+            "Total_Under": {
+              "line": 8.5,
+              "odds": -102
+            }
+          },
+          "Pinnacle": {
+            "ML_ASTROS": 123,
+            "ML_MARINERS": -134,
+            "Spread_ASTROS": {
+              "line": 1.5,
+              "odds": -135
+            },
+            "Spread_MARINERS": {
+              "line": -1.5,
+              "odds": 122
+            },
+            "Total_Over": {
+              "line": 8.5,
+              "odds": -116
+            },
+            "Total_Under": {
+              "line": 8.5,
+              "odds": 103
+            }
+          }
+        }
+      }
+    },
+    {
+      "game": "GIANTS @ DODGERS",
+      "away": "GIANTS",
+      "home": "DODGERS",
+      "away_sp": "TREVOR MCDONALD",
+      "home_sp": "ROKI SASAKI",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "7:10 PM PT",
+      "lineup_away": false,
+      "lineup_home": false,
+      "lineup_confirmed": false,
+      "ump_hp": "",
+      "ump_factor": 1.0,
+      "weather": {
+        "dome": false,
+        "temp": 70,
+        "dir": "OUT",
+        "mph": 5,
+        "raw_dir": "SW"
+      },
+      "model": {
+        "total": 7.0,
+        "mTotals": "O 7.0",
+        "mSpread": "GIANTS ML",
+        "mSpreadTeam": "AWAY",
+        "ml_pct": "-107 / +107",
+        "wp_away": 51.7,
+        "wp_home": 48.3,
+        "tA": 3.608,
+        "tB": 3.393
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_DODGERS": -188,
+            "ML_GIANTS": 158,
+            "Spread_DODGERS": {
+              "line": -1.5,
+              "odds": 106
+            },
+            "Spread_GIANTS": {
+              "line": 1.5,
+              "odds": -128
+            },
+            "Total_Over": {
+              "line": 9.0,
+              "odds": -110
+            },
+            "Total_Under": {
+              "line": 9.0,
+              "odds": -110
+            }
+          },
+          "DraftKings": {
+            "ML_DODGERS": -194,
+            "ML_GIANTS": 159,
+            "Spread_DODGERS": {
+              "line": -1.5,
+              "odds": 109
+            },
+            "Spread_GIANTS": {
+              "line": 1.5,
+              "odds": -131
+            },
+            "Total_Over": {
+              "line": 9.0,
+              "odds": -110
+            },
+            "Total_Under": {
+              "line": 9.0,
+              "odds": -110
+            }
+          },
+          "BetMGM": {
+            "ML_DODGERS": -185,
+            "ML_GIANTS": 150,
+            "Spread_DODGERS": {
+              "line": -1.5,
+              "odds": 115
+            },
+            "Spread_GIANTS": {
+              "line": 1.5,
+              "odds": -140
+            },
+            "Total_Over": {
+              "line": 9.0,
+              "odds": -110
+            },
+            "Total_Under": {
+              "line": 9.0,
+              "odds": -110
+            }
+          },
+          "Pinnacle": {
+            "ML_DODGERS": -173,
+            "ML_GIANTS": 159,
+            "Spread_DODGERS": {
+              "line": -1.5,
+              "odds": 116
+            },
+            "Spread_GIANTS": {
+              "line": 1.5,
+              "odds": -128
+            },
+            "Total_Over": {
+              "line": 9.0,
+              "odds": -111
+            },
+            "Total_Under": {
+              "line": 9.0,
+              "odds": -102
+            }
+          }
+        }
+      }
+    }
+  ],
+  "2026-05-12": [
+    {
+      "game": "YANKEES @ ORIOLES",
+      "away": "YANKEES",
+      "home": "ORIOLES",
+      "away_sp": "WILL WARREN",
+      "home_sp": "TREVOR ROGERS",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "6:35 PM ET",
+      "lineup_away": true,
+      "lineup_home": true,
+      "lineup_confirmed": true,
+      "ump_hp": "HUNTER WENDELSTEDT",
+      "ump_factor": 1.03,
+      "weather": {
+        "dome": false,
+        "temp": 66,
+        "dir": "CROSS",
+        "mph": 8,
+        "raw_dir": "SE"
+      },
+      "model": {
+        "total": 10.08,
+        "mTotals": "O 10.0",
+        "mSpread": "YANKEES -1.5",
+        "mSpreadTeam": "AWAY",
+        "ml_pct": "-219 / +219",
+        "wp_away": 68.6,
+        "wp_home": 31.4,
+        "tA": 6.161,
+        "tB": 3.92
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "Spread_ORIOLES": {
+              "line": 3.5,
+              "odds": 800
+            },
+            "Spread_YANKEES": {
+              "line": -3.5,
+              "odds": -2200
+            },
+            "Total_Over": {
+              "line": 8.5,
+              "odds": 800
+            },
+            "Total_Under": {
+              "line": 8.5,
+              "odds": -2200
+            }
+          },
+          "DraftKings": {
+            "Spread_ORIOLES": {
+              "line": 3.5,
+              "odds": 1060
+            },
+            "Spread_YANKEES": {
+              "line": -3.5,
+              "odds": -4600
+            },
+            "Total_Over": {
+              "line": 8.5,
+              "odds": 1060
+            },
+            "Total_Under": {
+              "line": 8.5,
+              "odds": -4600
+            }
+          },
+          "BetMGM": {
+            "ML_ORIOLES": 3300,
+            "ML_YANKEES": -10000,
+            "Spread_ORIOLES": {
+              "line": 3.5,
+              "odds": 1150
+            },
+            "Spread_YANKEES": {
+              "line": -3.5,
+              "odds": -5000
+            }
+          },
+          "Pinnacle": {
+            "Total_Over": {
+              "line": 8.5,
+              "odds": 279
+            },
+            "Total_Under": {
+              "line": 8.5,
+              "odds": -364
+            }
+          }
+        }
+      }
+    },
+    {
+      "game": "NATIONALS @ REDS",
+      "away": "NATIONALS",
+      "home": "REDS",
+      "away_sp": "MILES MIKOLAS",
+      "home_sp": "BRADY SINGER",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "6:40 PM ET",
+      "lineup_away": true,
+      "lineup_home": true,
+      "lineup_confirmed": true,
+      "ump_hp": "MIKE MUCHLINSKI",
+      "ump_factor": 1.0108,
+      "weather": {
+        "dome": false,
+        "temp": 69,
+        "dir": "CROSS",
+        "mph": 5,
+        "raw_dir": "SW"
+      },
+      "model": {
+        "total": 10.46,
+        "mTotals": "U 10.5",
+        "mSpread": "REDS +1.5",
+        "mSpreadTeam": "HOME",
+        "ml_pct": "-145 / +145",
+        "wp_away": 59.2,
+        "wp_home": 40.8,
+        "tA": 5.827,
+        "tB": 4.636
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_REDS": 3500,
+            "ML_NATIONALS": -50000,
+            "Spread_REDS": {
+              "line": 6.5,
+              "odds": 104
+            },
+            "Spread_NATIONALS": {
+              "line": -6.5,
+              "odds": -138
+            },
+            "Total_Over": {
+              "line": 12.5,
+              "odds": 106
+            },
+            "Total_Under": {
+              "line": 12.5,
+              "odds": -140
+            }
+          },
+          "DraftKings": {
+            "Spread_REDS": {
+              "line": 6.5,
+              "odds": 126
+            },
+            "Spread_NATIONALS": {
+              "line": -6.5,
+              "odds": -165
+            },
+            "Total_Over": {
+              "line": 12.5,
+              "odds": 125
+            },
+            "Total_Under": {
+              "line": 12.5,
+              "odds": -164
+            }
+          },
+          "Pinnacle": {
+            "Spread_REDS": {
+              "line": 5.0,
+              "odds": -142
+            },
+            "Spread_NATIONALS": {
+              "line": -5.0,
+              "odds": 113
+            },
+            "Total_Over": {
+              "line": 10.5,
+              "odds": -110
+            },
+            "Total_Under": {
+              "line": 10.5,
+              "odds": -110
+            }
+          },
+          "BetMGM": {
+            "ML_REDS": 3300,
+            "ML_NATIONALS": -10000,
+            "Spread_REDS": {
+              "line": 6.5,
+              "odds": -120
+            },
+            "Spread_NATIONALS": {
+              "line": -6.5,
+              "odds": -105
+            },
+            "Total_Over": {
+              "line": 12.5,
+              "odds": -135
+            },
+            "Total_Under": {
+              "line": 12.5,
+              "odds": 105
+            }
+          }
+        }
+      }
+    },
+    {
+      "game": "RAYS @ BLUE JAYS",
+      "away": "RAYS",
+      "home": "BLUE JAYS",
+      "away_sp": "SHANE MCCLANAHAN",
+      "home_sp": "PATRICK CORBIN",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "7:07 PM ET",
+      "lineup_away": true,
+      "lineup_home": true,
+      "lineup_confirmed": true,
+      "ump_hp": "CHRIS SEGAL",
+      "ump_factor": 0.97,
+      "weather": {
+        "dome": true,
+        "name": "Rogers Centre"
+      },
+      "model": {
+        "total": 7.95,
+        "mTotals": "U 8.0",
+        "mSpread": "RAYS -1.5",
+        "mSpreadTeam": "AWAY",
+        "ml_pct": "-173 / +173",
+        "wp_away": 63.4,
+        "wp_home": 36.6,
+        "tA": 4.615,
+        "tB": 3.334
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_RAYS": -10000,
+            "ML_BLUE JAYS": 1700,
+            "Spread_RAYS": {
+              "line": -4.5,
+              "odds": -166
+            },
+            "Spread_BLUE JAYS": {
+              "line": 4.5,
+              "odds": 124
+            },
+            "Total_Over": {
+              "line": 6.5,
+              "odds": -132
+            },
+            "Total_Under": {
+              "line": 6.5,
+              "odds": 100
+            }
+          },
+          "DraftKings": {
+            "Spread_RAYS": {
+              "line": -4.5,
+              "odds": -179
+            },
+            "Spread_BLUE JAYS": {
+              "line": 4.5,
+              "odds": 136
+            },
+            "Total_Over": {
+              "line": 6.5,
+              "odds": -126
+            },
+            "Total_Under": {
+              "line": 6.5,
+              "odds": -103
+            }
+          },
+          "Pinnacle": {
+            "Spread_RAYS": {
+              "line": -5.0,
+              "odds": -109
+            },
+            "Spread_BLUE JAYS": {
+              "line": 5.0,
+              "odds": -115
+            },
+            "Total_Over": {
+              "line": 7.0,
+              "odds": -108
+            },
+            "Total_Under": {
+              "line": 7.0,
+              "odds": -116
+            }
+          },
+          "BetMGM": {
+            "ML_RAYS": -10000,
+            "ML_BLUE JAYS": 1850,
+            "Spread_RAYS": {
+              "line": -4.5,
+              "odds": -160
+            },
+            "Spread_BLUE JAYS": {
+              "line": 4.5,
+              "odds": 125
+            },
+            "Total_Over": {
+              "line": 6.5,
+              "odds": -160
+            },
+            "Total_Under": {
+              "line": 6.5,
+              "odds": 125
+            }
+          }
+        }
+      }
+    },
+    {
+      "game": "TIGERS @ METS",
+      "away": "TIGERS",
+      "home": "METS",
+      "away_sp": "JACK FLAHERTY",
+      "home_sp": "FREDDY PERALTA",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "7:10 PM ET",
+      "lineup_away": true,
+      "lineup_home": true,
+      "lineup_confirmed": true,
+      "ump_hp": "STU SCHEURWATER",
+      "ump_factor": 0.97,
+      "weather": {
+        "dome": false,
+        "temp": 56,
+        "dir": "OUT",
+        "mph": 21,
+        "raw_dir": "S"
+      },
+      "model": {
+        "total": 8.56,
+        "mTotals": "O 8.5",
+        "mSpread": "METS -1.5",
+        "mSpreadTeam": "HOME",
+        "ml_pct": "+187 / -187",
+        "wp_away": 34.8,
+        "wp_home": 65.2,
+        "tA": 3.604,
+        "tB": 4.957
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_TIGERS": 1400,
+            "ML_METS": -6000,
+            "Spread_TIGERS": {
+              "line": 3.5,
+              "odds": -104
+            },
+            "Spread_METS": {
+              "line": -3.5,
+              "odds": -128
+            },
+            "Total_Over": {
+              "line": 9.5,
+              "odds": -132
+            },
+            "Total_Under": {
+              "line": 9.5,
+              "odds": 100
+            }
+          },
+          "DraftKings": {
+            "ML_TIGERS": 1280,
+            "ML_METS": -10000,
+            "Spread_TIGERS": {
+              "line": 4.5,
+              "odds": -204
+            },
+            "Spread_METS": {
+              "line": -4.5,
+              "odds": 154
+            },
+            "Total_Over": {
+              "line": 9.5,
+              "odds": -148
+            },
+            "Total_Under": {
+              "line": 9.5,
+              "odds": 114
+            }
+          },
+          "Pinnacle": {
+            "ML_TIGERS": 348,
+            "ML_METS": -470,
+            "Spread_TIGERS": {
+              "line": 1.5,
+              "odds": -124
+            },
+            "Spread_METS": {
+              "line": -1.5,
+              "odds": 103
+            },
+            "Total_Over": {
+              "line": 8.0,
+              "odds": -102
+            },
+            "Total_Under": {
+              "line": 8.0,
+              "odds": -124
+            }
+          },
+          "BetMGM": {
+            "ML_TIGERS": 1400,
+            "ML_METS": -10000,
+            "Spread_TIGERS": {
+              "line": 4.5,
+              "odds": -190
+            },
+            "Spread_METS": {
+              "line": -4.5,
+              "odds": 145
+            },
+            "Total_Over": {
+              "line": 10.5,
+              "odds": 130
+            },
+            "Total_Under": {
+              "line": 10.5,
+              "odds": -165
+            }
+          }
+        }
+      }
+    },
+    {
+      "game": "CUBS @ BRAVES",
+      "away": "CUBS",
+      "home": "BRAVES",
+      "away_sp": "COLIN REA",
+      "home_sp": "GRANT HOLMES",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "7:15 PM ET",
+      "lineup_away": true,
+      "lineup_home": true,
+      "lineup_confirmed": true,
+      "ump_hp": "TYLER JONES",
+      "ump_factor": 0.97,
+      "weather": {
+        "dome": false,
+        "temp": 69,
+        "dir": "IN",
+        "mph": 5,
+        "raw_dir": "SE"
+      },
+      "model": {
+        "total": 11.06,
+        "mTotals": "O 11.0",
+        "mSpread": "CUBS ML",
+        "mSpreadTeam": "AWAY",
+        "ml_pct": "-101 / +101",
+        "wp_away": 50.1,
+        "wp_home": 49.9,
+        "tA": 5.605,
+        "tB": 5.452
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_BRAVES": -6000,
+            "ML_CUBS": 1400,
+            "Spread_BRAVES": {
+              "line": -2.5,
+              "odds": -280
+            },
+            "Spread_CUBS": {
+              "line": 2.5,
+              "odds": 200
+            },
+            "Total_Over": {
+              "line": 7.5,
+              "odds": -178
+            },
+            "Total_Under": {
+              "line": 7.5,
+              "odds": 132
+            }
+          },
+          "DraftKings": {
+            "ML_BRAVES": -10000,
+            "ML_CUBS": 1200,
+            "Spread_BRAVES": {
+              "line": -2.5,
+              "odds": -268
+            },
+            "Spread_CUBS": {
+              "line": 2.5,
+              "odds": 198
+            },
+            "Total_Over": {
+              "line": 7.5,
+              "odds": -131
+            },
+            "Total_Under": {
+              "line": 7.5,
+              "odds": 101
+            }
+          },
+          "Pinnacle": {
+            "ML_BRAVES": -3830,
+            "ML_CUBS": 1954,
+            "Spread_BRAVES": {
+              "line": -3.0,
+              "odds": -154
+            },
+            "Spread_CUBS": {
+              "line": 3.0,
+              "odds": 126
+            },
+            "Total_Over": {
+              "line": 8.5,
+              "odds": 102
+            },
+            "Total_Under": {
+              "line": 8.5,
+              "odds": -119
+            }
+          },
+          "BetMGM": {
+            "ML_BRAVES": -10000,
+            "ML_CUBS": 1450,
+            "Spread_BRAVES": {
+              "line": -2.5,
+              "odds": -250
+            },
+            "Spread_CUBS": {
+              "line": 2.5,
+              "odds": 190
+            },
+            "Total_Over": {
+              "line": 7.5,
+              "odds": -150
+            },
+            "Total_Under": {
+              "line": 7.5,
+              "odds": 118
+            }
+          }
+        }
+      }
+    },
+    {
+      "game": "ROYALS @ WHITE SOX",
+      "away": "ROYALS",
+      "home": "WHITE SOX",
+      "away_sp": "STEPHEN KOLEK",
+      "home_sp": "ERICK FEDDE",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "6:40 PM CT",
+      "lineup_away": true,
+      "lineup_home": true,
+      "lineup_confirmed": true,
+      "ump_hp": "CHRIS CONROY",
+      "ump_factor": 1.0069,
+      "weather": {
+        "dome": false,
+        "temp": 64,
+        "dir": "OUT",
+        "mph": 15,
+        "raw_dir": "WSW"
+      },
+      "model": {
+        "total": 10.54,
+        "mTotals": "O 10.5",
+        "mSpread": "WHITE SOX ML",
+        "mSpreadTeam": "HOME",
+        "ml_pct": "+107 / -107",
+        "wp_away": 48.2,
+        "wp_home": 51.8,
+        "tA": 5.23,
+        "tB": 5.307
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_WHITE SOX": -620,
+            "ML_ROYALS": 400,
+            "Spread_WHITE SOX": {
+              "line": -2.5,
+              "odds": -108
+            },
+            "Spread_ROYALS": {
+              "line": 2.5,
+              "odds": -122
+            },
+            "Total_Over": {
+              "line": 10.5,
+              "odds": -152
+            },
+            "Total_Under": {
+              "line": 10.5,
+              "odds": 114
+            }
+          },
+          "Pinnacle": {
+            "ML_WHITE SOX": -930,
+            "ML_ROYALS": 607,
+            "Spread_WHITE SOX": {
+              "line": -3.0,
+              "odds": 103
+            },
+            "Spread_ROYALS": {
+              "line": 3.0,
+              "odds": -129
+            },
+            "Total_Over": {
+              "line": 10.5,
+              "odds": -124
+            },
+            "Total_Under": {
+              "line": 10.5,
+              "odds": 103
+            }
+          },
+          "DraftKings": {
+            "ML_WHITE SOX": -620,
+            "ML_ROYALS": 394,
+            "Spread_WHITE SOX": {
+              "line": -2.5,
+              "odds": -116
+            },
+            "Spread_ROYALS": {
+              "line": 2.5,
+              "odds": -112
+            },
+            "Total_Over": {
+              "line": 10.5,
+              "odds": -139
+            },
+            "Total_Under": {
+              "line": 10.5,
+              "odds": 107
+            }
+          },
+          "BetMGM": {
+            "ML_WHITE SOX": -650,
+            "ML_ROYALS": 450,
+            "Spread_WHITE SOX": {
+              "line": -2.5,
+              "odds": -110
+            },
+            "Spread_ROYALS": {
+              "line": 2.5,
+              "odds": -118
+            },
+            "Total_Over": {
+              "line": 11.5,
+              "odds": 120
+            },
+            "Total_Under": {
+              "line": 11.5,
+              "odds": -155
+            }
+          }
+        }
+      }
+    },
+    {
+      "game": "MARLINS @ TWINS",
+      "away": "MARLINS",
+      "home": "TWINS",
+      "away_sp": "EURY PÉREZ",
+      "home_sp": "BAILEY OBER",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "6:40 PM CT",
+      "lineup_away": true,
+      "lineup_home": true,
+      "lineup_confirmed": true,
+      "ump_hp": "SCOTT BARRY",
+      "ump_factor": 1.0034,
+      "weather": {
+        "dome": false,
+        "temp": 66,
+        "dir": "OUT",
+        "mph": 15,
+        "raw_dir": "NW"
+      },
+      "model": {
+        "total": 9.25,
+        "mTotals": "U 9.5",
+        "mSpread": "MARLINS +1.5",
+        "mSpreadTeam": "AWAY",
+        "ml_pct": "+166 / -166",
+        "wp_away": 37.6,
+        "wp_home": 62.4,
+        "tA": 4.045,
+        "tB": 5.21
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_MARLINS": 1100,
+            "ML_TWINS": -4000,
+            "Spread_MARLINS": {
+              "line": 2.5,
+              "odds": 178
+            },
+            "Spread_TWINS": {
+              "line": -2.5,
+              "odds": -245
+            },
+            "Total_Over": {
+              "line": 4.5,
+              "odds": -118
+            },
+            "Total_Under": {
+              "line": 4.5,
+              "odds": -112
+            }
+          },
+          "DraftKings": {
+            "ML_MARLINS": 1080,
+            "ML_TWINS": -4800,
+            "Spread_MARLINS": {
+              "line": 3.5,
+              "odds": -146
+            },
+            "Spread_TWINS": {
+              "line": -3.5,
+              "odds": 112
+            },
+            "Total_Over": {
+              "line": 5.5,
+              "odds": 125
+            },
+            "Total_Under": {
+              "line": 5.5,
+              "odds": -163
+            }
+          },
+          "Pinnacle": {
+            "ML_MARLINS": 805,
+            "ML_TWINS": -1341,
+            "Spread_MARLINS": {
+              "line": 3.0,
+              "odds": -152
+            },
+            "Spread_TWINS": {
+              "line": -3.0,
+              "odds": 121
+            },
+            "Total_Over": {
+              "line": 5.0,
+              "odds": -114
+            },
+            "Total_Under": {
+              "line": 5.0,
+              "odds": -110
+            }
+          },
+          "BetMGM": {
+            "ML_MARLINS": 1350,
+            "ML_TWINS": -10000,
+            "Spread_MARLINS": {
+              "line": 3.5,
+              "odds": -140
+            },
+            "Spread_TWINS": {
+              "line": -3.5,
+              "odds": 110
+            },
+            "Total_Over": {
+              "line": 5.5,
+              "odds": 130
+            },
+            "Total_Under": {
+              "line": 5.5,
+              "odds": -165
+            }
+          }
+        }
+      }
+    },
+    {
+      "game": "PADRES @ BREWERS",
+      "away": "PADRES",
+      "home": "BREWERS",
+      "away_sp": "BRADGLEY RODRIGUEZ",
+      "home_sp": "BRANDON SPROAT",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "6:40 PM CT",
+      "lineup_away": true,
+      "lineup_home": true,
+      "lineup_confirmed": true,
+      "ump_hp": "RYAN ADDITON",
+      "ump_factor": 1.03,
+      "weather": {
+        "dome": true,
+        "name": "American Family Field"
+      },
+      "model": {
+        "total": 9.3,
+        "mTotals": "U 9.5",
+        "mSpread": "PADRES +1.5",
+        "mSpreadTeam": "AWAY",
+        "ml_pct": "+146 / -146",
+        "wp_away": 40.7,
+        "wp_home": 59.3,
+        "tA": 4.232,
+        "tB": 5.072
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_BREWERS": -2500,
+            "ML_PADRES": 900,
+            "Spread_BREWERS": {
+              "line": -3.5,
+              "odds": 134
+            },
+            "Spread_PADRES": {
+              "line": 3.5,
+              "odds": -180
+            },
+            "Total_Over": {
+              "line": 11.5,
+              "odds": -128
+            },
+            "Total_Under": {
+              "line": 11.5,
+              "odds": -104
+            }
+          },
+          "DraftKings": {
+            "ML_BREWERS": -890,
+            "ML_PADRES": 504,
+            "Spread_BREWERS": {
+              "line": -2.5,
+              "odds": -146
+            },
+            "Spread_PADRES": {
+              "line": 2.5,
+              "odds": 112
+            },
+            "Total_Over": {
+              "line": 12.5,
+              "odds": -104
+            },
+            "Total_Under": {
+              "line": 12.5,
+              "odds": -125
+            }
+          },
+          "Pinnacle": {
+            "ML_BREWERS": -2552,
+            "ML_PADRES": 1287,
+            "Spread_BREWERS": {
+              "line": -4.0,
+              "odds": -119
+            },
+            "Spread_PADRES": {
+              "line": 4.0,
+              "odds": -106
+            },
+            "Total_Over": {
+              "line": 11.5,
+              "odds": 101
+            },
+            "Total_Under": {
+              "line": 11.5,
+              "odds": -122
+            }
+          },
+          "BetMGM": {
+            "ML_BREWERS": -1100,
+            "ML_PADRES": 625,
+            "Spread_BREWERS": {
+              "line": -2.5,
+              "odds": -150
+            },
+            "Spread_PADRES": {
+              "line": 2.5,
+              "odds": 115
+            },
+            "Total_Over": {
+              "line": 12.5,
+              "odds": 105
+            },
+            "Total_Under": {
+              "line": 12.5,
+              "odds": -135
+            }
+          }
+        }
+      }
+    },
+    {
+      "game": "D-BACKS @ RANGERS",
+      "away": "D-BACKS",
+      "home": "RANGERS",
+      "away_sp": "ZAC GALLEN",
+      "home_sp": "MACKENZIE GORE",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "7:05 PM CT",
+      "lineup_away": true,
+      "lineup_home": true,
+      "lineup_confirmed": true,
+      "ump_hp": "CORY BLASER",
+      "ump_factor": 1.0169,
+      "weather": {
+        "dome": true,
+        "name": "Globe Life Field"
+      },
+      "model": {
+        "total": 9.18,
+        "mTotals": "O 9.0",
+        "mSpread": "D-BACKS ML",
+        "mSpreadTeam": "AWAY",
+        "ml_pct": "-121 / +121",
+        "wp_away": 54.7,
+        "wp_home": 45.3,
+        "tA": 4.882,
+        "tB": 4.296
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_D-BACKS": 480,
+            "ML_RANGERS": -800,
+            "Spread_D-BACKS": {
+              "line": 2.5,
+              "odds": -136
+            },
+            "Spread_RANGERS": {
+              "line": -2.5,
+              "odds": 102
+            },
+            "Total_Over": {
+              "line": 7.5,
+              "odds": -102
+            },
+            "Total_Under": {
+              "line": 7.5,
+              "odds": -130
+            }
+          },
+          "DraftKings": {
+            "ML_D-BACKS": 477,
+            "ML_RANGERS": -780,
+            "Spread_D-BACKS": {
+              "line": 2.5,
+              "odds": -124
+            },
+            "Spread_RANGERS": {
+              "line": -2.5,
+              "odds": -105
+            },
+            "Total_Over": {
+              "line": 7.5,
+              "odds": 100
+            },
+            "Total_Under": {
+              "line": 7.5,
+              "odds": -130
+            }
+          },
+          "Pinnacle": {
+            "ML_D-BACKS": 197,
+            "ML_RANGERS": -247,
+            "Spread_D-BACKS": {
+              "line": 1.5,
+              "odds": -139
+            },
+            "Spread_RANGERS": {
+              "line": -1.5,
+              "odds": 115
+            },
+            "Total_Over": {
+              "line": 7.5,
+              "odds": -118
+            },
+            "Total_Under": {
+              "line": 7.5,
+              "odds": -103
+            }
+          },
+          "BetMGM": {
+            "ML_D-BACKS": 475,
+            "ML_RANGERS": -750,
+            "Spread_D-BACKS": {
+              "line": 2.5,
+              "odds": -145
+            },
+            "Spread_RANGERS": {
+              "line": -2.5,
+              "odds": 110
+            },
+            "Total_Over": {
+              "line": 7.5,
+              "odds": -102
+            },
+            "Total_Under": {
+              "line": 7.5,
+              "odds": -125
+            }
+          }
+        }
+      }
+    },
+    {
+      "game": "MARINERS @ ASTROS",
+      "away": "MARINERS",
+      "home": "ASTROS",
+      "away_sp": "BRYAN WOO",
+      "home_sp": "TATSUYA IMAI",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "7:10 PM CT",
+      "lineup_away": true,
+      "lineup_home": true,
+      "lineup_confirmed": true,
+      "ump_hp": "JIM WOLF",
+      "ump_factor": 0.9707,
+      "weather": {
+        "dome": true,
+        "name": "Minute Maid Park"
+      },
+      "model": {
+        "total": 8.87,
+        "mTotals": "U 9.0",
+        "mSpread": "ASTROS ML",
+        "mSpreadTeam": "HOME",
+        "ml_pct": "+122 / -122",
+        "wp_away": 45.0,
+        "wp_home": 55.0,
+        "tA": 4.248,
+        "tB": 4.624
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_ASTROS": 190,
+            "ML_MARINERS": -250,
+            "Spread_ASTROS": {
+              "line": 1.5,
+              "odds": 100
+            },
+            "Spread_MARINERS": {
+              "line": -1.5,
+              "odds": -132
+            },
+            "Total_Over": {
+              "line": 10.5,
+              "odds": -108
+            },
+            "Total_Under": {
+              "line": 10.5,
+              "odds": -122
+            }
+          },
+          "DraftKings": {
+            "ML_ASTROS": 230,
+            "ML_MARINERS": -316,
+            "Spread_ASTROS": {
+              "line": 2.5,
+              "odds": -127
+            },
+            "Spread_MARINERS": {
+              "line": -2.5,
+              "odds": -102
+            },
+            "Total_Over": {
+              "line": 10.5,
+              "odds": -135
+            },
+            "Total_Under": {
+              "line": 10.5,
+              "odds": 104
+            }
+          },
+          "Pinnacle": {
+            "ML_ASTROS": 135,
+            "ML_MARINERS": -165,
+            "Spread_ASTROS": {
+              "line": 1.0,
+              "odds": -103
+            },
+            "Spread_MARINERS": {
+              "line": -1.0,
+              "odds": -122
+            },
+            "Total_Over": {
+              "line": 9.5,
+              "odds": -103
+            },
+            "Total_Under": {
+              "line": 9.5,
+              "odds": -118
+            }
+          },
+          "BetMGM": {
+            "ML_ASTROS": 220,
+            "ML_MARINERS": -285,
+            "Spread_ASTROS": {
+              "line": 2.5,
+              "odds": -125
+            },
+            "Spread_MARINERS": {
+              "line": -2.5,
+              "odds": 100
+            },
+            "Total_Over": {
+              "line": 10.5,
+              "odds": -130
+            },
+            "Total_Under": {
+              "line": 10.5,
+              "odds": 100
+            }
+          }
+        }
+      }
+    },
+    {
+      "game": "CARDINALS @ ATHLETICS",
+      "away": "CARDINALS",
+      "home": "ATHLETICS",
+      "away_sp": "ANDRE PALLANTE",
+      "home_sp": "JEFFREY SPRINGS",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "6:40 PM PT",
+      "lineup_away": true,
+      "lineup_home": true,
+      "lineup_confirmed": true,
+      "ump_hp": "CHAD FAIRCHILD",
+      "ump_factor": 0.9999,
+      "weather": {
+        "dome": false,
+        "temp": 76,
+        "dir": "OUT",
+        "mph": 2,
+        "raw_dir": "SSW"
+      },
+      "model": {
+        "total": 11.16,
+        "mTotals": "O 11.0",
+        "mSpread": "CARDINALS ML",
+        "mSpreadTeam": "AWAY",
+        "ml_pct": "-113 / +113",
+        "wp_away": 53.0,
+        "wp_home": 47.0,
+        "tA": 5.832,
+        "tB": 5.329
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_ATHLETICS": -156,
+            "ML_CARDINALS": 132,
+            "Spread_ATHLETICS": {
+              "line": -1.5,
+              "odds": 128
+            },
+            "Spread_CARDINALS": {
+              "line": 1.5,
+              "odds": -154
+            },
+            "Total_Over": {
+              "line": 10.0,
+              "odds": -102
+            },
+            "Total_Under": {
+              "line": 10.0,
+              "odds": -120
+            }
+          },
+          "Pinnacle": {
+            "ML_ATHLETICS": -154,
+            "ML_CARDINALS": 142,
+            "Spread_ATHLETICS": {
+              "line": -1.5,
+              "odds": 129
+            },
+            "Spread_CARDINALS": {
+              "line": 1.5,
+              "odds": -143
+            },
+            "Total_Over": {
+              "line": 10.0,
+              "odds": -101
+            },
+            "Total_Under": {
+              "line": 10.0,
+              "odds": -111
+            }
+          },
+          "DraftKings": {
+            "ML_ATHLETICS": -156,
+            "ML_CARDINALS": 129,
+            "Spread_ATHLETICS": {
+              "line": -1.5,
+              "odds": 129
+            },
+            "Spread_CARDINALS": {
+              "line": 1.5,
+              "odds": -156
+            },
+            "Total_Over": {
+              "line": 10.0,
+              "odds": -110
+            },
+            "Total_Under": {
+              "line": 10.0,
+              "odds": -110
+            }
+          },
+          "BetMGM": {
+            "ML_ATHLETICS": -160,
+            "ML_CARDINALS": 135,
+            "Spread_ATHLETICS": {
+              "line": -1.5,
+              "odds": 125
+            },
+            "Spread_CARDINALS": {
+              "line": 1.5,
+              "odds": -150
+            },
+            "Total_Over": {
+              "line": 10.0,
+              "odds": -105
+            },
+            "Total_Under": {
+              "line": 10.0,
+              "odds": -115
+            }
+          }
+        }
+      }
+    },
+    {
+      "game": "GIANTS @ DODGERS",
+      "away": "GIANTS",
+      "home": "DODGERS",
+      "away_sp": "ADRIAN HOUSER",
+      "home_sp": "YOSHINOBU YAMAMOTO",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "7:10 PM PT",
+      "lineup_away": true,
+      "lineup_home": true,
+      "lineup_confirmed": true,
+      "ump_hp": "BRIAN WALSH",
+      "ump_factor": 0.989,
+      "weather": {
+        "dome": false,
+        "temp": 62,
+        "dir": "OUT",
+        "mph": 10,
+        "raw_dir": "SSW"
+      },
+      "model": {
+        "total": 8.82,
+        "mTotals": "U 9.0",
+        "mSpread": "DODGERS -1.5",
+        "mSpreadTeam": "HOME",
+        "ml_pct": "+256 / -256",
+        "wp_away": 28.1,
+        "wp_home": 71.9,
+        "tA": 3.356,
+        "tB": 5.467
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_DODGERS": -310,
+            "ML_GIANTS": 250,
+            "Spread_DODGERS": {
+              "line": -1.5,
+              "odds": -144
+            },
+            "Spread_GIANTS": {
+              "line": 1.5,
+              "odds": 120
+            },
+            "Total_Over": {
+              "line": 8.5,
+              "odds": -106
+            },
+            "Total_Under": {
+              "line": 8.5,
+              "odds": -114
+            }
+          },
+          "DraftKings": {
+            "ML_DODGERS": -328,
+            "ML_GIANTS": 259,
+            "Spread_DODGERS": {
+              "line": -1.5,
+              "odds": -149
+            },
+            "Spread_GIANTS": {
+              "line": 1.5,
+              "odds": 123
+            },
+            "Total_Over": {
+              "line": 8.5,
+              "odds": -105
+            },
+            "Total_Under": {
+              "line": 8.5,
+              "odds": -115
+            }
+          },
+          "Pinnacle": {
+            "ML_DODGERS": -311,
+            "ML_GIANTS": 274,
+            "Spread_DODGERS": {
+              "line": -1.5,
+              "odds": -141
+            },
+            "Spread_GIANTS": {
+              "line": 1.5,
+              "odds": 128
+            },
+            "Total_Over": {
+              "line": 8.5,
+              "odds": -102
+            },
+            "Total_Under": {
+              "line": 8.5,
+              "odds": -110
+            }
+          },
+          "BetMGM": {
+            "ML_DODGERS": -325,
+            "ML_GIANTS": 260,
+            "Spread_DODGERS": {
+              "line": -2.5,
+              "odds": 120
+            },
+            "Spread_GIANTS": {
+              "line": 2.5,
+              "odds": -145
+            },
+            "Total_Over": {
+              "line": 8.5,
+              "odds": -105
+            },
+            "Total_Under": {
+              "line": 8.5,
+              "odds": -115
+            }
+          }
+        }
+      }
+    }
+  ],
+  "2026-05-13": [
+    {
+      "game": "NATIONALS @ REDS",
+      "away": "NATIONALS",
+      "home": "REDS",
+      "away_sp": "JAKE IRVIN",
+      "home_sp": "NICK LODOLO",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "6:40 PM ET",
+      "lineup_away": true,
+      "lineup_home": true,
+      "lineup_confirmed": true,
+      "ump_hp": "DEXTER KELLEY",
+      "ump_factor": 0.97,
+      "weather": {
+        "dome": false,
+        "temp": 61,
+        "dir": "OUT",
+        "mph": 20,
+        "raw_dir": "NW"
+      },
+      "model": {
+        "total": 11.34,
+        "mTotals": "U 11.5",
+        "mSpread": "NATIONALS ML",
+        "mSpreadTeam": "AWAY",
+        "ml_pct": "-106 / +106",
+        "wp_away": 51.5,
+        "wp_home": 48.5,
+        "tA": 5.832,
+        "tB": 5.503
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_REDS": -205,
+            "ML_NATIONALS": 158,
+            "Spread_REDS": {
+              "line": -1.5,
+              "odds": 110
+            },
+            "Spread_NATIONALS": {
+              "line": 1.5,
+              "odds": -146
+            },
+            "Total_Over": {
+              "line": 17.5,
+              "odds": -104
+            },
+            "Total_Under": {
+              "line": 17.5,
+              "odds": -128
+            }
+          },
+          "DraftKings": {
+            "ML_REDS": -195,
+            "ML_NATIONALS": 148,
+            "Spread_REDS": {
+              "line": -1.5,
+              "odds": 113
+            },
+            "Spread_NATIONALS": {
+              "line": 1.5,
+              "odds": -148
+            },
+            "Total_Over": {
+              "line": 17.5,
+              "odds": -115
+            },
+            "Total_Under": {
+              "line": 17.5,
+              "odds": -113
+            }
+          },
+          "BetMGM": {
+            "ML_REDS": -210,
+            "ML_NATIONALS": 165,
+            "Spread_REDS": {
+              "line": -1.5,
+              "odds": 100
+            },
+            "Spread_NATIONALS": {
+              "line": 1.5,
+              "odds": -125
+            },
+            "Total_Over": {
+              "line": 17.5,
+              "odds": -110
+            },
+            "Total_Under": {
+              "line": 17.5,
+              "odds": -115
+            }
+          },
+          "Pinnacle": {
+            "ML_REDS": -176,
+            "ML_NATIONALS": 144,
+            "Spread_REDS": {
+              "line": -1.0,
+              "odds": -120
+            },
+            "Spread_NATIONALS": {
+              "line": 1.0,
+              "odds": -104
+            },
+            "Total_Over": {
+              "line": 17.0,
+              "odds": -125
+            },
+            "Total_Under": {
+              "line": 17.0,
+              "odds": 100
+            }
+          }
+        }
+      }
+    },
+    {
+      "game": "ROCKIES @ PIRATES",
+      "away": "ROCKIES",
+      "home": "PIRATES",
+      "away_sp": "JOSE QUINTANA",
+      "home_sp": "MITCH KELLER",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "6:40 PM ET",
+      "lineup_away": true,
+      "lineup_home": true,
+      "lineup_confirmed": true,
+      "ump_hp": "RAMON DE JESUS",
+      "ump_factor": 1.0287,
+      "weather": {
+        "dome": false,
+        "temp": 60,
+        "dir": "CROSS",
+        "mph": 12,
+        "raw_dir": "NW"
+      },
+      "model": {
+        "total": 8.98,
+        "mTotals": "U 9.0",
+        "mSpread": "PIRATES -1.5",
+        "mSpreadTeam": "HOME",
+        "ml_pct": "+250 / -250",
+        "wp_away": 28.6,
+        "wp_home": 71.4,
+        "tA": 3.444,
+        "tB": 5.538
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_ROCKIES": 1000,
+            "ML_PIRATES": -3000,
+            "Spread_ROCKIES": {
+              "line": 4.5,
+              "odds": 100
+            },
+            "Spread_PIRATES": {
+              "line": -4.5,
+              "odds": -132
+            },
+            "Total_Over": {
+              "line": 9.5,
+              "odds": -118
+            },
+            "Total_Under": {
+              "line": 9.5,
+              "odds": -112
+            }
+          },
+          "DraftKings": {
+            "ML_ROCKIES": 950,
+            "ML_PIRATES": -3200,
+            "Spread_ROCKIES": {
+              "line": 5.5,
+              "odds": -125
+            },
+            "Spread_PIRATES": {
+              "line": -5.5,
+              "odds": -104
+            },
+            "Total_Over": {
+              "line": 9.5,
+              "odds": -121
+            },
+            "Total_Under": {
+              "line": 9.5,
+              "odds": -107
+            }
+          },
+          "BetMGM": {
+            "ML_ROCKIES": 725,
+            "ML_PIRATES": -1400,
+            "Spread_ROCKIES": {
+              "line": 4.5,
+              "odds": -110
+            },
+            "Spread_PIRATES": {
+              "line": -4.5,
+              "odds": -115
+            },
+            "Total_Over": {
+              "line": 9.5,
+              "odds": 100
+            },
+            "Total_Under": {
+              "line": 9.5,
+              "odds": -130
+            }
+          },
+          "Pinnacle": {
+            "ML_ROCKIES": 845,
+            "ML_PIRATES": -1430,
+            "Spread_ROCKIES": {
+              "line": 4.0,
+              "odds": 100
+            },
+            "Spread_PIRATES": {
+              "line": -4.0,
+              "odds": -126
+            },
+            "Total_Over": {
+              "line": 9.0,
+              "odds": -119
+            },
+            "Total_Under": {
+              "line": 9.0,
+              "odds": -106
+            }
+          }
+        }
+      }
+    },
+    {
+      "game": "PHILLIES @ RED SOX",
+      "away": "PHILLIES",
+      "home": "RED SOX",
+      "away_sp": "ANDREW PAINTER",
+      "home_sp": "SONNY GRAY",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "6:45 PM ET",
+      "lineup_away": true,
+      "lineup_home": true,
+      "lineup_confirmed": true,
+      "ump_hp": "DAN BELLINO",
+      "ump_factor": 0.9816,
+      "weather": {
+        "dome": false,
+        "temp": 63,
+        "dir": "OUT",
+        "mph": 14,
+        "raw_dir": "S"
+      },
+      "model": {
+        "total": 9.71,
+        "mTotals": "O 9.5",
+        "mSpread": "RED SOX ML",
+        "mSpreadTeam": "HOME",
+        "ml_pct": "+121 / -121",
+        "wp_away": 45.3,
+        "wp_home": 54.7,
+        "tA": 4.665,
+        "tB": 5.041
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_RED SOX": -160,
+            "ML_PHILLIES": 124,
+            "Spread_RED SOX": {
+              "line": -1.5,
+              "odds": 188
+            },
+            "Spread_PHILLIES": {
+              "line": 1.5,
+              "odds": -260
+            },
+            "Total_Over": {
+              "line": 5.5,
+              "odds": -146
+            },
+            "Total_Under": {
+              "line": 5.5,
+              "odds": 110
+            }
+          },
+          "DraftKings": {
+            "ML_RED SOX": -136,
+            "ML_PHILLIES": 104,
+            "Spread_RED SOX": {
+              "line": 1.5,
+              "odds": -273
+            },
+            "Spread_PHILLIES": {
+              "line": -1.5,
+              "odds": 201
+            },
+            "Total_Over": {
+              "line": 6.5,
+              "odds": -106
+            },
+            "Total_Under": {
+              "line": 6.5,
+              "odds": -122
+            }
+          },
+          "BetMGM": {
+            "ML_RED SOX": -155,
+            "ML_PHILLIES": 125,
+            "Spread_RED SOX": {
+              "line": -1.5,
+              "odds": 210
+            },
+            "Spread_PHILLIES": {
+              "line": 1.5,
+              "odds": -275
+            },
+            "Total_Over": {
+              "line": 6.5,
+              "odds": 100
+            },
+            "Total_Under": {
+              "line": 6.5,
+              "odds": -130
+            }
+          },
+          "Pinnacle": {
+            "ML_RED SOX": -149,
+            "ML_PHILLIES": 127,
+            "Spread_RED SOX": {
+              "line": -1.0,
+              "odds": 122
+            },
+            "Spread_PHILLIES": {
+              "line": 1.0,
+              "odds": -148
+            },
+            "Total_Over": {
+              "line": 6.0,
+              "odds": -119
+            },
+            "Total_Under": {
+              "line": 6.0,
+              "odds": -101
+            }
+          }
+        }
+      }
+    },
+    {
+      "game": "RAYS @ BLUE JAYS",
+      "away": "RAYS",
+      "home": "BLUE JAYS",
+      "away_sp": "GRIFFIN JAX",
+      "home_sp": "DYLAN CEASE",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "7:07 PM ET",
+      "lineup_away": true,
+      "lineup_home": true,
+      "lineup_confirmed": true,
+      "ump_hp": "ERICH BACCHUS",
+      "ump_factor": 1.0179,
+      "weather": {
+        "dome": true,
+        "name": "Rogers Centre"
+      },
+      "model": {
+        "total": 7.25,
+        "mTotals": "U 7.5",
+        "mSpread": "RAYS ML",
+        "mSpreadTeam": "AWAY",
+        "ml_pct": "-118 / +118",
+        "wp_away": 54.2,
+        "wp_home": 45.8,
+        "tA": 3.838,
+        "tB": 3.417
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_RAYS": 176,
+            "ML_BLUE JAYS": -230,
+            "Spread_RAYS": {
+              "line": 1.5,
+              "odds": -160
+            },
+            "Spread_BLUE JAYS": {
+              "line": -1.5,
+              "odds": 120
+            },
+            "Total_Over": {
+              "line": 4.5,
+              "odds": -146
+            },
+            "Total_Under": {
+              "line": 4.5,
+              "odds": 110
+            }
+          },
+          "DraftKings": {
+            "ML_RAYS": 118,
+            "ML_BLUE JAYS": -153,
+            "Spread_RAYS": {
+              "line": 1.5,
+              "odds": -267
+            },
+            "Spread_BLUE JAYS": {
+              "line": -1.5,
+              "odds": 197
+            },
+            "Total_Over": {
+              "line": 4.5,
+              "odds": 104
+            },
+            "Total_Under": {
+              "line": 4.5,
+              "odds": -135
+            }
+          },
+          "BetMGM": {
+            "ML_RAYS": 175,
+            "ML_BLUE JAYS": -220,
+            "Spread_RAYS": {
+              "line": 1.5,
+              "odds": -165
+            },
+            "Spread_BLUE JAYS": {
+              "line": -1.5,
+              "odds": 130
+            },
+            "Total_Over": {
+              "line": 4.5,
+              "odds": -150
+            },
+            "Total_Under": {
+              "line": 4.5,
+              "odds": 115
+            }
+          },
+          "Pinnacle": {
+            "ML_RAYS": 149,
+            "ML_BLUE JAYS": -175,
+            "Spread_RAYS": {
+              "line": 1.0,
+              "odds": -117
+            },
+            "Spread_BLUE JAYS": {
+              "line": -1.0,
+              "odds": -103
+            },
+            "Total_Over": {
+              "line": 4.5,
+              "odds": -120
+            },
+            "Total_Under": {
+              "line": 4.5,
+              "odds": 103
+            }
+          }
+        }
+      }
+    },
+    {
+      "game": "TIGERS @ METS",
+      "away": "TIGERS",
+      "home": "METS",
+      "away_sp": "FRAMBER VALDEZ",
+      "home_sp": "CHRISTIAN SCOTT",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "7:10 PM ET",
+      "lineup_away": true,
+      "lineup_home": true,
+      "lineup_confirmed": true,
+      "ump_hp": "JUNIOR VALENTINE",
+      "ump_factor": 1.0281,
+      "weather": {
+        "dome": false,
+        "temp": 59,
+        "dir": "OUT",
+        "mph": 28,
+        "raw_dir": "S"
+      },
+      "model": {
+        "total": 9.7,
+        "mTotals": "O 9.5",
+        "mSpread": "METS ML",
+        "mSpreadTeam": "HOME",
+        "ml_pct": "+121 / -121",
+        "wp_away": 45.3,
+        "wp_home": 54.7,
+        "tA": 4.659,
+        "tB": 5.042
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_TIGERS": -194,
+            "ML_METS": 150,
+            "Spread_TIGERS": {
+              "line": -1.5,
+              "odds": -104
+            },
+            "Spread_METS": {
+              "line": 1.5,
+              "odds": -128
+            },
+            "Total_Over": {
+              "line": 9.5,
+              "odds": 100
+            },
+            "Total_Under": {
+              "line": 9.5,
+              "odds": -132
+            }
+          },
+          "BetMGM": {
+            "ML_TIGERS": -175,
+            "ML_METS": 140,
+            "Spread_TIGERS": {
+              "line": -1.5,
+              "odds": 105
+            },
+            "Spread_METS": {
+              "line": 1.5,
+              "odds": -135
+            },
+            "Total_Over": {
+              "line": 9.5,
+              "odds": -102
+            },
+            "Total_Under": {
+              "line": 9.5,
+              "odds": -125
+            }
+          },
+          "DraftKings": {
+            "ML_TIGERS": -185,
+            "ML_METS": 139,
+            "Spread_TIGERS": {
+              "line": -1.5,
+              "odds": 102
+            },
+            "Spread_METS": {
+              "line": 1.5,
+              "odds": -131
+            },
+            "Total_Over": {
+              "line": 9.5,
+              "odds": -102
+            },
+            "Total_Under": {
+              "line": 9.5,
+              "odds": -127
+            }
+          },
+          "Pinnacle": {
+            "ML_TIGERS": -161,
+            "ML_METS": 138,
+            "Spread_TIGERS": {
+              "line": -1.0,
+              "odds": -121
+            },
+            "Spread_METS": {
+              "line": 1.0,
+              "odds": 100
+            },
+            "Total_Over": {
+              "line": 9.0,
+              "odds": -106
+            },
+            "Total_Under": {
+              "line": 9.0,
+              "odds": -115
+            }
+          }
+        }
+      }
+    },
+    {
+      "game": "CUBS @ BRAVES",
+      "away": "CUBS",
+      "home": "BRAVES",
+      "away_sp": "SHOTA IMANAGA",
+      "home_sp": "JR RITCHIE",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "7:15 PM ET",
+      "lineup_away": true,
+      "lineup_home": true,
+      "lineup_confirmed": true,
+      "ump_hp": "SEAN BARBER",
+      "ump_factor": 1.0,
+      "weather": {
+        "dome": false,
+        "temp": 78,
+        "dir": "OUT",
+        "mph": 10,
+        "raw_dir": "NW"
+      },
+      "model": {
+        "total": 10.61,
+        "mTotals": "O 10.5",
+        "mSpread": "BRAVES +1.5",
+        "mSpreadTeam": "HOME",
+        "ml_pct": "-125 / +125",
+        "wp_away": 55.6,
+        "wp_home": 44.4,
+        "tA": 5.696,
+        "tB": 4.918
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_BRAVES": -115,
+            "ML_CUBS": -111,
+            "Spread_BRAVES": {
+              "line": -1.5,
+              "odds": 210
+            },
+            "Spread_CUBS": {
+              "line": 1.5,
+              "odds": -300
+            },
+            "Total_Over": {
+              "line": 5.5,
+              "odds": -130
+            },
+            "Total_Under": {
+              "line": 5.5,
+              "odds": -102
+            }
+          },
+          "DraftKings": {
+            "ML_BRAVES": -117,
+            "ML_CUBS": -111,
+            "Spread_BRAVES": {
+              "line": 1.5,
+              "odds": -207
+            },
+            "Spread_CUBS": {
+              "line": -1.5,
+              "odds": 156
+            },
+            "Total_Over": {
+              "line": 5.5,
+              "odds": -117
+            },
+            "Total_Under": {
+              "line": 5.5,
+              "odds": -112
+            }
+          },
+          "BetMGM": {
+            "ML_BRAVES": -110,
+            "ML_CUBS": -110,
+            "Total_Over": {
+              "line": 6.5,
+              "odds": -102
+            },
+            "Total_Under": {
+              "line": 6.5,
+              "odds": -125
+            }
+          },
+          "Pinnacle": {
+            "ML_BRAVES": 110,
+            "ML_CUBS": -133,
+            "Spread_BRAVES": {
+              "line": 1.0,
+              "odds": -127
+            },
+            "Spread_CUBS": {
+              "line": -1.0,
+              "odds": 101
+            },
+            "Total_Over": {
+              "line": 6.5,
+              "odds": -114
+            },
+            "Total_Under": {
+              "line": 6.5,
+              "odds": -106
+            }
+          }
+        }
+      }
+    },
+    {
+      "game": "ROYALS @ WHITE SOX",
+      "away": "ROYALS",
+      "home": "WHITE SOX",
+      "away_sp": "SETH LUGO",
+      "home_sp": "NOAH SCHULTZ",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "6:40 PM CT",
+      "lineup_away": true,
+      "lineup_home": true,
+      "lineup_confirmed": true,
+      "ump_hp": "JEN PAWOL",
+      "ump_factor": 1.03,
+      "weather": {
+        "dome": false,
+        "temp": 52,
+        "dir": "IN",
+        "mph": 10,
+        "raw_dir": "NE"
+      },
+      "model": {
+        "total": 7.94,
+        "mTotals": "U 8.0",
+        "mSpread": "WHITE SOX ML",
+        "mSpreadTeam": "HOME",
+        "ml_pct": "+107 / -107",
+        "wp_away": 48.4,
+        "wp_home": 51.6,
+        "tA": 3.947,
+        "tB": 3.989
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_WHITE SOX": -122,
+            "ML_ROYALS": -104,
+            "Spread_WHITE SOX": {
+              "line": -1.5,
+              "odds": 168
+            },
+            "Spread_ROYALS": {
+              "line": 1.5,
+              "odds": -230
+            },
+            "Total_Over": {
+              "line": 7.5,
+              "odds": -108
+            },
+            "Total_Under": {
+              "line": 7.5,
+              "odds": -122
+            }
+          },
+          "DraftKings": {
+            "ML_WHITE SOX": -131,
+            "ML_ROYALS": 101,
+            "Spread_WHITE SOX": {
+              "line": -1.5,
+              "odds": 159
+            },
+            "Spread_ROYALS": {
+              "line": 1.5,
+              "odds": -211
+            },
+            "Total_Over": {
+              "line": 7.5,
+              "odds": -111
+            },
+            "Total_Under": {
+              "line": 7.5,
+              "odds": -117
+            }
+          },
+          "BetMGM": {
+            "ML_WHITE SOX": -140,
+            "ML_ROYALS": 110,
+            "Spread_WHITE SOX": {
+              "line": -1.5,
+              "odds": 160
+            },
+            "Spread_ROYALS": {
+              "line": 1.5,
+              "odds": -210
+            },
+            "Total_Over": {
+              "line": 7.5,
+              "odds": -110
+            },
+            "Total_Under": {
+              "line": 7.5,
+              "odds": -115
+            }
+          },
+          "Pinnacle": {
+            "ML_WHITE SOX": -116,
+            "ML_ROYALS": -104,
+            "Spread_WHITE SOX": {
+              "line": 1.0,
+              "odds": -164
+            },
+            "Spread_ROYALS": {
+              "line": -1.0,
+              "odds": 130
+            },
+            "Total_Over": {
+              "line": 7.0,
+              "odds": -121
+            },
+            "Total_Under": {
+              "line": 7.0,
+              "odds": -104
+            }
+          }
+        }
+      }
+    },
+    {
+      "game": "MARLINS @ TWINS",
+      "away": "MARLINS",
+      "home": "TWINS",
+      "away_sp": "MAX MEYER",
+      "home_sp": "SIMEON WOODS RICHARDSON",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "6:40 PM CT",
+      "lineup_away": true,
+      "lineup_home": true,
+      "lineup_confirmed": true,
+      "ump_hp": "MANNY GONZALEZ",
+      "ump_factor": 1.0023,
+      "weather": {
+        "dome": false,
+        "temp": 72,
+        "dir": "CROSS",
+        "mph": 5,
+        "raw_dir": "NNE"
+      },
+      "model": {
+        "total": 8.18,
+        "mTotals": "O 8.0",
+        "mSpread": "MARLINS -1.5",
+        "mSpreadTeam": "AWAY",
+        "ml_pct": "-182 / +182",
+        "wp_away": 64.6,
+        "wp_home": 35.4,
+        "tA": 4.801,
+        "tB": 3.376
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_MARLINS": -310,
+            "ML_TWINS": 230,
+            "Spread_MARLINS": {
+              "line": -2.5,
+              "odds": -106
+            },
+            "Spread_TWINS": {
+              "line": 2.5,
+              "odds": -125
+            },
+            "Total_Over": {
+              "line": 10.5,
+              "odds": -118
+            },
+            "Total_Under": {
+              "line": 10.5,
+              "odds": -112
+            }
+          },
+          "DraftKings": {
+            "ML_MARLINS": -319,
+            "ML_TWINS": 230,
+            "Spread_MARLINS": {
+              "line": -2.5,
+              "odds": -130
+            },
+            "Spread_TWINS": {
+              "line": 2.5,
+              "odds": 100
+            },
+            "Total_Over": {
+              "line": 10.5,
+              "odds": -127
+            },
+            "Total_Under": {
+              "line": 10.5,
+              "odds": -102
+            }
+          },
+          "BetMGM": {
+            "ML_MARLINS": -350,
+            "ML_TWINS": 260,
+            "Spread_MARLINS": {
+              "line": -2.5,
+              "odds": -135
+            },
+            "Spread_TWINS": {
+              "line": 2.5,
+              "odds": 105
+            },
+            "Total_Over": {
+              "line": 10.5,
+              "odds": -120
+            },
+            "Total_Under": {
+              "line": 10.5,
+              "odds": -105
+            }
+          },
+          "Pinnacle": {
+            "ML_MARLINS": -123,
+            "ML_TWINS": 113,
+            "Spread_MARLINS": {
+              "line": -1.5,
+              "odds": 133
+            },
+            "Spread_TWINS": {
+              "line": 1.5,
+              "odds": -148
+            },
+            "Total_Over": {
+              "line": 8.5,
+              "odds": -118
+            },
+            "Total_Under": {
+              "line": 8.5,
+              "odds": 105
+            }
+          }
+        }
+      }
+    },
+    {
+      "game": "PADRES @ BREWERS",
+      "away": "PADRES",
+      "home": "BREWERS",
+      "away_sp": "MICHAEL KING",
+      "home_sp": "JACOB MISIOROWSKI",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "6:40 PM CT",
+      "lineup_away": true,
+      "lineup_home": true,
+      "lineup_confirmed": true,
+      "ump_hp": "RYAN WILLS",
+      "ump_factor": 0.9829,
+      "weather": {
+        "dome": true,
+        "name": "American Family Field"
+      },
+      "model": {
+        "total": 7.26,
+        "mTotals": "U 7.5",
+        "mSpread": "PADRES +1.5",
+        "mSpreadTeam": "AWAY",
+        "ml_pct": "+168 / -168",
+        "wp_away": 37.2,
+        "wp_home": 62.8,
+        "tA": 3.16,
+        "tB": 4.099
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_BREWERS": -194,
+            "ML_PADRES": 150,
+            "Spread_BREWERS": {
+              "line": -1.5,
+              "odds": 116
+            },
+            "Spread_PADRES": {
+              "line": 1.5,
+              "odds": -154
+            },
+            "Total_Over": {
+              "line": 6.5,
+              "odds": -125
+            },
+            "Total_Under": {
+              "line": 6.5,
+              "odds": -106
+            }
+          },
+          "DraftKings": {
+            "ML_BREWERS": -208,
+            "ML_PADRES": 156,
+            "Spread_BREWERS": {
+              "line": -1.5,
+              "odds": 109
+            },
+            "Spread_PADRES": {
+              "line": 1.5,
+              "odds": -141
+            },
+            "Total_Over": {
+              "line": 6.5,
+              "odds": -118
+            },
+            "Total_Under": {
+              "line": 6.5,
+              "odds": -110
+            }
+          },
+          "Pinnacle": {
+            "ML_BREWERS": -187,
+            "ML_PADRES": 153,
+            "Spread_BREWERS": {
+              "line": -1.0,
+              "odds": -127
+            },
+            "Spread_PADRES": {
+              "line": 1.0,
+              "odds": 101
+            },
+            "Total_Over": {
+              "line": 6.5,
+              "odds": -124
+            },
+            "Total_Under": {
+              "line": 6.5,
+              "odds": 103
+            }
+          },
+          "BetMGM": {
+            "ML_BREWERS": -220,
+            "ML_PADRES": 175,
+            "Spread_BREWERS": {
+              "line": -1.5,
+              "odds": 110
+            },
+            "Spread_PADRES": {
+              "line": 1.5,
+              "odds": -140
+            },
+            "Total_Over": {
+              "line": 6.5,
+              "odds": -105
+            },
+            "Total_Under": {
+              "line": 6.5,
+              "odds": -120
+            }
+          }
+        }
+      }
+    },
+    {
+      "game": "D-BACKS @ RANGERS",
+      "away": "D-BACKS",
+      "home": "RANGERS",
+      "away_sp": "RYNE NELSON",
+      "home_sp": "KUMAR ROCKER",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "7:05 PM CT",
+      "lineup_away": true,
+      "lineup_home": true,
+      "lineup_confirmed": true,
+      "ump_hp": "JANSEN VISCONTI",
+      "ump_factor": 1.001,
+      "weather": {
+        "dome": true,
+        "name": "Globe Life Field"
+      },
+      "model": {
+        "total": 8.14,
+        "mTotals": "O 8.0",
+        "mSpread": "D-BACKS ML",
+        "mSpreadTeam": "AWAY",
+        "ml_pct": "-131 / +131",
+        "wp_away": 56.7,
+        "wp_home": 43.3,
+        "tA": 4.419,
+        "tB": 3.721
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_D-BACKS": -112,
+            "ML_RANGERS": -104,
+            "Spread_D-BACKS": {
+              "line": -1.5,
+              "odds": 146
+            },
+            "Spread_RANGERS": {
+              "line": 1.5,
+              "odds": -178
+            },
+            "Total_Over": {
+              "line": 8.0,
+              "odds": -112
+            },
+            "Total_Under": {
+              "line": 8.0,
+              "odds": -108
+            }
+          },
+          "DraftKings": {
+            "ML_D-BACKS": -109,
+            "ML_RANGERS": -111,
+            "Spread_D-BACKS": {
+              "line": -1.5,
+              "odds": 148
+            },
+            "Spread_RANGERS": {
+              "line": 1.5,
+              "odds": -180
+            },
+            "Total_Over": {
+              "line": 8.0,
+              "odds": -112
+            },
+            "Total_Under": {
+              "line": 8.0,
+              "odds": -108
+            }
+          },
+          "BetMGM": {
+            "ML_D-BACKS": -115,
+            "ML_RANGERS": -105,
+            "Spread_D-BACKS": {
+              "line": -1.5,
+              "odds": 145
+            },
+            "Spread_RANGERS": {
+              "line": 1.5,
+              "odds": -175
+            },
+            "Total_Over": {
+              "line": 8.0,
+              "odds": -115
+            },
+            "Total_Under": {
+              "line": 8.0,
+              "odds": -105
+            }
+          },
+          "Pinnacle": {
+            "ML_D-BACKS": -109,
+            "ML_RANGERS": 101,
+            "Spread_D-BACKS": {
+              "line": 1.5,
+              "odds": -221
+            },
+            "Spread_RANGERS": {
+              "line": -1.5,
+              "odds": 195
+            },
+            "Total_Over": {
+              "line": 8.0,
+              "odds": -105
+            },
+            "Total_Under": {
+              "line": 8.0,
+              "odds": -107
+            }
+          }
+        }
+      }
+    },
+    {
+      "game": "MARINERS @ ASTROS",
+      "away": "MARINERS",
+      "home": "ASTROS",
+      "away_sp": "BRYCE MILLER",
+      "home_sp": "LANCE MCCULLERS JR.",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "7:10 PM CT",
+      "lineup_away": true,
+      "lineup_home": true,
+      "lineup_confirmed": true,
+      "ump_hp": "ROBERTO ORTIZ",
+      "ump_factor": 0.97,
+      "weather": {
+        "dome": true,
+        "name": "Minute Maid Park"
+      },
+      "model": {
+        "total": 9.01,
+        "mTotals": "O 9.0",
+        "mSpread": "MARINERS ML",
+        "mSpreadTeam": "AWAY",
+        "ml_pct": "-129 / +129",
+        "wp_away": 56.3,
+        "wp_home": 43.7,
+        "tA": 4.869,
+        "tB": 4.138
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_ASTROS": 116,
+            "ML_MARINERS": -136,
+            "Spread_ASTROS": {
+              "line": 1.5,
+              "odds": -137
+            },
+            "Spread_MARINERS": {
+              "line": -1.5,
+              "odds": 114
+            },
+            "Total_Over": {
+              "line": 9.0,
+              "odds": -115
+            },
+            "Total_Under": {
+              "line": 9.0,
+              "odds": -105
+            }
+          },
+          "DraftKings": {
+            "ML_ASTROS": 108,
+            "ML_MARINERS": -130,
+            "Spread_ASTROS": {
+              "line": 1.5,
+              "odds": -149
+            },
+            "Spread_MARINERS": {
+              "line": -1.5,
+              "odds": 124
+            },
+            "Total_Over": {
+              "line": 9.0,
+              "odds": -121
+            },
+            "Total_Under": {
+              "line": 9.0,
+              "odds": 100
+            }
+          },
+          "BetMGM": {
+            "ML_ASTROS": 118,
+            "ML_MARINERS": -140,
+            "Spread_ASTROS": {
+              "line": 1.5,
+              "odds": -135
+            },
+            "Spread_MARINERS": {
+              "line": -1.5,
+              "odds": 115
+            },
+            "Total_Over": {
+              "line": 9.0,
+              "odds": -120
+            },
+            "Total_Under": {
+              "line": 9.0,
+              "odds": 100
+            }
+          },
+          "Pinnacle": {
+            "ML_ASTROS": 127,
+            "ML_MARINERS": -138,
+            "Spread_ASTROS": {
+              "line": 1.5,
+              "odds": -132
+            },
+            "Spread_MARINERS": {
+              "line": -1.5,
+              "odds": 119
+            },
+            "Total_Over": {
+              "line": 9.0,
+              "odds": -116
+            },
+            "Total_Under": {
+              "line": 9.0,
+              "odds": 103
+            }
+          }
+        }
+      }
+    },
+    {
+      "game": "CARDINALS @ ATHLETICS",
+      "away": "CARDINALS",
+      "home": "ATHLETICS",
+      "away_sp": "MATTHEW LIBERATORE",
+      "home_sp": "J.T. GINN",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "6:40 PM PT",
+      "lineup_away": true,
+      "lineup_home": true,
+      "lineup_confirmed": true,
+      "ump_hp": "CHAD WHITSON",
+      "ump_factor": 0.9728,
+      "weather": {
+        "dome": false,
+        "temp": 66,
+        "dir": "OUT",
+        "mph": 1,
+        "raw_dir": "WSW"
+      },
+      "model": {
+        "total": 9.31,
+        "mTotals": "U 9.5",
+        "mSpread": "ATHLETICS ML",
+        "mSpreadTeam": "HOME",
+        "ml_pct": "+111 / -111",
+        "wp_away": 47.3,
+        "wp_home": 52.7,
+        "tA": 4.578,
+        "tB": 4.736
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_ATHLETICS": -138,
+            "ML_CARDINALS": 118,
+            "Spread_ATHLETICS": {
+              "line": -1.5,
+              "odds": 140
+            },
+            "Spread_CARDINALS": {
+              "line": 1.5,
+              "odds": -170
+            },
+            "Total_Over": {
+              "line": 9.5,
+              "odds": -122
+            },
+            "Total_Under": {
+              "line": 9.5,
+              "odds": 100
+            }
+          },
+          "DraftKings": {
+            "ML_ATHLETICS": -144,
+            "ML_CARDINALS": 119,
+            "Spread_ATHLETICS": {
+              "line": -1.5,
+              "odds": 139
+            },
+            "Spread_CARDINALS": {
+              "line": 1.5,
+              "odds": -168
+            },
+            "Total_Over": {
+              "line": 10.0,
+              "odds": -108
+            },
+            "Total_Under": {
+              "line": 10.0,
+              "odds": -112
+            }
+          },
+          "BetMGM": {
+            "ML_ATHLETICS": -140,
+            "ML_CARDINALS": 118,
+            "Spread_ATHLETICS": {
+              "line": -1.5,
+              "odds": 140
+            },
+            "Spread_CARDINALS": {
+              "line": 1.5,
+              "odds": -170
+            },
+            "Total_Over": {
+              "line": 10.0,
+              "odds": -105
+            },
+            "Total_Under": {
+              "line": 10.0,
+              "odds": -115
+            }
+          },
+          "Pinnacle": {
+            "ML_ATHLETICS": -133,
+            "ML_CARDINALS": 122,
+            "Spread_ATHLETICS": {
+              "line": -1.5,
+              "odds": 145
+            },
+            "Spread_CARDINALS": {
+              "line": 1.5,
+              "odds": -161
+            },
+            "Total_Over": {
+              "line": 10.0,
+              "odds": -103
+            },
+            "Total_Under": {
+              "line": 10.0,
+              "odds": -109
+            }
+          }
+        }
+      }
+    },
+    {
+      "game": "GIANTS @ DODGERS",
+      "away": "GIANTS",
+      "home": "DODGERS",
+      "away_sp": "ROBBIE RAY",
+      "home_sp": "SHOHEI OHTANI",
+      "away_sp_hand": null,
+      "home_sp_hand": null,
+      "game_time": "7:10 PM PT",
+      "lineup_away": true,
+      "lineup_home": true,
+      "lineup_confirmed": true,
+      "ump_hp": "JAMES JEAN",
+      "ump_factor": 1.0043,
+      "weather": {
+        "dome": false,
+        "temp": 64,
+        "dir": "OUT",
+        "mph": 10,
+        "raw_dir": "SW"
+      },
+      "model": {
+        "total": 7.48,
+        "mTotals": "U 7.5",
+        "mSpread": "GIANTS +1.5",
+        "mSpreadTeam": "AWAY",
+        "ml_pct": "+157 / -157",
+        "wp_away": 38.9,
+        "wp_home": 61.1,
+        "tA": 3.327,
+        "tB": 4.152
+      },
+      "mkt": {
+        "books": {
+          "FanDuel": {
+            "ML_DODGERS": -250,
+            "ML_GIANTS": 205,
+            "Spread_DODGERS": {
+              "line": -1.5,
+              "odds": -110
+            },
+            "Spread_GIANTS": {
+              "line": 1.5,
+              "odds": -110
+            },
+            "Total_Over": {
+              "line": 7.5,
+              "odds": -112
+            },
+            "Total_Under": {
+              "line": 7.5,
+              "odds": -108
+            }
+          },
+          "DraftKings": {
+            "ML_DODGERS": -252,
+            "ML_GIANTS": 203,
+            "Spread_DODGERS": {
+              "line": -1.5,
+              "odds": -114
+            },
+            "Spread_GIANTS": {
+              "line": 1.5,
+              "odds": -105
+            },
+            "Total_Over": {
+              "line": 7.5,
+              "odds": -112
+            },
+            "Total_Under": {
+              "line": 7.5,
+              "odds": -107
+            }
+          },
+          "Pinnacle": {
+            "ML_DODGERS": -235,
+            "ML_GIANTS": 212,
+            "Spread_DODGERS": {
+              "line": -1.5,
+              "odds": -107
+            },
+            "Spread_GIANTS": {
+              "line": 1.5,
+              "odds": -103
+            },
+            "Total_Over": {
+              "line": 7.5,
+              "odds": -106
+            },
+            "Total_Under": {
+              "line": 7.5,
+              "odds": -106
+            }
+          },
+          "BetMGM": {
+            "ML_DODGERS": -250,
+            "ML_GIANTS": 200,
+            "Spread_DODGERS": {
+              "line": -1.5,
+              "odds": -115
+            },
+            "Spread_GIANTS": {
+              "line": 1.5,
+              "odds": -105
+            },
+            "Total_Over": {
+              "line": 7.5,
+              "odds": -115
+            },
+            "Total_Under": {
+              "line": 7.5,
+              "odds": -105
+            }
+          }
+        }
+      }
+    }
+  ]
+}

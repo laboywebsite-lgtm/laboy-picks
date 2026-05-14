@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Laboy Picks · Récord del Día</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap');
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  background:#080808;
+  font-family:'Inter',system-ui,sans-serif;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  min-height:100vh;
+  padding:36px 20px;
+}
+
+.wrapper{
+  width:100%;
+  max-width:760px;
+}
+
+/* ── Brand row ── */
+.brand-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:30px;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+.brand-dot{
+  width:7px;height:7px;
+  border-radius:50%;
+  background:#f07820;
+  box-shadow:0 0 8px #f0782066;
+}
+.brand-name{
+  font-size:.72rem;
+  font-weight:700;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:#f07820;
+}
+.ts-badge{
+  font-size:.62rem;
+  color:#383838;
+  letter-spacing:1px;
+}
+
+/* ── Hero card (combined record) ── */
+.hero{
+  position:relative;
+  background:linear-gradient(135deg,#0e0e0e 0%,#111 100%);
+  border:1px solid #1f1f1f;
+  border-radius:20px;
+  padding:32px 36px 28px;
+  overflow:hidden;
+  margin-bottom:14px;
+}
+
+/* top accent line */
+.hero::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:2px;
+  background:linear-gradient(90deg,#f07820,#ff4e00,#f07820);
+  opacity:.8;
+}
+
+/* background glow */
+.hero::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:radial-gradient(ellipse at 50% 0%,rgba(240,120,32,.07) 0%,transparent 65%);
+  pointer-events:none;
+}
+
+.hero-label{
+  font-size:.62rem;
+  font-weight:800;
+  letter-spacing:4px;
+  color:#f07820;
+  text-transform:uppercase;
+  margin-bottom:4px;
+  position:relative;z-index:1;
+}
+.hero-date{
+  font-size:.75rem;
+  font-weight:400;
+  color:#444;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  margin-bottom:20px;
+  position:relative;z-index:1;
+}
+
+/* Big W-L-P numbers */
+.hero-record{
+  display:flex;
+  align-items:center;
+  gap:0;
+  position:relative;z-index:1;
+  margin-bottom:20px;
+}
+.hr-num{
+  font-size:5.5rem;
+  font-weight:900;
+  line-height:1;
+  letter-spacing:-4px;
+}
+.hr-w{color:#22c55e;text-shadow:0 0 30px rgba(34,197,94,.3);}
+.hr-l{color:#ef4444;text-shadow:0 0 30px rgba(239,68,68,.25);}
+.hr-p{color:#71717a;}
+.hr-sep{
+  font-size:3.5rem;
+  font-weight:200;
+  color:#222;
+  line-height:1;
+  margin:0 8px;
+  position:relative;top:3px;
+}
+
+/* stat pills below big number */
+.hero-stats{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  position:relative;z-index:1;
+}
+.stat-pill{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  padding:7px 14px;
+  background:#131313;
+  border:1px solid #1e1e1e;
+  border-radius:10px;
+}
+.pill-label{
+  font-size:.52rem;
+  font-weight:700;
+  letter-spacing:2px;
+  color:#383838;
+  text-transform:uppercase;
+}
+.pill-value{
+  font-size:.95rem;
+  font-weight:800;
+  line-height:1;
+}
+
+/* Win bar inside hero */
+.hero-bar-row{
+  margin-top:16px;
+  position:relative;z-index:1;
+}
+.hero-bar-label{
+  font-size:.55rem;
+  font-weight:700;
+  letter-spacing:2px;
+  color:#2e2e2e;
+  text-transform:uppercase;
+  margin-bottom:5px;
+}
+.hero-bar-bg{
+  height:3px;
+  background:#151515;
+  border-radius:99px;
+  overflow:hidden;
+  width:100%;
+}
+.hero-bar-fill{
+  height:100%;
+  border-radius:99px;
+}
+
+/* ── League breakdown ── */
+.breakdown{
+  display:flex;
+  flex-direction:column;
+  gap:9px;
+}
+
+.lg-card{
+  position:relative;
+  background:#0c0c0c;
+  border:1px solid #181818;
+  border-radius:14px;
+  padding:16px 22px;
+  display:flex;
+  align-items:center;
+  gap:18px;
+  overflow:hidden;
+}
+
+.lg-card::before{
+  content:'';
+  position:absolute;
+  left:0;top:0;bottom:0;
+  width:3px;
+  background:var(--accent);
+}
+.lg-card::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:radial-gradient(ellipse at 0% 50%,var(--glow) 0%,transparent 55%);
+  pointer-events:none;
+}
+
+/* logo box */
+.lg-logo{
+  flex-shrink:0;
+  width:44px;height:44px;
+  border-radius:10px;
+  background:#141414;
+  border:1px solid #202020;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+  position:relative;z-index:1;
+}
+.lg-logo img{
+  width:34px;height:34px;
+  object-fit:contain;
+}
+.lg-logo-text{
+  font-size:.9rem;font-weight:900;
+  color:var(--accent);
+  letter-spacing:1px;
+}
+
+/* league name */
+.lg-name{
+  font-size:.65rem;
+  font-weight:800;
+  letter-spacing:3px;
+  color:var(--accent);
+  text-transform:uppercase;
+  flex-shrink:0;
+  width:38px;
+  position:relative;z-index:1;
+}
+
+/* divider */
+.lg-div{
+  width:1px;
+  align-self:stretch;
+  background:#1a1a1a;
+  flex-shrink:0;
+  position:relative;z-index:1;
+}
+
+/* record */
+.lg-rec{
+  display:flex;
+  align-items:baseline;
+  gap:4px;
+  position:relative;z-index:1;
+  flex-shrink:0;
+  min-width:110px;
+}
+.lr-num{
+  font-size:2.2rem;
+  font-weight:900;
+  line-height:1;
+  letter-spacing:-1.5px;
+}
+.lr-w{color:#22c55e;}
+.lr-l{color:#ef4444;}
+.lr-sep{
+  font-size:1.3rem;
+  font-weight:300;
+  color:#232323;
+  line-height:1;
+  margin:0 2px;
+}
+.lr-p{
+  font-size:1rem;
+  font-weight:700;
+  color:#444;
+  line-height:1;
+}
+
+/* win pct */
+.lg-win{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  position:relative;z-index:1;
+}
+.lg-pct{
+  font-size:1.15rem;
+  font-weight:900;
+  line-height:1;
+  letter-spacing:-0.3px;
+}
+.lg-bar-bg{
+  height:3px;
+  background:#181818;
+  border-radius:99px;
+  overflow:hidden;
+  max-width:130px;
+}
+.lg-bar-fill{
+  height:100%;
+  border-radius:99px;
+}
+
+/* P&L tag */
+.pl-tag{
+  font-size:.7rem;
+  font-weight:800;
+  padding:4px 10px;
+  border-radius:8px;
+  flex-shrink:0;
+  position:relative;z-index:1;
+  letter-spacing:.3px;
+}
+.pl-pos{background:rgba(34,197,94,.12);color:#22c55e;border:1px solid rgba(34,197,94,.2);}
+.pl-neg{background:rgba(239,68,68,.10);color:#ef4444;border:1px solid rgba(239,68,68,.18);}
+.pl-neu{background:#131313;color:#555;border:1px solid #1e1e1e;}
+
+/* no picks */
+.no-picks{
+  font-size:.7rem;
+  color:#333;
+  font-style:italic;
+  position:relative;z-index:1;
+}
+
+/* pending */
+.lg-pending{
+  font-size:.58rem;
+  font-weight:700;
+  letter-spacing:1.5px;
+  color:#444;
+  text-transform:uppercase;
+  position:relative;z-index:1;
+  padding:3px 8px;
+  border:1px solid #1e1e1e;
+  border-radius:99px;
+  flex-shrink:0;
+}
+
+/* ── Footer ── */
+.footer{
+  margin-top:18px;
+  text-align:center;
+  font-size:.6rem;
+  color:#212121;
+  letter-spacing:1px;
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- Brand row -->
+  <div class="brand-row">
+    <div class="brand">
+      <div class="brand-dot"></div>
+      <span class="brand-name">Laboy Picks</span>
+    </div>
+    <span class="ts-badge">12:09</span>
+  </div>
+
+  <!-- Hero combined record -->
+  <div class="hero">
+    <div class="hero-label">Récord del Día</div>
+    <div class="hero-date">MAY 02, 2026</div>
+
+    <div class="hero-record">
+      <span class="hr-num hr-w">3</span>
+      <span class="hr-sep">-</span>
+      <span class="hr-num hr-l">1</span>
+      <span class="hr-sep" style="font-size:2rem;margin:0 6px;">·</span><span class="hr-num hr-p" style="font-size:3rem;">1</span>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat-pill">
+        <span class="pill-label">Win Rate</span>
+        <span class="pill-value" style="color:#22c55e;">75.0%</span>
+      </div>
+      <div class="stat-pill"><span class="pill-label">P&L</span><span class="pill-value" style="color:#22c55e;">+$14.60</span></div>
+      <div class="stat-pill"><span class="pill-label">Picks</span><span class="pill-value" style="color:#555;">5</span></div>
+      
+    </div>
+
+    <div class="hero-bar-row">
+      <div class="hero-bar-label">Performance</div>
+      <div class="hero-bar-bg">
+        <div class="hero-bar-fill" style="width:100%;background:#22c55e;box-shadow:0 0 8px #22c55e55;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Per-league breakdown -->
+  <div class="breakdown">
+    <div class="lg-card" style="--accent:#D50032;--glow:rgba(213,0,50,0.30);">
+      <div class="lg-logo">
+        <img src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/mlb.png&w=120&h=120" alt="MLB"
+             onerror="this.style.display='none';this.nextSibling.style.display='flex';">
+        <span class="lg-logo-text" style="display:none;">MLB</span>
+      </div>
+
+      <span class="lg-name">MLB</span>
+      <div class="lg-div"></div>
+
+      <div class="lg-rec">
+        <span class="lr-num lr-w">1</span>
+        <span class="lr-sep">-</span>
+        <span class="lr-num lr-l">1</span>
+        <span class="lr-sep">·</span><span class="lr-p">1</span>
+      </div>
+
+      <div class="lg-div"></div>
+
+      <div class="lg-win">
+        <span class="lg-pct" style="color:#f07820;">50.0%</span>
+        <div class="lg-bar-bg">
+          <div class="lg-bar-fill" style="width:44.4%;background:#f07820;"></div>
+        </div>
+      </div>
+
+      <span class="pl-tag pl-neg">-$2.50</span>
+      
+      
+    </div>
+    <div class="lg-card" style="--accent:#1D428A;--glow:rgba(29,66,138,0.35);">
+      <div class="lg-logo">
+        <img src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/nba.png&w=120&h=120" alt="NBA"
+             onerror="this.style.display='none';this.nextSibling.style.display='flex';">
+        <span class="lg-logo-text" style="display:none;">NBA</span>
+      </div>
+
+      <span class="lg-name">NBA</span>
+      <div class="lg-div"></div>
+
+      <div class="lg-rec">
+        <span class="lr-num lr-w">1</span>
+        <span class="lr-sep">-</span>
+        <span class="lr-num lr-l">0</span>
+        
+      </div>
+
+      <div class="lg-div"></div>
+
+      <div class="lg-win">
+        <span class="lg-pct" style="color:#22c55e;">100.0%</span>
+        <div class="lg-bar-bg">
+          <div class="lg-bar-fill" style="width:100%;background:#22c55e;"></div>
+        </div>
+      </div>
+
+      <span class="pl-tag pl-pos">+$9.10</span>
+      
+      
+    </div>
+    <div class="lg-card" style="--accent:#F2A900;--glow:rgba(242,169,0,0.28);">
+      <div class="lg-logo">
+        <img src="" alt="BSN"
+             onerror="this.style.display='none';this.nextSibling.style.display='flex';">
+        <span class="lg-logo-text" style="display:none;">BSN</span>
+      </div>
+
+      <span class="lg-name">BSN</span>
+      <div class="lg-div"></div>
+
+      <div class="lg-rec">
+        <span class="lr-num lr-w">1</span>
+        <span class="lr-sep">-</span>
+        <span class="lr-num lr-l">0</span>
+        
+      </div>
+
+      <div class="lg-div"></div>
+
+      <div class="lg-win">
+        <span class="lg-pct" style="color:#22c55e;">100.0%</span>
+        <div class="lg-bar-bg">
+          <div class="lg-bar-fill" style="width:100%;background:#22c55e;"></div>
+        </div>
+      </div>
+
+      <span class="pl-tag pl-pos">+$8.00</span>
+      
+      
+    </div>
+  </div>
+
+  <div class="footer">Laboy Picks · MAY 02, 2026 · Generated 12:09</div>
+
+</div>
+</body>
+</html>

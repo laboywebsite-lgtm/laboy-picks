@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 mlb.py --grade-picks \"2026-04-17\" --publish)",
+      "Bash(python3 mlb.py --picks)",
+      "Bash(python3 mlb.py --export-picks --publish)"
+    ]
+  }
+}

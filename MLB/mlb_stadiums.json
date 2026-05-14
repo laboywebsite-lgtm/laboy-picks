@@ -1,0 +1,280 @@
+{
+  "stadiums": [
+    {
+      "team": "Arizona Diamondbacks",
+      "stadium": "Chase Field",
+      "city": "Phoenix, AZ",
+      "lat": 33.4455,
+      "lon": -112.0667,
+      "roof": "retractable",
+      "weather_impact": false
+    },
+    {
+      "team": "Atlanta Braves",
+      "stadium": "Truist Park",
+      "city": "Cumberland, GA",
+      "lat": 33.8908,
+      "lon": -84.4678,
+      "roof": "open",
+      "weather_impact": true
+    },
+    {
+      "team": "Baltimore Orioles",
+      "stadium": "Oriole Park at Camden Yards",
+      "city": "Baltimore, MD",
+      "lat": 39.2838,
+      "lon": -76.6218,
+      "roof": "open",
+      "weather_impact": true
+    },
+    {
+      "team": "Boston Red Sox",
+      "stadium": "Fenway Park",
+      "city": "Boston, MA",
+      "lat": 42.3467,
+      "lon": -71.0972,
+      "roof": "open",
+      "weather_impact": true
+    },
+    {
+      "team": "Chicago Cubs",
+      "stadium": "Wrigley Field",
+      "city": "Chicago, IL",
+      "lat": 41.9484,
+      "lon": -87.6553,
+      "roof": "open",
+      "weather_impact": true,
+      "note": "Most weather-volatile park in MLB due to Lake Michigan winds"
+    },
+    {
+      "team": "Chicago White Sox",
+      "stadium": "Guaranteed Rate Field",
+      "city": "Chicago, IL",
+      "lat": 41.8299,
+      "lon": -87.6338,
+      "roof": "open",
+      "weather_impact": true
+    },
+    {
+      "team": "Cincinnati Reds",
+      "stadium": "Great American Ball Park",
+      "city": "Cincinnati, OH",
+      "lat": 39.0979,
+      "lon": -84.5082,
+      "roof": "open",
+      "weather_impact": true
+    },
+    {
+      "team": "Cleveland Guardians",
+      "stadium": "Progressive Field",
+      "city": "Cleveland, OH",
+      "lat": 41.4962,
+      "lon": -81.6852,
+      "roof": "open",
+      "weather_impact": true
+    },
+    {
+      "team": "Colorado Rockies",
+      "stadium": "Coors Field",
+      "city": "Denver, CO",
+      "lat": 39.7559,
+      "lon": -104.9942,
+      "roof": "open",
+      "weather_impact": true,
+      "altitude_ft": 5280,
+      "note": "Highest altitude MLB park — ball carries further regardless of wind"
+    },
+    {
+      "team": "Detroit Tigers",
+      "stadium": "Comerica Park",
+      "city": "Detroit, MI",
+      "lat": 42.3390,
+      "lon": -83.0485,
+      "roof": "open",
+      "weather_impact": true
+    },
+    {
+      "team": "Houston Astros",
+      "stadium": "Minute Maid Park",
+      "city": "Houston, TX",
+      "lat": 29.7573,
+      "lon": -95.3555,
+      "roof": "retractable",
+      "weather_impact": false
+    },
+    {
+      "team": "Kansas City Royals",
+      "stadium": "Kauffman Stadium",
+      "city": "Kansas City, MO",
+      "lat": 39.0517,
+      "lon": -94.4803,
+      "roof": "open",
+      "weather_impact": true
+    },
+    {
+      "team": "Los Angeles Angels",
+      "stadium": "Angel Stadium",
+      "city": "Anaheim, CA",
+      "lat": 33.8003,
+      "lon": -117.8827,
+      "roof": "open",
+      "weather_impact": true
+    },
+    {
+      "team": "Los Angeles Dodgers",
+      "stadium": "Dodger Stadium",
+      "city": "Los Angeles, CA",
+      "lat": 34.0739,
+      "lon": -118.2400,
+      "roof": "open",
+      "weather_impact": true
+    },
+    {
+      "team": "Miami Marlins",
+      "stadium": "loanDepot Park",
+      "city": "Miami, FL",
+      "lat": 25.7781,
+      "lon": -80.2197,
+      "roof": "retractable",
+      "weather_impact": false
+    },
+    {
+      "team": "Milwaukee Brewers",
+      "stadium": "American Family Field",
+      "city": "Milwaukee, WI",
+      "lat": 43.0280,
+      "lon": -87.9712,
+      "roof": "retractable",
+      "weather_impact": false
+    },
+    {
+      "team": "Minnesota Twins",
+      "stadium": "Target Field",
+      "city": "Minneapolis, MN",
+      "lat": 44.9817,
+      "lon": -93.2781,
+      "roof": "open",
+      "weather_impact": true
+    },
+    {
+      "team": "New York Mets",
+      "stadium": "Citi Field",
+      "city": "Queens, NY",
+      "lat": 40.7571,
+      "lon": -73.8458,
+      "roof": "open",
+      "weather_impact": true
+    },
+    {
+      "team": "New York Yankees",
+      "stadium": "Yankee Stadium",
+      "city": "Bronx, NY",
+      "lat": 40.8296,
+      "lon": -73.9262,
+      "roof": "open",
+      "weather_impact": true
+    },
+    {
+      "team": "Oakland Athletics",
+      "stadium": "Sacramento Sutter Health Park",
+      "city": "Sacramento, CA",
+      "lat": 38.5802,
+      "lon": -121.5005,
+      "roof": "open",
+      "weather_impact": true,
+      "note": "Temporary home while new ballpark is built in Las Vegas"
+    },
+    {
+      "team": "Philadelphia Phillies",
+      "stadium": "Citizens Bank Park",
+      "city": "Philadelphia, PA",
+      "lat": 39.9057,
+      "lon": -75.1665,
+      "roof": "open",
+      "weather_impact": true
+    },
+    {
+      "team": "Pittsburgh Pirates",
+      "stadium": "PNC Park",
+      "city": "Pittsburgh, PA",
+      "lat": 40.4469,
+      "lon": -80.0057,
+      "roof": "open",
+      "weather_impact": true
+    },
+    {
+      "team": "San Diego Padres",
+      "stadium": "Petco Park",
+      "city": "San Diego, CA",
+      "lat": 32.7073,
+      "lon": -117.1566,
+      "roof": "open",
+      "weather_impact": true,
+      "note": "Marine layer suppresses offense even on windy days"
+    },
+    {
+      "team": "San Francisco Giants",
+      "stadium": "Oracle Park",
+      "city": "San Francisco, CA",
+      "lat": 37.7786,
+      "lon": -122.3893,
+      "roof": "open",
+      "weather_impact": true,
+      "note": "Bay winds make this a pitcher-friendly park most nights"
+    },
+    {
+      "team": "Seattle Mariners",
+      "stadium": "T-Mobile Park",
+      "city": "Seattle, WA",
+      "lat": 47.5914,
+      "lon": -122.3325,
+      "roof": "retractable",
+      "weather_impact": false
+    },
+    {
+      "team": "St. Louis Cardinals",
+      "stadium": "Busch Stadium",
+      "city": "St. Louis, MO",
+      "lat": 38.6226,
+      "lon": -90.1928,
+      "roof": "open",
+      "weather_impact": true
+    },
+    {
+      "team": "Tampa Bay Rays",
+      "stadium": "Tropicana Field",
+      "city": "St. Petersburg, FL",
+      "lat": 27.7683,
+      "lon": -82.6534,
+      "roof": "fixed_dome",
+      "weather_impact": false
+    },
+    {
+      "team": "Texas Rangers",
+      "stadium": "Globe Life Field",
+      "city": "Arlington, TX",
+      "lat": 32.7473,
+      "lon": -97.0822,
+      "roof": "retractable",
+      "weather_impact": false
+    },
+    {
+      "team": "Toronto Blue Jays",
+      "stadium": "Rogers Centre",
+      "city": "Toronto, ON",
+      "lat": 43.6414,
+      "lon": -79.3894,
+      "roof": "retractable",
+      "weather_impact": false
+    },
+    {
+      "team": "Washington Nationals",
+      "stadium": "Nationals Park",
+      "city": "Washington, DC",
+      "lat": 38.8730,
+      "lon": -77.0074,
+      "roof": "open",
+      "weather_impact": true
+    }
+  ]
+}

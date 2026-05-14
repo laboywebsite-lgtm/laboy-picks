@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Laboy Picks · Record General</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+:root{
+  --bg:#0a0a0a;--surface:#131313;--card:#1c1c1e;
+  --accent:#f07820;--text:#f1f5f9;--muted:#64748b;
+  --border:#2a2a2a;--green:#22c55e;--red:#ef4444;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  min-height:100vh;display:flex;flex-direction:column;align-items:center;
+  padding:0 0 48px;
+}
+
+/* ── Header ── */
+.header{
+  width:100%;background:#000;
+  padding:20px 24px 16px;
+  border-bottom:2px solid var(--accent);
+  text-align:center;
+  margin-bottom:32px;
+}
+.header h1{
+  font-size:1.5rem;font-weight:900;letter-spacing:3px;
+  color:var(--accent);text-transform:uppercase;
+}
+.header .sub{
+  color:var(--muted);font-size:.75rem;letter-spacing:2px;
+  margin-top:5px;text-transform:uppercase;
+}
+
+/* ── Grid ── */
+.grid{
+  display:flex;gap:18px;flex-wrap:wrap;
+  justify-content:center;
+  width:100%;max-width:900px;
+  padding:0 16px;
+}
+
+/* ── League card ── */
+.lcard{
+  background:var(--card);
+  border-radius:18px;
+  padding:28px 24px 22px;
+  flex:1 1 240px;max-width:280px;
+  border:1px solid var(--border);
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;align-items:center;gap:12px;
+  box-shadow:0 4px 24px rgba(0,0,0,.45);
+  transition:transform .15s;
+}
+.lcard:hover{transform:translateY(-3px);}
+
+/* accent stripe at top */
+.lcard::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:var(--league-accent,var(--accent));
+}
+
+.logo-wrap{
+  width:64px;height:64px;border-radius:50%;
+  background:#222;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+  border:2px solid var(--border);
+}
+.logo-wrap img{width:56px;height:56px;object-fit:contain;}
+
+/* fallback text logo */
+.logo-text{
+  font-size:1.3rem;font-weight:900;letter-spacing:1px;
+  color:var(--league-accent,var(--accent));
+}
+
+.league-name{
+  font-size:.65rem;letter-spacing:2.5px;font-weight:700;
+  color:var(--muted);text-transform:uppercase;text-align:center;
+  margin-top:-4px;
+}
+
+/* W - L */
+.record-row{
+  display:flex;align-items:center;gap:14px;margin-top:4px;
+}
+.rec-stat{text-align:center;}
+.rec-num{font-size:2.6rem;font-weight:900;line-height:1;}
+.rec-num.wins{color:var(--green);}
+.rec-num.losses{color:var(--red);}
+.rec-num.pushes{color:var(--muted);font-size:1.6rem;}
+.rec-label{font-size:.6rem;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-top:3px;}
+.divider{font-size:2rem;font-weight:300;color:var(--border);}
+
+/* Win rate pill */
+.win-rate{
+  margin-top:2px;
+  padding:6px 20px;border-radius:99px;
+  font-size:1.05rem;font-weight:800;letter-spacing:1px;
+  background:#ffffff0f;
+}
+
+/* Pending note */
+.pending-note{
+  font-size:.65rem;color:var(--muted);letter-spacing:1px;
+}
+
+/* P&L */
+.pl-row{
+  font-size:.75rem;color:var(--muted);
+  display:flex;align-items:center;gap:6px;
+  border-top:1px solid var(--border);
+  padding-top:10px;width:100%;justify-content:center;
+}
+.pl-val{font-weight:700;font-size:.82rem;}
+
+/* ── Error state ── */
+.error-card{opacity:.45;}
+.error-msg{font-size:.7rem;color:var(--red);text-align:center;}
+
+/* ── Footer ── */
+.footer{
+  margin-top:28px;color:var(--muted);font-size:.7rem;
+  letter-spacing:1px;text-align:center;
+}
+.footer span{color:var(--accent);}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1><i class="fa-solid fa-chart-line" style="margin-right:8px;"></i>Record General</h1>
+  <div class="sub">FRIDAY, APRIL 24 · 2026 · Laboy Picks</div>
+</div>
+
+<div class="grid">
+  <div class="lcard" style="--league-accent:#D50032;">
+    <div class="logo-wrap">
+      <img src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/mlb.png&w=80&h=80" alt="MLB"
+           onerror="this.style.display='none';this.nextSibling.style.display='block';"
+      /><span class="logo-text" style="display:none;">MLB</span>
+    </div>
+    <div class="league-name">Major League Baseball</div>
+
+    <div class="record-row">
+      <div class="rec-stat">
+        <div class="rec-num wins">17</div>
+        <div class="rec-label">Wins</div>
+      </div>
+      <div class="divider">-</div>
+      <div class="rec-stat">
+        <div class="rec-num losses">31</div>
+        <div class="rec-label">Losses</div>
+      </div>
+      <div class="divider">·</div><div class="rec-stat"><div class="rec-num pushes">2</div><div class="rec-label">Push</div></div>
+    </div>
+
+    <div class="win-rate" style="color:#ef4444;">34.0% Win Rate</div>
+
+    <div class="pending-note"><i class="fa-solid fa-clock" style="margin-right:4px;"></i>2 pendiente(s)</div>
+    
+
+    <div class="pl-row">
+      <i class="fa-solid fa-dollar-sign" style="font-size:.7rem;"></i>
+      P&L: <span class="pl-val" style="color:#ef4444;">-$224.66</span>
+    </div>
+  </div>
+  <div class="lcard" style="--league-accent:#C8102E;">
+    <div class="logo-wrap">
+      <img src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/nba.png&w=80&h=80" alt="NBA"
+           onerror="this.style.display='none';this.nextSibling.style.display='block';"
+      /><span class="logo-text" style="display:none;">NBA</span>
+    </div>
+    <div class="league-name">National Basketball Assoc.</div>
+
+    <div class="record-row">
+      <div class="rec-stat">
+        <div class="rec-num wins">16</div>
+        <div class="rec-label">Wins</div>
+      </div>
+      <div class="divider">-</div>
+      <div class="rec-stat">
+        <div class="rec-num losses">15</div>
+        <div class="rec-label">Losses</div>
+      </div>
+      
+    </div>
+
+    <div class="win-rate" style="color:#f0782099;">51.6% Win Rate</div>
+
+    
+    
+
+    <div class="pl-row">
+      <i class="fa-solid fa-dollar-sign" style="font-size:.7rem;"></i>
+      P&L: <span class="pl-val" style="color:#ef4444;">-$24.62</span>
+    </div>
+  </div>
+  <div class="lcard" style="--league-accent:#F2A900;">
+    <div class="logo-wrap">
+      <img src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/bsn.png&w=80&h=80" alt="BSN"
+           onerror="this.style.display='none';this.nextSibling.style.display='block';"
+      /><span class="logo-text" style="display:none;">BSN</span>
+    </div>
+    <div class="league-name">Baloncesto Superior Nac.</div>
+
+    <div class="record-row">
+      <div class="rec-stat">
+        <div class="rec-num wins">35</div>
+        <div class="rec-label">Wins</div>
+      </div>
+      <div class="divider">-</div>
+      <div class="rec-stat">
+        <div class="rec-num losses">14</div>
+        <div class="rec-label">Losses</div>
+      </div>
+      
+    </div>
+
+    <div class="win-rate" style="color:#22c55e;">71.4% Win Rate</div>
+
+    <div class="pending-note"><i class="fa-solid fa-clock" style="margin-right:4px;"></i>3 pendiente(s)</div>
+    
+
+    <div class="pl-row">
+      <i class="fa-solid fa-dollar-sign" style="font-size:.7rem;"></i>
+      P&L: <span class="pl-val" style="color:#22c55e;">+$271.77</span>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  Actualizado · <span>01:31 · 24/04/2026</span>
+</div>
+</body>
+</html>

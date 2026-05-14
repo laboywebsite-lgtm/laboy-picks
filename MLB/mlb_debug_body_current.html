@@ -1,0 +1,119 @@
+
+<style>
+/* ── Debug fragment — inyectado en el dashboard ── */
+.dbg-frag-wrap {
+  font-family: inherit;
+  color: #f1f5f9;
+  --muted: #94a3b8;
+  --cyan: #00dcff;
+  --accent: #f07820;
+}
+
+/* Card */
+.dbg-frag-wrap .pick-card {
+  background: linear-gradient(160deg,#0d0d12 0%,#090910 100%);
+  border: 1px solid rgba(0,220,255,.13);
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin-bottom: 20px;
+  box-shadow:
+    0 0 0 1px rgba(0,220,255,.04),
+    0 6px 40px rgba(0,0,0,.85),
+    inset 0 1px 0 rgba(255,255,255,.04);
+  position: relative;
+  overflow: hidden;
+}
+/* Subtle top glow line on each card */
+.dbg-frag-wrap .pick-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg,transparent,rgba(0,220,255,.35),rgba(240,120,32,.25),transparent);
+}
+
+/* Game header time */
+.dbg-frag-wrap .pick-time {
+  font-size: .65rem;
+  color: rgba(0,220,255,.55);
+  letter-spacing: .08em;
+  font-weight: 700;
+  margin-bottom: 2px;
+  text-transform: uppercase;
+}
+
+/* Section header row (MODEL DEBUG · N PICKS) */
+.dbg-frag-wrap .section-title {
+  font-size: .62rem;
+  font-weight: 900;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  background: linear-gradient(90deg,#00dcff,#7c3aed,#00dcff);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: dbg-frag-grad 5s linear infinite;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+@keyframes dbg-frag-grad {
+  0%   { background-position: 0% center }
+  100% { background-position: 200% center }
+}
+
+/* Inner stat cells (EDGE/EV/MODELO) */
+.dbg-frag-wrap .stat {
+  background: rgba(0,0,0,.45);
+  border: 1px solid rgba(0,220,255,.1);
+  border-radius: 8px;
+  padding: 7px 11px;
+}
+.dbg-frag-wrap .stat-label {
+  font-size: .55rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  color: rgba(0,220,255,.5);
+  margin-bottom: 3px;
+  text-transform: uppercase;
+}
+.dbg-frag-wrap .stat-val {
+  font-size: .85rem;
+  font-weight: 800;
+}
+
+/* Odds badge used in some places */
+.dbg-frag-wrap .odds-badge {
+  background: rgba(0,220,255,.08);
+  border: 1px solid rgba(0,220,255,.22);
+  color: #00dcff;
+  border-radius: 6px;
+  padding: 1px 9px;
+  font-size: .9rem;
+  font-weight: 800;
+  letter-spacing: .03em;
+  text-shadow: 0 0 10px rgba(0,220,255,.5);
+}
+
+/* Game title text */
+.dbg-frag-wrap [style*="font-size:0.92rem;font-weight:700"] {
+  text-shadow: 0 0 20px rgba(255,255,255,.07);
+}
+
+/* Team logo shimmer glow */
+.dbg-frag-wrap img[alt] {
+  filter: drop-shadow(0 0 6px rgba(0,220,255,.18));
+}
+
+/* wRC+ bar */
+.dbg-frag-wrap [style*="border-radius:3px;height:5px"] {
+  box-shadow: 0 0 6px rgba(0,220,255,.1);
+}
+
+/* Collapsible badge */
+.dbg-frag-wrap .dbg-toggle-badge:hover {
+  background: rgba(240,120,32,.25) !important;
+  box-shadow: 0 0 8px rgba(240,120,32,.3);
+}
+</style><div class="dbg-frag-wrap"><div class="no-picks">No se encontraron picks EV+ para hoy.</div></div>

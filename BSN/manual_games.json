@@ -1,0 +1,686 @@
+[
+  {
+    "date": "2026-04-10",
+    "team1": "SANTEROS",
+    "team2": "LEONES",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Municipal de Ponce, Ponce",
+    "game": "SANTEROS vs. LEONES",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-11",
+    "team1": "VAQUEROS",
+    "team2": "GIGANTES",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Osvaldo Mart\u00ednez, Carolina",
+    "game": "VAQUEROS vs. GIGANTES",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-11",
+    "team1": "METS",
+    "team2": "CRIOLLOS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Guillermo Angulo, Caguas",
+    "game": "METS vs. CRIOLLOS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-12",
+    "team1": "LEONES",
+    "team2": "OSOS",
+    "game_time": "6:00 PM",
+    "venue": "Coliseo Jes\u00fas 'Chu\u00edto' Morales, Manat\u00ed",
+    "game": "LEONES vs. OSOS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-12",
+    "team1": "SANTEROS",
+    "team2": "PIRATAS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Municipio de Quebradillas, Quebradillas",
+    "game": "SANTEROS vs. PIRATAS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-13",
+    "team1": "INDIOS",
+    "team2": "VAQUEROS",
+    "game_time": "8:00 PM",
+    "venue": "Jos\u00e9 M. Agrelot Coliseum, Bayam\u00f3n",
+    "game": "INDIOS vs. VAQUEROS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-13",
+    "team1": "CRIOLLOS",
+    "team2": "METS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo H\u00e9ctor Sol\u00e1 Bezares, Guaynabo",
+    "game": "CRIOLLOS vs. METS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-13",
+    "team1": "CANGREJEROS",
+    "team2": "CAPITANES",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo de Arecibo, Arecibo",
+    "game": "CANGREJEROS vs. CAPITANES",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-14",
+    "team1": "PIRATAS",
+    "team2": "GIGANTES",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Osvaldo Mart\u00ednez, Carolina",
+    "game": "PIRATAS vs. GIGANTES",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-15",
+    "team1": "CRIOLLOS",
+    "team2": "CANGREJEROS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Roberto Clemente, Santurce",
+    "game": "CRIOLLOS vs. CANGREJEROS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-15",
+    "team1": "LEONES",
+    "team2": "SANTEROS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo de Aguada, Aguada",
+    "game": "LEONES vs. SANTEROS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-15",
+    "team1": "VAQUEROS",
+    "team2": "METS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo H\u00e9ctor Sol\u00e1 Bezares, Guaynabo",
+    "game": "VAQUEROS vs. METS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-16",
+    "team1": "GIGANTES",
+    "team2": "OSOS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Jes\u00fas 'Chu\u00edto' Morales, Manat\u00ed",
+    "game": "GIGANTES vs. OSOS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-16",
+    "team1": "PIRATAS",
+    "team2": "CAPITANES",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo de Arecibo, Arecibo",
+    "game": "PIRATAS vs. CAPITANES",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-17",
+    "team1": "CANGREJEROS",
+    "team2": "LEONES",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Municipal de Ponce, Ponce",
+    "game": "CANGREJEROS vs. LEONES",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-17",
+    "team1": "ATLETICOS",
+    "team2": "INDIOS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Ruben Rodr\u00edguez, Mayag\u00fcez",
+    "game": "ATLETICOS vs. INDIOS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-18",
+    "team1": "OSOS",
+    "team2": "VAQUEROS",
+    "game_time": "8:00 PM",
+    "venue": "Jos\u00e9 M. Agrelot Coliseum, Bayam\u00f3n",
+    "game": "OSOS vs. VAQUEROS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-18",
+    "team1": "CRIOLLOS",
+    "team2": "GIGANTES",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Osvaldo Mart\u00ednez, Carolina",
+    "game": "CRIOLLOS vs. GIGANTES",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-18",
+    "team1": "CAPITANES",
+    "team2": "SANTEROS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo de Aguada, Aguada",
+    "game": "CAPITANES vs. SANTEROS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-18",
+    "team1": "LEONES",
+    "team2": "OSOS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Jes\u00fas 'Chu\u00edto' Morales, Manat\u00ed",
+    "game": "LEONES vs. OSOS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-18",
+    "team1": "SANTEROS",
+    "team2": "LEONES",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Municipal de Ponce, Ponce",
+    "game": "SANTEROS vs. LEONES",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-18",
+    "team1": "GIGANTES",
+    "team2": "VAQUEROS",
+    "game_time": "8:00 PM",
+    "venue": "Jos\u00e9 M. Agrelot Coliseum, Bayam\u00f3n",
+    "game": "GIGANTES vs. VAQUEROS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-19",
+    "team1": "METS",
+    "team2": "CANGREJEROS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Roberto Clemente, Santurce",
+    "game": "METS vs. CANGREJEROS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-19",
+    "team1": "LEONES",
+    "team2": "ATLETICOS",
+    "game_time": "6:00 PM",
+    "venue": "Coliseo Edgardo Zayas Hern\u00e1ndez, San Germ\u00e1n",
+    "game": "LEONES vs. ATLETICOS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-19",
+    "team1": "INDIOS",
+    "team2": "PIRATAS",
+    "game_time": "6:00 PM",
+    "venue": "Coliseo Municipio de Quebradillas, Quebradillas",
+    "game": "INDIOS vs. PIRATAS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-20",
+    "team1": "GIGANTES",
+    "team2": "VAQUEROS",
+    "game_time": "8:00 PM",
+    "venue": "Jos\u00e9 M. Agrelot Coliseum, Bayam\u00f3n",
+    "game": "GIGANTES vs. VAQUEROS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-21",
+    "team1": "METS",
+    "team2": "INDIOS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Ruben Rodr\u00edguez, Mayag\u00fcez",
+    "game": "METS vs. INDIOS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-21",
+    "team1": "ATLETICOS",
+    "team2": "CRIOLLOS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Guillermo Angulo, Caguas",
+    "game": "ATLETICOS vs. CRIOLLOS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-22",
+    "team1": "VAQUEROS",
+    "team2": "CANGREJEROS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Roberto Clemente, Santurce",
+    "game": "VAQUEROS vs. CANGREJEROS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-23",
+    "team1": "CRIOLLOS",
+    "team2": "INDIOS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Ruben Rodr\u00edguez, Mayag\u00fcez",
+    "game": "CRIOLLOS vs. INDIOS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-23",
+    "team1": "GIGANTES",
+    "team2": "METS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo H\u00e9ctor Sol\u00e1 Bezares, Guaynabo",
+    "game": "GIGANTES vs. METS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-23",
+    "team1": "ATLETICOS",
+    "team2": "PIRATAS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Municipio de Quebradillas, Quebradillas",
+    "game": "ATLETICOS vs. PIRATAS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-23",
+    "team1": "SANTEROS",
+    "team2": "OSOS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Jes\u00fas 'Chu\u00edto' Morales, Manat\u00ed",
+    "game": "SANTEROS vs. OSOS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-24",
+    "team1": "CAPITANES",
+    "team2": "LEONES",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Municipal de Ponce, Ponce",
+    "game": "CAPITANES vs. LEONES",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-24",
+    "team1": "CANGREJEROS",
+    "team2": "VAQUEROS",
+    "game_time": "8:00 PM",
+    "venue": "Jos\u00e9 M. Agrelot Coliseum, Bayam\u00f3n",
+    "game": "CANGREJEROS vs. VAQUEROS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-25",
+    "team1": "METS",
+    "team2": "OSOS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Jes\u00fas 'Chu\u00edto' Morales, Manat\u00ed",
+    "game": "METS vs. OSOS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-25",
+    "team1": "INDIOS",
+    "team2": "ATLETICOS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Edgardo Zayas Hern\u00e1ndez, San Germ\u00e1n",
+    "game": "INDIOS vs. ATLETICOS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-26",
+    "team1": "SANTEROS",
+    "team2": "LEONES",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Municipal de Ponce, Ponce",
+    "game": "SANTEROS vs. LEONES",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-26",
+    "team1": "PIRATAS",
+    "team2": "CANGREJEROS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Roberto Clemente, Santurce",
+    "game": "PIRATAS vs. CANGREJEROS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-26",
+    "team1": "CAPITANES",
+    "team2": "GIGANTES",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Osvaldo Mart\u00ednez, Carolina",
+    "game": "CAPITANES vs. GIGANTES",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-27",
+    "team1": "VAQUEROS",
+    "team2": "CRIOLLOS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Guillermo Angulo, Caguas",
+    "game": "VAQUEROS vs. CRIOLLOS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-28",
+    "team1": "CANGREJEROS",
+    "team2": "METS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo H\u00e9ctor Sol\u00e1 Bezares, Guaynabo",
+    "game": "CANGREJEROS vs. METS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-28",
+    "team1": "INDIOS",
+    "team2": "OSOS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Jes\u00fas 'Chu\u00edto' Morales, Manat\u00ed",
+    "game": "INDIOS vs. OSOS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-29",
+    "team1": "SANTEROS",
+    "team2": "ATLETICOS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Edgardo Zayas Hern\u00e1ndez, San Germ\u00e1n",
+    "game": "SANTEROS vs. ATLETICOS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-29",
+    "team1": "CRIOLLOS",
+    "team2": "CAPITANES",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo de Arecibo, Arecibo",
+    "game": "CRIOLLOS vs. CAPITANES",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-29",
+    "team1": "GIGANTES",
+    "team2": "PIRATAS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Municipio de Quebradillas, Quebradillas",
+    "game": "GIGANTES vs. PIRATAS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-30",
+    "team1": "LEONES",
+    "team2": "VAQUEROS",
+    "game_time": "8:00 PM",
+    "venue": "Jos\u00e9 M. Agrelot Coliseum, Bayam\u00f3n",
+    "game": "LEONES vs. VAQUEROS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-04-30",
+    "team1": "OSOS",
+    "team2": "CANGREJEROS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Roberto Clemente, Santurce",
+    "game": "OSOS vs. CANGREJEROS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-05-01",
+    "team1": "CRIOLLOS",
+    "team2": "GIGANTES",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Osvaldo Mart\u00ednez, Carolina",
+    "game": "CRIOLLOS vs. GIGANTES",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-05-01",
+    "team1": "INDIOS",
+    "team2": "SANTEROS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo de Aguada, Aguada",
+    "game": "INDIOS vs. SANTEROS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-05-01",
+    "team1": "ATLETICOS",
+    "team2": "PIRATAS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Municipio de Quebradillas, Quebradillas",
+    "game": "ATLETICOS vs. PIRATAS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-05-02",
+    "team1": "OSOS",
+    "team2": "VAQUEROS",
+    "game_time": "8:00 PM",
+    "venue": "Jos\u00e9 M. Agrelot Coliseum, Bayam\u00f3n",
+    "game": "OSOS vs. VAQUEROS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-05-02",
+    "team1": "LEONES",
+    "team2": "CANGREJEROS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Roberto Clemente, Santurce",
+    "game": "LEONES vs. CANGREJEROS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-05-03",
+    "team1": "SANTEROS",
+    "team2": "GIGANTES",
+    "game_time": "6:00 PM",
+    "venue": "Coliseo Osvaldo Mart\u00ednez, Carolina",
+    "game": "SANTEROS vs. GIGANTES",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-05-03",
+    "team1": "CAPITANES",
+    "team2": "ATLETICOS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Edgardo Zayas Hern\u00e1ndez, San Germ\u00e1n",
+    "game": "CAPITANES vs. ATLETICOS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-05-04",
+    "team1": "OSOS",
+    "team2": "METS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo H\u00e9ctor Sol\u00e1 Bezares, Guaynabo",
+    "game": "OSOS vs. METS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-05-04",
+    "team1": "CAPITANES",
+    "team2": "INDIOS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Ruben Rodr\u00edguez, Mayag\u00fcez",
+    "game": "CAPITANES vs. INDIOS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-05-05",
+    "team1": "VAQUEROS",
+    "team2": "CRIOLLOS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Guillermo Angulo, Caguas",
+    "game": "VAQUEROS vs. CRIOLLOS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-05-06",
+    "team1": "SANTEROS",
+    "team2": "ATLETICOS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Edgardo Zayas Hern\u00e1ndez, San Germ\u00e1n",
+    "game": "SANTEROS vs. ATLETICOS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-05-06",
+    "team1": "GIGANTES",
+    "team2": "LEONES",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Municipal de Ponce, Ponce",
+    "game": "GIGANTES vs. LEONES",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-05-06",
+    "team1": "PIRATAS",
+    "team2": "INDIOS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Ruben Rodr\u00edguez, Mayag\u00fcez",
+    "game": "PIRATAS vs. INDIOS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-05-07",
+    "team1": "METS",
+    "team2": "VAQUEROS",
+    "game_time": "8:00 PM",
+    "venue": "Jos\u00e9 M. Agrelot Coliseum, Bayam\u00f3n",
+    "game": "METS vs. VAQUEROS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-05-07",
+    "team1": "CANGREJEROS",
+    "team2": "CRIOLLOS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Guillermo Angulo, Caguas",
+    "game": "CANGREJEROS vs. CRIOLLOS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-05-08",
+    "team1": "ATLETICOS",
+    "team2": "INDIOS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Ruben Rodr\u00edguez, Mayag\u00fcez",
+    "game": "ATLETICOS vs. INDIOS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-05-08",
+    "team1": "SANTEROS",
+    "team2": "CAPITANES",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo de Arecibo, Arecibo",
+    "game": "SANTEROS vs. CAPITANES",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-05-08",
+    "team1": "LEONES",
+    "team2": "PIRATAS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Municipio de Quebradillas, Quebradillas",
+    "game": "LEONES vs. PIRATAS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-05-09",
+    "team1": "METS",
+    "team2": "GIGANTES",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Osvaldo Mart\u00ednez, Carolina",
+    "game": "METS vs. GIGANTES",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-05-09",
+    "team1": "CRIOLLOS",
+    "team2": "OSOS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Jes\u00fas 'Chu\u00edto' Morales, Manat\u00ed",
+    "game": "CRIOLLOS vs. OSOS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-05-10",
+    "team1": "INDIOS",
+    "team2": "CAPITANES",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo de Arecibo, Arecibo",
+    "game": "INDIOS vs. CAPITANES",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-05-10",
+    "team1": "VAQUEROS",
+    "team2": "CANGREJEROS",
+    "game_time": "6:00 PM",
+    "venue": "Coliseo Roberto Clemente, Santurce",
+    "game": "VAQUEROS vs. CANGREJEROS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-05-10",
+    "team1": "PIRATAS",
+    "team2": "SANTEROS",
+    "game_time": "6:00 PM",
+    "venue": "Coliseo de Aguada, Aguada",
+    "game": "PIRATAS vs. SANTEROS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-05-11",
+    "team1": "OSOS",
+    "team2": "ATLETICOS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Edgardo Zayas Hern\u00e1ndez, San Germ\u00e1n",
+    "game": "OSOS vs. ATLETICOS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-05-12",
+    "team1": "GIGANTES",
+    "team2": "CANGREJEROS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo Roberto Clemente, Santurce",
+    "game": "GIGANTES vs. CANGREJEROS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-05-12",
+    "team1": "CRIOLLOS",
+    "team2": "VAQUEROS",
+    "game_time": "8:00 PM",
+    "venue": "Jos\u00e9 M. Agrelot Coliseum, Bayam\u00f3n",
+    "game": "CRIOLLOS vs. VAQUEROS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-05-13",
+    "team1": "LEONES",
+    "team2": "SANTEROS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo de Aguada, Aguada",
+    "game": "LEONES vs. SANTEROS",
+    "source": "Manual"
+  },
+  {
+    "date": "2026-05-13",
+    "team1": "OSOS",
+    "team2": "METS",
+    "game_time": "8:00 PM",
+    "venue": "Coliseo H\u00e9ctor Sol\u00e1 Bezares, Guaynabo",
+    "game": "OSOS vs. METS",
+    "source": "Manual"
+  }
+]

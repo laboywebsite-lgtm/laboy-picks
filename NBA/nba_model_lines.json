@@ -1,0 +1,244 @@
+{
+  "2026-05-08": [
+    {
+      "game": "KNICKS @ 76ERS",
+      "away_abb": "NYK",
+      "home_abb": "PHI",
+      "model": {
+        "pts_a": 111.5,
+        "pts_h": 104.4,
+        "total": 215.9,
+        "spread": -7.1,
+        "wp_a": 71.5,
+        "wp_h": 28.5,
+        "ml_a": -251,
+        "ml_h": 251,
+        "series_note": "serie 2G [momentum]: NYK avg 120.5 / PHI avg 102.0 (peso serie 50%)",
+        "series_missing": false,
+        "rest_note": null,
+        "fatigue_note": "fatiga R1: NYK 6G (-0.9pts) | PHI 7G (-1.6pts)",
+        "r2_note": "factor R2 (0.992)",
+        "po_round": 2,
+        "rest_away": 1,
+        "rest_home": 1
+      }
+    },
+    {
+      "game": "SPURS @ WOLVES",
+      "away_abb": "SAS",
+      "home_abb": "MIN",
+      "model": {
+        "pts_a": 111.2,
+        "pts_h": 105.0,
+        "total": 216.2,
+        "spread": -6.1,
+        "wp_a": 68.7,
+        "wp_h": 31.3,
+        "ml_a": -220,
+        "ml_h": 220,
+        "series_note": "serie 2G [momentum]: SAS avg 115.5 / MIN avg 101.5 (peso serie 50%)",
+        "series_missing": false,
+        "rest_note": null,
+        "fatigue_note": "fatiga R1: SAS 5G (-0.4pts) | MIN 6G (-0.9pts)",
+        "r2_note": "factor R2 (0.992)",
+        "po_round": 2,
+        "rest_away": 1,
+        "rest_home": 1
+      }
+    }
+  ],
+  "2026-05-09": [
+    {
+      "game": "PISTONS @ CAVS",
+      "away_abb": "DET",
+      "home_abb": "CLE",
+      "model": {
+        "pts_a": 104.5,
+        "pts_h": 104.6,
+        "total": 209.1,
+        "spread": 0.1,
+        "wp_a": 49.6,
+        "wp_h": 50.4,
+        "ml_a": 102,
+        "ml_h": -102,
+        "series_note": "serie 2G [momentum]: DET avg 107.0 / CLE avg 101.0 (peso serie 50%)",
+        "series_missing": false,
+        "rest_note": null,
+        "fatigue_note": "fatiga R1: DET 7G (-1.6pts) | CLE 7G (-1.6pts)",
+        "r2_note": "factor R2 (0.992)",
+        "po_round": 2,
+        "rest_away": 1,
+        "rest_home": 1
+      }
+    },
+    {
+      "game": "THUNDER @ LAKERS",
+      "away_abb": "OKC",
+      "home_abb": "LAL",
+      "model": {
+        "pts_a": 108.7,
+        "pts_h": 97.8,
+        "total": 206.5,
+        "spread": -10.9,
+        "wp_a": 81.3,
+        "wp_h": 18.7,
+        "ml_a": -435,
+        "ml_h": 435,
+        "series_note": "serie 2G [momentum]: OKC avg 114.5 / LAL avg 100.5 (peso serie 50%)",
+        "series_missing": false,
+        "rest_note": null,
+        "fatigue_note": "fatiga R1: OKC 4G (-0.0pts) | LAL 6G (-0.9pts)",
+        "r2_note": "factor R2 (0.992)",
+        "po_round": 2,
+        "rest_away": 1,
+        "rest_home": 1
+      }
+    }
+  ],
+  "2026-05-10": [
+    {
+      "game": "KNICKS @ 76ERS",
+      "away_abb": "NYK",
+      "home_abb": "PHI",
+      "model": {
+        "pts_a": 108.3,
+        "pts_h": 101.6,
+        "total": 209.9,
+        "spread": -6.7,
+        "wp_a": 71.0,
+        "wp_h": 29.0,
+        "ml_a": -245,
+        "ml_h": 245,
+        "series_note": "serie 3G [momentum]: NYK avg 113.4 / PHI avg 98.4 (peso serie 60%)",
+        "series_missing": false,
+        "rest_note": null,
+        "fatigue_note": "fatiga R1: NYK 6G (-0.9pts) | PHI 7G (-1.6pts)",
+        "r2_note": "factor R2 (0.992)",
+        "po_round": 2,
+        "rest_away": 1,
+        "rest_home": 1
+      }
+    },
+    {
+      "game": "SPURS @ WOLVES",
+      "away_abb": "SAS",
+      "home_abb": "MIN",
+      "model": {
+        "pts_a": 113.6,
+        "pts_h": 105.0,
+        "total": 218.6,
+        "spread": -8.7,
+        "wp_a": 75.1,
+        "wp_h": 24.9,
+        "ml_a": -302,
+        "ml_h": 302,
+        "series_note": "serie 3G [momentum]: SAS avg 119.2 / MIN avg 102.4 (peso serie 60%)",
+        "series_missing": false,
+        "rest_note": null,
+        "fatigue_note": "fatiga R1: SAS 5G (-0.4pts) | MIN 6G (-0.9pts)",
+        "r2_note": "factor R2 (0.992)",
+        "po_round": 2,
+        "rest_away": 1,
+        "rest_home": 1
+      }
+    }
+  ],
+  "2026-05-11": [
+    {
+      "game": "PISTONS @ CAVS",
+      "away_abb": "DET",
+      "home_abb": "CLE",
+      "model": {
+        "pts_a": 105.1,
+        "pts_h": 106.5,
+        "total": 211.6,
+        "spread": 1.4,
+        "wp_a": 45.3,
+        "wp_h": 54.7,
+        "ml_a": 121,
+        "ml_h": -121,
+        "series_note": "serie 3G [momentum]: DET avg 108.2 / CLE avg 105.8 (peso serie 60%)",
+        "series_missing": false,
+        "rest_note": null,
+        "fatigue_note": "fatiga R1: DET 7G (-1.6pts) | CLE 7G (-1.6pts)",
+        "r2_note": "factor R2 (0.992)",
+        "po_round": 2,
+        "rest_away": 1,
+        "rest_home": 1
+      }
+    },
+    {
+      "game": "THUNDER @ LAKERS",
+      "away_abb": "OKC",
+      "home_abb": "LAL",
+      "model": {
+        "pts_a": 115.2,
+        "pts_h": 100.4,
+        "total": 215.6,
+        "spread": -14.7,
+        "wp_a": 87.0,
+        "wp_h": 13.0,
+        "ml_a": -671,
+        "ml_h": 671,
+        "series_note": "serie 3G [momentum]: OKC avg 123.7 / LAL avg 104.3 (peso serie 60%)",
+        "series_missing": false,
+        "rest_note": null,
+        "fatigue_note": "fatiga R1: OKC 4G (-0.0pts) | LAL 6G (-0.9pts)",
+        "r2_note": "factor R2 (0.992)",
+        "po_round": 2,
+        "rest_away": 1,
+        "rest_home": 1
+      }
+    }
+  ],
+  "2026-05-12": [
+    {
+      "game": "WOLVES @ SPURS",
+      "away_abb": "MIN",
+      "home_abb": "SAS",
+      "model": {
+        "pts_a": 103.6,
+        "pts_h": 114.3,
+        "total": 217.8,
+        "spread": 10.7,
+        "wp_a": 20.3,
+        "wp_h": 79.7,
+        "ml_a": 394,
+        "ml_h": -394,
+        "series_note": "serie 4G [momentum]: MIN avg 106.6 / SAS avg 114.4 (peso serie 70%)",
+        "series_missing": false,
+        "rest_note": null,
+        "fatigue_note": "fatiga R1: MIN 6G (-0.9pts) | SAS 5G (-0.4pts)",
+        "r2_note": "factor R2 (0.992)",
+        "po_round": 2,
+        "rest_away": 1,
+        "rest_home": 1
+      }
+    }
+  ],
+  "2026-05-13": [
+    {
+      "game": "CAVS @ PISTONS",
+      "away_abb": "CLE",
+      "home_abb": "DET",
+      "model": {
+        "pts_a": 104.5,
+        "pts_h": 107.6,
+        "total": 212.0,
+        "spread": 3.1,
+        "wp_a": 40.1,
+        "wp_h": 59.9,
+        "ml_a": 149,
+        "ml_h": -149,
+        "series_note": "serie 4G [momentum]: CLE avg 108.4 / DET avg 107.6 (peso serie 70%)",
+        "series_missing": false,
+        "rest_note": null,
+        "fatigue_note": "fatiga R1: CLE 7G (-1.6pts) | DET 7G (-1.6pts)",
+        "r2_note": "factor R2 (0.992)",
+        "po_round": 2,
+        "rest_away": 1,
+        "rest_home": 1
+      }
+    }
+  ]
+}
