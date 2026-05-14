@@ -3441,7 +3441,7 @@ def bsn_panel():
     ('🖼', 'Record',  "openRecordModal('BSN','bsn.py','BSN','#f5a623')"),
     ('🃏', 'Parlay',  "openModal('bsn-parlay')"),
     ('🏥', 'IR',      "openBsnIrModal()"),
-    ('✏️', 'Stats ⚙',"window.open('/bsn/stats-edit','_blank')"),
+    ('✏️', 'Stats ⚙',"openBsnStatsEditor()"),
     ('🎯', 'GP',      "openModal('bsn-gp')"),
   ]
 )}
