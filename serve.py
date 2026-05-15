@@ -4176,6 +4176,7 @@ function _mlbNpSynced(inp,fld){{
 function _mlbShowNoPicksInputs(sel){{
   if(document.getElementById('mlb-np-wrap'))return;
   sel.style.display='none';
+  sel.innerHTML='<option value="__np__">manual</option>';
   var _d=document.createElement('div');
   _d.id='mlb-np-wrap';
   _d.style.marginTop='8px';
