@@ -19,6 +19,7 @@ NBA_LOG  = os.path.join(NBA_DIR, "nba_picks_log.json")
 MLB_LOG  = os.path.join(MLB_DIR, "laboy_picks_log.json")
 NBA_IR   = os.path.join(NBA_DIR, "nba_injuries.json")
 BSN_GP   = os.path.join(BSN_DIR, "bsn_gp.json")
+BSN_STATS_JSON = os.path.join(BSN_DIR, "bsn_team_stats.json")
 MLB_PICKS = os.path.join(MLB_DIR, "mlb_model_picks.json")
 
 PORT = int(os.environ.get("PORT", 5001))   # Railway/cloud usa $PORT; local usa 5001
@@ -6656,7 +6657,12 @@ def _nba_stats_html():
   <span style="color:#475569">Equipos sin playoffs (PO GP = —) aparecen en gris</span>
 </div>"""
 
+    _ebtn = ('<button onclick="openView(\'/api/view/bsn/stats-edit\',\'✏️ Editar Stats BSN\')" '
+             'style="float:right;background:#1e293b;border:1px solid rgba(245,166,35,.3);color:#f5a623;'
+             'padding:5px 14px;border-radius:7px;font-size:.72rem;cursor:pointer;margin-bottom:8px">'
+             '✏️ Editar</button>')
     return (f'<div class="vw-output">'
+            f'{_ebtn}'
             f'{title_html}{hdr_html}'
             f'<div class="vpt">{rows_html}</div>'
             f'{legend}'
@@ -6773,9 +6779,8 @@ def _bsn_stats_html():
         ws = wb["BSN - Advanced"]
         rows_raw = list(ws.iter_rows(values_only=True))
         wb.close()
-    except Exception as ex:
-        return (f'<div class="detail-empty">Sin datos BSN.<br>'
-                f'<span style="font-size:.7rem;color:#475569">{ex}</span></div>')
+    except Exception:
+        pass  # fallthrough: JSON override below
 
     # Parse: header row has 'TEAM','ORtg','DRtg','Pace' at columns H–K (index 7–10)
     # Data rows start at row 5 (index 4) — team short name in col C (index 2)
@@ -6792,6 +6797,18 @@ def _bsn_stats_html():
                 "drtg": float(drtg) if isinstance(drtg, (int, float)) else None,
                 "pace": float(pace) if isinstance(pace, (int, float)) else None,
             }
+
+    # Override / merge con stats manuales de JSON
+    if os.path.exists(BSN_STATS_JSON):
+        _jst = _rj(BSN_STATS_JSON)
+        if isinstance(_jst, dict):
+            for _tk, _tv in _jst.items():
+                if isinstance(_tv, dict):
+                    stats[_tk] = {
+                        "ortg": float(_tv.get("ortg") or 0),
+                        "drtg": float(_tv.get("drtg") or 0),
+                        "pace": float(_tv.get("pace") or 0),
+                    }
 
     if not stats:
         return '<div class="detail-empty">Sin datos en el Excel BSN.</div>'
@@ -6893,6 +6910,70 @@ def _bsn_stats_html():
             f'{legend}'
             f'</div>')
 
+
+
+def _bsn_stats_edit_html():
+    """Formulario editable de stats BSN (ORTG / DRTG / PACE) por equipo."""
+    stats = {}
+    if os.path.exists(BSN_STATS_JSON):
+        _js = _rj(BSN_STATS_JSON)
+        if isinstance(_js, dict):
+            stats = {k: v for k, v in _js.items() if isinstance(v, dict)}
+    if not stats:
+        try:
+            import openpyxl as _xl
+            wb = _xl.load_workbook(
+                os.path.join(BSN_DIR, "Laboy Picks - Data Model Module - Last Version.xlsx"),
+                data_only=True, read_only=True)
+            ws = wb["BSN - Advanced"]
+            for _row in ws.iter_rows(values_only=True):
+                _sh = _row[2] if len(_row) > 2 else None
+                _or = _row[8] if len(_row) > 8 else None
+                _dr = _row[9] if len(_row) > 9 else None
+                _pa = _row[10] if len(_row) > 10 else None
+                if isinstance(_sh, str) and _sh.upper() in _BSN_COLORS and isinstance(_or, (int, float)):
+                    stats[_sh.upper()] = {"ortg": float(_or), "drtg": float(_dr or 0), "pace": float(_pa or 0)}
+            wb.close()
+        except Exception:
+            pass
+    if not stats:
+        for _t in sorted(_BSN_COLORS.keys()):
+            stats[_t] = {"ortg": 110.0, "drtg": 110.0, "pace": 78.0}
+
+    rows_html = ""
+    inp_style = ("width:68px;background:#0f172a;border:1px solid #334155;border-radius:6px;"
+                 "padding:5px;color:#f1f5f9;font-size:.8rem;text-align:center")
+    for abb in sorted(stats.keys()):
+        d = stats[abb]
+        o  = float(d.get("ortg") or 0)
+        dr = float(d.get("drtg") or 0)
+        p  = float(d.get("pace") or 0)
+        rows_html += (
+            f'<div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">'
+            f'<span style="width:90px;font-size:.75rem;font-weight:700;color:#f1f5f9">{_esc(abb)}</span>'
+            f'<input type="number" step="0.1" data-bsnt="{_esc(abb)}" data-s="ortg" value="{o:.1f}" style="{inp_style}">'
+            f'<input type="number" step="0.1" data-bsnt="{_esc(abb)}" data-s="drtg" value="{dr:.1f}" style="{inp_style}">'
+            f'<input type="number" step="0.1" data-bsnt="{_esc(abb)}" data-s="pace" value="{p:.1f}" style="{inp_style}">'
+            f'</div>'
+        )
+
+    return (
+        '<div style="padding:4px">'
+        '<div style="display:flex;gap:8px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #1e293b">'
+        '<span style="width:90px;font-size:.63rem;color:#64748b;font-weight:700">EQUIPO</span>'
+        '<span style="width:68px;font-size:.63rem;color:#94a3b8;text-align:center">ORTG</span>'
+        '<span style="width:68px;font-size:.63rem;color:#94a3b8;text-align:center">DRTG</span>'
+        '<span style="width:68px;font-size:.63rem;color:#94a3b8;text-align:center">PACE</span>'
+        '</div>'
+        f'{rows_html}'
+        '<div style="margin-top:14px">'
+        '<button onclick="_saveBsnStats()" '
+        'style="width:100%;background:#f5a623;color:#000;border:none;padding:11px;'
+        'border-radius:8px;font-weight:700;cursor:pointer;font-size:.85rem">💾 Guardar Stats</button>'
+        '</div>'
+        '<div id="se-msg" style="margin-top:10px;font-size:.78rem;text-align:center;min-height:1.2rem"></div>'
+        '</div>'
+    )
 
 def _mlb_lines_html():
     """Build premium MLB model lines view from mlb_model_lines.json."""
@@ -7518,6 +7599,27 @@ def handle_api(path, data):
         if ok: _git_autopush_bg("bsn --remove-pick")
         return 200, j(ok, msg)
 
+
+    if path == "/api/bsn/save-stats":
+        _raw = data.get("stats", {})
+        if not isinstance(_raw, dict):
+            return 200, j(False, "⚠️ Formato inválido")
+        _clean = {}
+        for _t, _v in _raw.items():
+            if isinstance(_v, dict):
+                try:
+                    _clean[str(_t)] = {
+                        "ortg": float(_v.get("ortg") or 0),
+                        "drtg": float(_v.get("drtg") or 0),
+                        "pace": float(_v.get("pace") or 0),
+                    }
+                except (ValueError, TypeError):
+                    pass
+        if not _clean:
+            return 200, j(False, "⚠️ Sin datos válidos")
+        _wj(BSN_STATS_JSON, _clean)
+        _git_autopush_bg("bsn --save-stats")
+        return 200, j(True, f"✅ Stats guardados ({len(_clean)} equipos)")
     if path == "/api/bsn/gp":
         team = data.get("team","").strip().upper()
         gp_s = data.get("gp","").strip()
