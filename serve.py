@@ -251,6 +251,7 @@ def _grade_rows(log_path, endpoint):
     <button class="btn green" style="flex:1;padding:7px 4px;font-size:0.75rem" onclick="gradePick('{endpoint}',{eid},'W')">✅ WIN</button>
     <button class="btn red" style="flex:1;padding:7px 4px;font-size:0.75rem" onclick="gradePick('{endpoint}',{eid},'L')">❌ LOSS</button>
     <button class="btn gray" style="flex:1;padding:7px 4px;font-size:0.75rem" onclick="gradePick('{endpoint}',{eid},'P')">🔄 PUSH</button>
+    <button class="btn red" style="flex:0 0 34px;padding:7px 2px;font-size:0.9rem" onclick="_removePick('{rm_ep}',{eid})" title="Borrar pick">🗑</button>
   </div>
 </div>"""
     return rows
@@ -4823,7 +4824,7 @@ def _render_log_html(log_path, limit=50, remove_ep=None):
             pick_text = e.get("pick","—")
 
         eid     = e.get("id","")
-        rm_btn  = (f'<button onclick="_removePick(\"{remove_ep}\",{eid})" '
+        rm_btn  = (f'<button onclick=\"_removePick(\'{remove_ep}\',{eid})\" '
                    f'style="background:none;border:none;color:#ef4444;cursor:pointer;'
                    f'font-size:0.85rem;padding:0 4px;float:right" title="Borrar">🗑</button>')\
                   if remove_ep else ''
