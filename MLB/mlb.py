@@ -4800,7 +4800,91 @@ def cmd_publish(html_paths):
                     print(f"  ⚠️  No se pudo publicar {fname}: {info}")
         if published:
             print(f"\n  🌐 {GITHUB_PAGES_URL}/{published[0]}")
+            _api_update_dashboard(published)
         return
+
+    def _api_update_dashboard(new_files):
+        """Actualiza dashboard-{TOKEN}.html en GitHub via API, igual que _publish_update_index."""
+        from urllib.parse import quote as _quote
+        import re as _re
+        if not _gh_token:
+            return
+        _base = f"https://api.github.com/repos/{_pages_user}/{_pages_repo}"
+        _hdrs2 = {"Authorization": f"token {_gh_token}", "Accept": "application/vnd.github.v3+json",
+                  "Content-Type": "application/json", "User-Agent": "laboy-mlb-publish"}
+        def _gh2(method, path, payload=None):
+            data = json.dumps(payload).encode() if payload else None
+            req  = _ur.Request(f"{_base}{path}", data=data, headers=_hdrs2, method=method)
+            try:
+                with _ur.urlopen(req) as r: return json.loads(r.read())
+            except Exception: return {}
+
+        # Lista todos los archivos del repo
+        tree = _gh2("GET", "/git/trees/main?recursive=1")
+        all_names = [item["path"] for item in tree.get("tree", [])
+                     if item.get("type") == "blob" and item["path"].startswith("Laboy ") and item["path"].endswith(".html")]
+        all_names = sorted(all_names, reverse=True)
+
+        _MONTH = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+        def _link_list(names, label, emoji=""):
+            if not names: return ""
+            items = ""
+            for name in names[:12]:
+                enc  = _quote(name)
+                dm   = _re.search(r"(\d{4})-(\d{2})-(\d{2})", name)
+                dstr = f"{_MONTH[int(dm.group(2))-1]} {dm.group(3)}" if dm else name
+                items += f'<li><a href="{GITHUB_PAGES_URL}/{enc}" target="_blank">{dstr}</a></li>\n'
+            lbl = f"{emoji} {label}".strip()
+            return f"<h3>{lbl}</h3><ul>{items}</ul>"
+
+        picks   = [n for n in all_names if "Picks" in n and "Debug" not in n]
+        records = [n for n in all_names if "Record" in n or "Model Card" in n]
+        lines   = [n for n in all_names if "Lines" in n]
+        debug   = [n for n in all_names if "Debug" in n]
+
+        dash_html = f"""<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>⚾ MLB Picks — Dashboard</title>
+<style>body{{font-family:system-ui,sans-serif;background:#0f172a;color:#e2e8f0;padding:24px;max-width:600px;margin:0 auto}}
+h1{{color:#f8fafc;font-size:1.4rem;border-bottom:1px solid #334155;padding-bottom:10px;margin-bottom:16px}}
+h3{{color:#94a3b8;font-size:0.85rem;text-transform:uppercase;letter-spacing:.08em;margin-top:20px;margin-bottom:6px}}
+a{{color:#60a5fa;text-decoration:none}}a:hover{{text-decoration:underline}}
+ul{{list-style:none;padding:0;margin:0}}li{{padding:6px 0;border-bottom:1px solid #1e293b}}
+.ts{{font-size:0.75rem;color:#475569;margin-top:20px}}</style></head>
+<body><h1>⚾ MLB Picks — Dashboard</h1>
+{_link_list(picks,   "Picks",          "🎯")}
+{_link_list(records, "Record / Model", "📈")}
+{_link_list(lines,   "Lines",          "📊")}
+{_link_list(debug,   "Reports",        "🔬")}
+<p class="ts">Actualizado: {datetime.now().strftime("%Y-%m-%d %H:%M")}</p>
+</body></html>"""
+
+        dash_name = f"dashboard-{DASHBOARD_TOKEN}.html"
+        ok, info = _api_push_content(dash_name, dash_html.encode("utf-8"))
+        if ok:
+            print(f"  📋 Dashboard actualizado → {GITHUB_PAGES_URL}/{dash_name}")
+
+    def _api_push_content(repo_filename, raw_bytes):
+        from urllib.parse import quote as _quote
+        _api_url = f"https://api.github.com/repos/{_pages_user}/{_pages_repo}/contents/{_quote(repo_filename)}"
+        _hdrs3 = {"Authorization": f"token {_gh_token}", "Accept": "application/vnd.github.v3+json",
+                  "Content-Type": "application/json", "User-Agent": "laboy-mlb-publish"}
+        import base64 as _b64_inner
+        _content = _b64_inner.b64encode(raw_bytes).decode()
+        _sha = ""
+        try:
+            _req = _ur.Request(_api_url, headers=_hdrs3)
+            with _ur.urlopen(_req) as _r: _sha = json.loads(_r.read()).get("sha", "")
+        except Exception: pass
+        _payload = {"message": f"deploy: {repo_filename}", "content": _content}
+        if _sha: _payload["sha"] = _sha
+        try:
+            _req2 = _ur.Request(_api_url, data=json.dumps(_payload).encode(), headers=_hdrs3, method="PUT")
+            with _ur.urlopen(_req2) as _r2: _res = json.loads(_r2.read())
+            return True, _res["commit"]["sha"][:8]
+        except Exception as _e:
+            return False, str(_e)
 
     copied = []
     for hp in (html_paths or []):
