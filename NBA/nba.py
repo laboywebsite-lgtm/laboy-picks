@@ -1371,8 +1371,8 @@ def _save_nba_injuries(entries):
 def _gh_push_injuries():
     """Push nba_injuries.json to the laboy-picks repo so it survives Render redeploys."""
     import base64 as _b64, urllib.request as _ur, urllib.error as _ue
-    _token = os.environ.get("LABOY_GITHUB_TOKEN", "")
-    _repo  = "laboywebsite-lgtm/laboy-picks"
+    _token = os.environ.get("GITHUB_TOKEN", "")
+    _repo  = os.environ.get("GITHUB_USER", "laboywebsite-lgtm") + "/" + os.environ.get("GITHUB_REPO", "laboy-picks")
     _path  = "NBA/nba_injuries.json"
     _api   = f"https://api.github.com/repos/{_repo}/contents/{_path}"
     _hdrs  = {
@@ -5731,15 +5731,22 @@ def cmd_publish(html_paths):
       - Repo clonado localmente en GITHUB_PAGES_REPO (o env NBA_GITHUB_REPO)
       - git configurado con acceso push al repo
     """
-    import shutil, glob as _glob
+    import shutil, glob as _glob, subprocess as _sp
 
-    repo = GITHUB_PAGES_REPO
+    repo      = GITHUB_PAGES_REPO
+    _gh_token = os.environ.get("LABOY_GITHUB_TOKEN", "")
+    _clone_base = "https://github.com/laboywebsite-lgtm/nba-picks"
+    _clone_url  = (f"https://{_gh_token}@github.com/laboywebsite-lgtm/nba-picks"
+                   if _gh_token else _clone_base)
+
     if not os.path.isdir(repo):
-        print(f"\n  ❌ Repo no encontrado: {repo}")
-        print(f"     Clona el repo primero:")
-        print(f"     git clone https://github.com/laboywebsite-lgtm/nba-picks {repo}")
-        print(f"     O define la variable: export NBA_GITHUB_REPO=/tu/path/nba-picks")
-        return
+        print(f"\n  📥 Repo nba-picks no encontrado. Clonando...")
+        os.makedirs(os.path.dirname(repo), exist_ok=True)
+        _r = _sp.run(["git", "clone", _clone_url, repo], capture_output=True, text=True)
+        if _r.returncode != 0:
+            print(f"\n  ❌ Error al clonar: {_r.stderr.strip()}")
+            return
+        print(f"  ✅ Repo clonado.\n")
 
     copied = []
     for hp in (html_paths or []):
