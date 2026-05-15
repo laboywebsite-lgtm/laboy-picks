@@ -3919,7 +3919,7 @@ function nbaLogSelectBook(btn,book){{
     <button type="button" class="mlg-close" onclick="closeModal('nba-log')">✕</button>
   </div>
   <div class="mlg-body">
-  <form id="f-nba-log" onsubmit="event.preventDefault();var g=document.getElementById('nba-log-game');if(g&&!g.value){{alert('Selecciona un juego');return;}}submitForm('f-nba-log','/api/nba/log','nba-log')">
+  <form id="f-nba-log" onsubmit="event.preventDefault();var g=document.getElementById('nba-log-game');if(g&&!g.value&&!document.getElementById('mlb-np-wrap')){{alert('Selecciona un juego');return;}}submitForm('f-nba-log','/api/nba/log','nba-log')">
     <input type="hidden" name="date" value="{today}">
     <input type="hidden" name="away">
     <input type="hidden" name="home">
