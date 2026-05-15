@@ -292,7 +292,7 @@ GITHUB_PAGES_REPO = os.environ.get(
     "MLB_GITHUB_REPO",
     os.path.join(os.path.expanduser("~"), "repos", "mlb-picks")
 )
-GITHUB_PAGES_URL  = "https://laboywebsite-lgtm.github.io/laboy-picks"
+GITHUB_PAGES_URL  = "https://laboywebsite-lgtm.github.io/mlb-picks"
 
 # ── URL token — seguridad por oscuridad ──────────────
 # Salt privado. Cámbialo (o pon env var MLB_TOKEN_SALT) para rotar todos los tokens.
@@ -4735,7 +4735,7 @@ def cmd_publish(html_paths):
 
     _gh_token = os.environ.get("GITHUB_TOKEN", "") or os.environ.get("LABOY_GITHUB_TOKEN", "")
     _pages_user = os.environ.get("GITHUB_USER", "laboywebsite-lgtm")
-    _pages_repo = os.environ.get("GITHUB_REPO", "laboy-picks")
+    _pages_repo = os.environ.get("GITHUB_REPO", "mlb-picks")
 
     def _api_push(file_path, repo_filename):
         """Push a single file to GitHub Pages repo via API."""
