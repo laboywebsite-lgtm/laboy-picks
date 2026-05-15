@@ -1066,5 +1066,17 @@
     "result": "W",
     "pnl": 20.83,
     "analysis": ""
+  },
+  {
+    "id": 89,
+    "date": "2026-05-15",
+    "game": "ANGELS vs. ASTROS",
+    "pick": "ANGELS ML",
+    "odds": -100,
+    "stake": 12.0,
+    "book": "DraftKings",
+    "result": null,
+    "pnl": null,
+    "analysis": ""
   }
 ]
