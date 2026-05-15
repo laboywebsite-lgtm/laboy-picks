@@ -6922,7 +6922,13 @@ def _bsn_stats_html():
   <span style="color:#f43f5e;font-weight:700">DRTG &gt;116</span> = vulnerable
 </div>"""
 
+    _ebtn = ('<button onclick="openView(\'/api/view/bsn/stats-edit\',\'✏️ Editar Stats BSN\')" '
+             'style="float:right;background:#1e293b;border:1px solid rgba(245,166,35,.3);'
+             'color:#f5a623;padding:5px 14px;border-radius:7px;font-size:.72rem;'
+             'cursor:pointer;margin-bottom:8px">✏️ Editar</button>')
+
     return (f'<div class="vw-output">'
+            f'{_ebtn}'
             f'{title_html}{hdr_html}'
             f'<div class="vpt">{rows_html}</div>'
             f'{legend}'
