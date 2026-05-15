@@ -1090,5 +1090,17 @@
     "result": null,
     "pnl": null,
     "analysis": ""
+  },
+  {
+    "id": 91,
+    "date": "2026-05-15",
+    "game": "BLUE JAYS vs. TIGERS",
+    "pick": "BLUE JAYS ML",
+    "odds": -125,
+    "stake": 30.0,
+    "book": "BetMGM",
+    "result": null,
+    "pnl": null,
+    "analysis": ""
   }
 ]
