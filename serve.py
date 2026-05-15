@@ -4223,7 +4223,7 @@ function mlbLogOpen(){{
         sel.appendChild(opt);
       }});
       if(games.length === 0){{
-        sel.innerHTML = '<option value="">Sin picks del modelo para hoy</option>';
+        _mlbShowNoPicksInputs(sel);
       }}
     }})
     .catch(function(){{ /* sin conexión — usa lo que está */ }});
