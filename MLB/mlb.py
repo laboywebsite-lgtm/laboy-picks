@@ -9796,8 +9796,11 @@ def export_log_pick_html(entry):
 
         body = card1 + card2 + card3
 
+        # Sanitize game name for filename: "ROYALS vs. WHITE SOX" → "ROYALS vs WHITE SOX"
+        _safe_game = re.sub(r'[<>:"/\\|?*]', '', game).replace('.','').strip()
+        _safe_game = re.sub(r'\s+', ' ', _safe_game)[:40].strip()
         html  = _debug_html_wrap(f"Laboy Pick #{pick_id} · {dstr}", dstr, yr, body)
-        fname = f"Laboy Pick {pick_date} #{pick_id}.html"
+        fname = f"Laboy Pick {pick_date} #{pick_id} {_safe_game}.html" if _safe_game else f"Laboy Pick {pick_date} #{pick_id}.html"
         fpath = os.path.join(SCRIPT_DIR, fname)
         with open(fpath, "w", encoding="utf-8") as f:
             f.write(html)
