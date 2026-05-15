@@ -4124,11 +4124,16 @@ def mlb_panel():
         _log_hidden_teams = '<input type="hidden" name="away"><input type="hidden" name="home">'
     else:
         log_game_section = (
-            '<select id="mlb-log-game" onchange="mlbLogFillPick(this)">'
-            '<option value="__manual__">✍️ Loguear juego de hoy (ya empezó)</option>'
-            '</select>'
+            '<div class="mlg-field">'
+            '<div class="mlg-lbl">⚡ Juego (entrada directa)</div>'
+            '<div class="mlg-row2" style="margin-top:6px">'
+            '<div><div class="mlg-lbl">Away (Visitador)</div>'
+            '<input name="away" id="mlb-else-away" placeholder="Ej: YANKEES" autocapitalize="characters" style="text-transform:uppercase"></div>'
+            '<div><div class="mlg-lbl">Home (Local)</div>'
+            '<input name="home" id="mlb-else-home" placeholder="Ej: METS" autocapitalize="characters" style="text-transform:uppercase"></div>'
+            '</div></div>'
         )
-        _log_hidden_teams = '<input type="hidden" name="away"><input type="hidden" name="home">'
+        _log_hidden_teams = ''
 
     _log_modal_html = f"""<style>
 #mlb-log .modal{{background:linear-gradient(160deg,#070710 0%,#05050d 100%);border:1px solid rgba(0,220,255,.18);border-radius:20px;padding:0;overflow:hidden;box-shadow:0 0 0 1px rgba(0,220,255,.04),0 24px 80px rgba(0,0,0,.95),inset 0 1px 0 rgba(255,255,255,.05);max-width:480px}}
@@ -4273,7 +4278,7 @@ function mlgSelectBook(btn,book){{
     <button type="button" class="mlg-close" onclick="closeModal('mlb-log')">✕</button>
   </div>
   <div class="mlg-body">
-  <form id="f-mlb-log" onsubmit="event.preventDefault();var g=document.getElementById('mlb-log-game');if(g&&!g.value){{alert('Selecciona un juego');return;}}submitForm('f-mlb-log','/api/mlb/log','mlb-log')">
+  <form id="f-mlb-log" onsubmit="event.preventDefault();var g=document.getElementById('mlb-log-game');var ea=document.getElementById('mlb-else-away');var eh=document.getElementById('mlb-else-home');if(ea&&!ea.value.trim()){{alert('Ingresa el equipo visitador (Away)');ea.focus();return;}}if(eh&&!eh.value.trim()){{alert('Ingresa el equipo local (Home)');eh.focus();return;}}if(g&&!g.value){{alert('Selecciona un juego');return;}}submitForm('f-mlb-log','/api/mlb/log','mlb-log')">
     <input type="hidden" name="date" value="{today}">
     <input type="hidden" name="away">
     <input type="hidden" name="home">
