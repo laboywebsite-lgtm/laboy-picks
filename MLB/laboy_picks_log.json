@@ -1054,5 +1054,17 @@
     "result": "W",
     "pnl": 25.0,
     "analysis": ""
+  },
+  {
+    "id": 88,
+    "date": "2026-05-14",
+    "game": "ROYALS vs. WHITE SOX",
+    "pick": "OVER 7.5",
+    "odds": -120,
+    "stake": 25.0,
+    "book": "BetMGM",
+    "result": "W",
+    "pnl": 20.83,
+    "analysis": ""
   }
 ]
