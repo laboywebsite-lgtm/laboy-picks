@@ -1068,18 +1068,6 @@
     "analysis": ""
   },
   {
-    "id": 89,
-    "date": "2026-05-15",
-    "game": "ANGELS vs. ASTROS",
-    "pick": "ANGELS ML",
-    "odds": -100,
-    "stake": 12.0,
-    "book": "DraftKings",
-    "result": null,
-    "pnl": null,
-    "analysis": ""
-  },
-  {
     "id": 90,
     "date": "2026-05-15",
     "game": "ASTROS vs. BREWERS",
@@ -1098,30 +1086,6 @@
     "pick": "DODGERS ML",
     "odds": -110,
     "stake": 2.0,
-    "book": "DraftKings",
-    "result": null,
-    "pnl": null,
-    "analysis": ""
-  },
-  {
-    "id": 92,
-    "date": "2026-05-15",
-    "game": "ANGELS vs. BRAVES",
-    "pick": "BRAV",
-    "odds": -120,
-    "stake": 54.0,
-    "book": "BetMGM",
-    "result": null,
-    "pnl": null,
-    "analysis": ""
-  },
-  {
-    "id": 93,
-    "date": "2026-05-15",
-    "game": "PHILLIES vs. PIRATES",
-    "pick": "OVER 8.0",
-    "odds": -110,
-    "stake": 13.0,
     "book": "DraftKings",
     "result": null,
     "pnl": null,
