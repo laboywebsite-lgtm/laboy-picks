@@ -4274,8 +4274,10 @@ function mlbLogOpen(){{
 function mlbLogFillPick(sel){{
   var v=sel.value;if(!v)return;
   var parts=v.split('|');var away=parts[0],home=parts[1];
-  document.querySelector('#f-mlb-log [name=away]').value=away;
-  document.querySelector('#f-mlb-log [name=home]').value=home;
+  var awSel=document.getElementById('mlb-log-away');
+  var hmSel=document.getElementById('mlb-log-home');
+  if(awSel)awSel.value=away;
+  if(hmSel)hmSel.value=home;
   var game=away+' @ '+home;
   var picks=mlbLogPicksData[game];
   var card=document.getElementById('mlg-pick-card');
@@ -4336,18 +4338,26 @@ function mlgSelectBook(btn,book){{
     <button type="button" class="mlg-close" onclick="closeModal('mlb-log')">✕</button>
   </div>
   <div class="mlg-body">
-  <form id="f-mlb-log" onsubmit="event.preventDefault();var g=document.getElementById('mlb-log-game');if(g&&!g.value){{alert('Selecciona un juego');return;}}submitForm('f-mlb-log','/api/mlb/log','mlb-log')">
-    <input type="hidden" name="away">
-    <input type="hidden" name="home">
+  <form id="f-mlb-log" onsubmit="event.preventDefault();submitForm('f-mlb-log','/api/mlb/log','mlb-log')">
     <input type="hidden" name="book" value="DraftKings">
     <div class="mlg-field">
       <div class="mlg-lbl">📅 Fecha</div>
       <input type="date" name="date" value="{today}" max="{today}">
     </div>
+    <div class="mlg-row2">
+      <div>
+        <div class="mlg-lbl">✈️ Away</div>
+        <select name="away" id="mlb-log-away" required><option value="">—</option>{mlb_team_opts}</select>
+      </div>
+      <div>
+        <div class="mlg-lbl">🏠 Home</div>
+        <select name="home" id="mlb-log-home" required><option value="">—</option>{mlb_team_opts}</select>
+      </div>
+    </div>
     <div class="mlg-field">
-      <div class="mlg-lbl">⚡ Juego del Modelo</div>
+      <div class="mlg-lbl">⚡ Pick del Modelo (opcional)</div>
       <select id="mlb-log-game" onchange="mlbLogFillPick(this)">
-        <option value="">Cargando picks...</option>
+        <option value="">— Manual / sin pick del modelo —</option>
       </select>
     </div>
     <div class="mlg-pick-card" id="mlg-pick-card">
