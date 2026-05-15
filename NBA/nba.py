@@ -4668,8 +4668,10 @@ def export_log_pick_html(entry):
         </div>"""
 
         body = card1 + card2
+        _safe_game_nba = re.sub(r'[<>:"/\\|?*]', '', game).replace('.','').strip()
+        _safe_game_nba = re.sub(r'\s+', ' ', _safe_game_nba)[:40].strip()
         html = _nba_html_wrap(f"Laboy NBA Pick #{pick_id} · {dstr}", "NBA", dstr, yr, body)
-        fname = f"Laboy NBA Pick {pick_date} #{pick_id}.html"
+        fname = f"Laboy NBA Pick {pick_date} #{pick_id} {_safe_game_nba}.html" if _safe_game_nba else f"Laboy NBA Pick {pick_date} #{pick_id}.html"
         fpath = os.path.join(SCRIPT_DIR, fname)
         with open(fpath, "w", encoding="utf-8") as f:
             f.write(html)
