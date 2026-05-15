@@ -94,6 +94,136 @@ _NBA_COLORS = {
     "TOR":("#CE1141","#000"),"UTA":("#002B5C","#F9A01B"),"WAS":("#002B5C","#E31837"),
 }
 
+# ── PIL pick card generator (no Playwright needed) ────────────────────
+try:
+    from PIL import Image, ImageDraw, ImageFont
+    _HAS_PIL = True
+except ImportError:
+    _HAS_PIL = False
+
+def _make_pick_jpg(entry, league, out_dir):
+    """
+    Genera un JPG de la pick card usando PIL (sin Playwright).
+    Rápido, sin subprocess, funciona en Render.
+    Retorna el path del JPG o None si falla.
+    """
+    if not _HAS_PIL:
+        return None
+    try:
+        import re as _re
+        pick_date = entry.get("date", "")
+        pick_id   = entry.get("id", 0)
+        game      = entry.get("game", "")
+        pick      = entry.get("pick", "")
+        odds_v    = entry.get("odds", 0)
+        result    = entry.get("result")
+        stake     = entry.get("stake", 0)
+        book      = entry.get("book", "")
+
+        # Odds format
+        try:
+            odds_fmt = (f"+{int(odds_v)}" if float(odds_v) > 0 else str(int(odds_v))) if odds_v else "—"
+        except Exception:
+            odds_fmt = str(odds_v)
+
+        # Result colors
+        res_color = {"W": (34,197,94), "L": (239,68,68), "P": (147,197,253)}.get(result or "", (100,116,139))
+        league_color = {"MLB": (34,197,94), "BSN": (245,166,35), "NBA": (59,130,246)}.get(league.upper(), (148,163,184))
+
+        # Sanitize game name for filename
+        safe_game = _re.sub(r'[<>:"/\\|?*]', '', game).replace('.','').strip()
+        safe_game = _re.sub(r'\s+', ' ', safe_game)[:40].strip()
+        prefix    = "Laboy NBA Pick" if league.upper() == "NBA" else "Laboy Pick"
+        fname     = f"{prefix} {pick_date} #{pick_id} {safe_game}.jpg" if safe_game else f"{prefix} {pick_date} #{pick_id}.jpg"
+        fpath     = os.path.join(out_dir, fname)
+
+        # Canvas
+        W, H = 1080, 540
+        C_BG     = (10, 10, 15)
+        C_CARD   = (20, 25, 35)
+        C_BORDER = (35, 45, 60)
+        C_TEXT   = (241, 245, 249)
+        C_MUTED  = (100, 116, 139)
+
+        img  = Image.new("RGB", (W, H), C_BG)
+        draw = ImageDraw.Draw(img)
+
+        # Load fonts with fallback chain
+        def _fnt(size, bold=False):
+            paths = [
+                f"/usr/share/fonts/truetype/dejavu/DejaVuSans{'Bold' if bold else ''}.ttf",
+                f"/usr/share/fonts/truetype/liberation/LiberationSans-{'Bold' if bold else 'Regular'}.ttf",
+                "/System/Library/Fonts/Helvetica.ttc",
+                "/System/Library/Fonts/SFPro-Regular.ttf",
+            ]
+            for p in paths:
+                if os.path.exists(p):
+                    try: return ImageFont.truetype(p, size)
+                    except: pass
+            return ImageFont.load_default()
+
+        font_sm   = _fnt(22)
+        font_md   = _fnt(32)
+        font_lg   = _fnt(52, bold=True)
+        font_xl   = _fnt(68, bold=True)
+
+        PAD = 60
+
+        # Main card background
+        draw.rounded_rectangle([PAD//2, PAD//2, W-PAD//2, H-PAD//2], radius=24, fill=C_CARD, outline=C_BORDER, width=2)
+
+        # League badge (top-left)
+        badge_w, badge_h = 100, 36
+        draw.rounded_rectangle([PAD, PAD, PAD+badge_w, PAD+badge_h], radius=8, fill=league_color)
+        lx = PAD + badge_w//2 - draw.textlength(league.upper(), font=font_sm)//2
+        draw.text((lx, PAD+6), league.upper(), font=font_sm, fill=(10,10,15))
+
+        # Date (top-right)
+        draw.text((W-PAD, PAD+8), pick_date, font=font_sm, fill=C_MUTED, anchor="ra")
+
+        # Pick ID
+        id_txt = f"#{pick_id}"
+        draw.text((W-PAD, PAD+38), id_txt, font=font_sm, fill=C_MUTED, anchor="ra")
+
+        # Game matchup (center-big)
+        game_parts = game.upper().replace(" VS. ", " vs ").replace(" VS ", " vs ")
+        cy = H // 2 - 60
+        draw.text((W//2, cy), game_parts, font=font_lg, fill=C_TEXT, anchor="mm")
+
+        # Divider line
+        draw.line([(PAD*2, cy+48), (W-PAD*2, cy+48)], fill=C_BORDER, width=2)
+
+        # Pick
+        draw.text((W//2, cy+90), pick.upper(), font=font_xl, fill=league_color, anchor="mm")
+
+        # Odds
+        draw.text((W//2, cy+165), odds_fmt, font=font_md, fill=C_MUTED, anchor="mm")
+
+        # Result badge (bottom-left)
+        if result:
+            res_txt = {"W":"✓ WIN","L":"✗ LOSS","P":"— PUSH"}.get(result, result)
+            bw = int(draw.textlength(res_txt, font=font_md)) + 24
+            bx1, by1 = PAD, H - PAD - 40
+            draw.rounded_rectangle([bx1, by1, bx1+bw, by1+40], radius=8, fill=(*res_color, 40) if False else res_color)
+            draw.text((bx1+bw//2, by1+20), res_txt, font=font_md, fill=(10,10,15), anchor="mm")
+
+        # Book + stake (bottom-right)
+        info = []
+        if book: info.append(book)
+        if stake: info.append(f"${float(stake):.0f}")
+        if info:
+            draw.text((W-PAD, H-PAD-10), " · ".join(info), font=font_sm, fill=C_MUTED, anchor="ra")
+
+        # Accent bar (top)
+        draw.rectangle([PAD//2, PAD//2, W-PAD//2, PAD//2+4], fill=league_color)
+
+        img.save(fpath, "JPEG", quality=92, optimize=True)
+        return fpath
+    except Exception as _e:
+        print(f"  ⚠️  _make_pick_jpg: {_e}")
+        return None
+
+
 # ── JSON helpers ──────────────────────────────────────────────────────
 def _rj(path):
     try:
@@ -4719,6 +4849,8 @@ def full_page(alert="", alert_type=""):
         onclick="openView('/api/view/calendar','CALENDARIO P&amp;L')">P&amp;L CAL</button>
       <button class="btn gray" style="padding:5px 11px;font-size:.65rem;font-weight:800;letter-spacing:.05em"
         onclick="openView('/api/view/record/all','RECORD ALL-TIME')">RECORD</button>
+      <button class="btn gray" style="padding:5px 11px;font-size:.65rem;font-weight:800;letter-spacing:.05em"
+        onclick="window.open('/gallery','_blank')">🖼 FOTOS</button>
       <div class="live-badge"><div class="live-dot"></div>LIVE</div>
       <span class="hdr-date">{today_str}</span>
     </div>
@@ -7960,13 +8092,17 @@ def handle_api(path, data):
             try:
                 log_now = _rj(BSN_LOG)
                 _pick_idx_bsn = len(log_now) - 1
-                def _bsn_auto_pub(idx):
+                _entry_bsn = log_now[_pick_idx_bsn]
+                def _bsn_gen(e):
+                    # 1. Fast PIL card (instant)
+                    _make_pick_jpg(e, "BSN", BSN_DIR)
+                    # 2. Full HTML+publish in background (slow, best-effort)
                     try:
-                        _run(["python3","bsn.py","--export-log", str(idx), "--publish"],
-                             cwd=BSN_DIR, timeout=90)
-                    except Exception as _e:
-                        print(f"  ⚠️  bsn auto-publish pick #{idx}: {_e}")
-                threading.Thread(target=_bsn_auto_pub, args=(_pick_idx_bsn,), daemon=True).start()
+                        _run(["python3","bsn.py","--export-log", str(e.get("id",0)), "--publish"],
+                             cwd=BSN_DIR, timeout=120)
+                    except Exception as _e2:
+                        print(f"  ⚠️  bsn export-log: {_e2}")
+                threading.Thread(target=_bsn_gen, args=(_entry_bsn,), daemon=True).start()
             except Exception: pass
             return 200, {"ok": True, "msg": msg, "pick_date": _pick_date_bsn, "pick_idx": _pick_idx_bsn}
         return 200, j(ok, msg)
@@ -8065,13 +8201,15 @@ def handle_api(path, data):
             try:
                 log_now = _rj(NBA_LOG)
                 _pick_idx_nba = len(log_now) - 1
-                def _nba_auto_pub(idx):
+                _entry_nba = log_now[_pick_idx_nba]
+                def _nba_gen(e):
+                    _make_pick_jpg(e, "NBA", NBA_DIR)
                     try:
-                        _run(["python3","nba.py","--export-log", str(idx), "--publish"],
-                             cwd=NBA_DIR, timeout=90)
-                    except Exception as _e:
-                        print(f"  ⚠️  nba auto-publish pick #{idx}: {_e}")
-                threading.Thread(target=_nba_auto_pub, args=(_pick_idx_nba,), daemon=True).start()
+                        _run(["python3","nba.py","--export-log", str(e.get("id",0)), "--publish"],
+                             cwd=NBA_DIR, timeout=120)
+                    except Exception as _e2:
+                        print(f"  ⚠️  nba export-log: {_e2}")
+                threading.Thread(target=_nba_gen, args=(_entry_nba,), daemon=True).start()
             except Exception: pass
             return 200, {"ok": True, "msg": msg, "pick_date": _pick_date_nba, "pick_idx": _pick_idx_nba}
         return 200, j(ok, msg)
@@ -8155,13 +8293,15 @@ def handle_api(path, data):
             try:
                 log_now = _rj(MLB_LOG)
                 _pick_idx_mlb = len(log_now) - 1
-                def _auto_pub(idx):
+                _entry_mlb = log_now[_pick_idx_mlb]
+                def _mlb_gen(e):
+                    _make_pick_jpg(e, "MLB", MLB_DIR)
                     try:
-                        _run(["python3","mlb.py","--export-log", str(idx), "--publish"],
-                             cwd=MLB_DIR, timeout=90)
-                    except Exception as _e:
-                        print(f"  ⚠️  auto-publish pick #{idx}: {_e}")
-                threading.Thread(target=_auto_pub, args=(_pick_idx_mlb,), daemon=True).start()
+                        _run(["python3","mlb.py","--export-log", str(e.get("id",0)), "--publish"],
+                             cwd=MLB_DIR, timeout=120)
+                    except Exception as _e2:
+                        print(f"  ⚠️  mlb export-log: {_e2}")
+                threading.Thread(target=_mlb_gen, args=(_entry_mlb,), daemon=True).start()
             except Exception: pass
             return 200, {"ok": True, "msg": msg, "pick_date": _pick_date_mlb, "pick_idx": _pick_idx_mlb}
         return 200, j(ok, msg)
