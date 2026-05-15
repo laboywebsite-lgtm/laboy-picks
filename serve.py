@@ -3741,8 +3741,8 @@ def nba_panel():
     ('✓',  'Grade',   "openModal('nba-grade')"),
     ('📜', 'Historial',"openView('/api/view/nba/log','NBA · Historial')"),
     ('🖼', 'Record',  "openRecordModal('NBA','nba.py','NBA','#3b82f6')"),
-    ('🏥', 'IR',      "openModal('nba-ir')"),
-    ('🔄', 'Refresh IR',"runCmd('python3 nba.py --ir refresh','NBA','NBA → IR')"),
+    ('🏥', 'IR',      "openNbaIR()"),
+    ('🔄', 'Refresh IR',"refreshAndShowIR()"),
     ('📤', 'Publish', "runCmd('python3 nba.py --picks --publish','NBA','NBA → Publish')"),
   ]
 )}
@@ -3842,6 +3842,44 @@ function nbaLogOpen(){{
   var oddsInp=document.getElementById('nba-log-odds-inp');
   if(oddsInp) oddsInp.value='';
   openModal('nba-log');
+}}
+
+function _buildNbaIRTable(entries){{
+  var ACTIVE={{'out':1,'doubtful':1,'questionable':1}};
+  var filtered=entries.filter(function(e){{return ACTIVE[e.status]&&e.status!=='probable';}});
+  filtered.sort(function(a,b){{return(a.team_abb+a.player).localeCompare(b.team_abb+b.player);}});
+  var tbody=document.querySelector('#nba-ir .ir-tbody');
+  if(!tbody)return;
+  if(!filtered.length){{
+    tbody.innerHTML='<tr><td colspan="4" style="color:#334155;padding:10px;text-align:center">Sin lesionados activos</td></tr>';
+    return;
+  }}
+  tbody.innerHTML=filtered.map(function(e){{
+    var sc=e.status==='out'?'#ef4444':(e.status==='doubtful'?'#f97316':'#eab308');
+    return '<tr><td>'+e.team_abb+'</td><td>'+e.player+'</td><td style="color:'+sc+'">'+e.status.toUpperCase()+'</td><td>'+(e.ppg||'—')+'</td></tr>';
+  }}).join('');
+}}
+
+function openNbaIR(){{
+  fetch('/api/nba/ir-list')
+    .then(function(r){{return r.json();}})
+    .then(function(d){{_buildNbaIRTable(d.entries||[]);openModal('nba-ir');}})
+    .catch(function(){{openModal('nba-ir');}});
+}}
+
+async function refreshAndShowIR(){{
+  showOutput('NBA → IR Refresh');
+  try{{
+    var r=await fetch('/api/run',{{method:'POST',headers:{{'Content-Type':'application/json'}},
+      body:JSON.stringify({{cmd:'python3 nba.py --ir refresh',cwd:'NBA'}})}});
+    var d=await r.json();
+    setOutput(d.out||'(sin salida)');
+    // After refresh, reload IR data and show modal
+    fetch('/api/nba/ir-list')
+      .then(function(r2){{return r2.json();}})
+      .then(function(d2){{_buildNbaIRTable(d2.entries||[]);openModal('nba-ir');}})
+      .catch(function(){{}});
+  }}catch(e){{setOutput('Error: '+e);}}
 }}
 
 var _nbaCurrentPicks = [];
@@ -4027,7 +4065,7 @@ function nbaLogSelectBook(btn,book){{
         <th style="padding:6px 8px;color:#64748b;text-align:left">Status</th>
         <th style="padding:6px 8px;color:#64748b;text-align:left">PPG</th>
       </tr></thead>
-      <tbody>{ir_rows if ir_rows else '<tr><td colspan="4" style="color:#334155;padding:10px;text-align:center">Sin lesionados activos</td></tr>'}</tbody>
+      <tbody class="ir-tbody">{ir_rows if ir_rows else '<tr><td colspan="4" style="color:#334155;padding:10px;text-align:center">Sin lesionados activos</td></tr>'}</tbody>
     </table>
   </div>
   <div class="section-sep"></div>
@@ -7881,6 +7919,17 @@ class Handler(BaseHTTPRequestHandler):
                 except Exception:
                     pass
             self._send_json(200, {"picks": by_game, "date": today_str})
+            return
+
+        # ── NBA IR list (GET) ────────────────────────────────────────────
+        if self.path == "/api/nba/ir-list":
+            try:
+                ACTIVE = {"out", "doubtful", "questionable"}
+                all_ir = _rj(NBA_IR)
+                entries = [e for e in all_ir if e.get("status", "").lower() in ACTIVE]
+                self._send_json(200, {"entries": entries})
+            except Exception as _ex:
+                self._send_json(200, {"entries": [], "error": str(_ex)})
             return
 
         # ── BSN IR list (GET) ────────────────────────────────────────────
