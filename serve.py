@@ -8168,9 +8168,9 @@ def _setup_git_autopush():
 
 def _git_autopush_bg(trigger_cmd=""):
     """
-    Persiste archivos de estado en GitHub via REST API.
-    Un solo commit con todos los archivos cambiados.
-    No depende de git CLI — funciona en cualquier entorno cloud.
+    Persiste archivos de estado en GitHub via Contents API (file-by-file).
+    Inmune a race conditions con deploy.py porque cada archivo usa su propio
+    SHA — no depende del SHA del branch.
     """
     def _push():
         import base64 as _b64, urllib.request as _ur, urllib.error as _ue
@@ -8184,82 +8184,46 @@ def _git_autopush_bg(trigger_cmd=""):
             "Authorization": f"token {token}",
             "Accept":        "application/vnd.github.v3+json",
             "Content-Type":  "application/json",
+            "User-Agent":    "laboy-autopush",
         }
-        base = f"https://api.github.com/repos/{user}/{repo}"
+        base_url = f"https://api.github.com/repos/{user}/{repo}/contents"
+        short    = (trigger_cmd or "state update")[:60]
 
-        def _api(method, path, payload=None, timeout=15):
-            data = json.dumps(payload).encode() if payload else None
-            req  = _ur.Request(f"{base}{path}", data=data,
-                               headers=hdrs, method=method)
+        for rel_path in _GIT_STATE_FILES:
+            abs_path = os.path.join(BASE_DIR, rel_path)
+            if not os.path.exists(abs_path):
+                continue
             try:
-                with _ur.urlopen(req, timeout=timeout) as r:
-                    return json.loads(r.read()), r.status
-            except _ue.HTTPError as e:
-                return json.loads(e.read() or b"{}"), e.code
-            except Exception as e:
-                return {}, 0
-
-        try:
-            # 1. SHA del último commit en main
-            ref, st = _api("GET", "/git/ref/heads/main")
-            if st != 200:
-                print(f"  ⚠️ Autopush: no se pudo leer ref ({st})")
-                return
-            base_commit_sha = ref["object"]["sha"]
-
-            # 2. SHA del árbol base
-            commit, st = _api("GET", f"/git/commits/{base_commit_sha}")
-            if st != 200: return
-            base_tree_sha = commit["tree"]["sha"]
-
-            # 3. Crear blobs para cada archivo de estado
-            tree_items = []
-            for rel_path in _GIT_STATE_FILES:
-                abs_path = os.path.join(BASE_DIR, rel_path)
-                if not os.path.exists(abs_path):
-                    continue
                 with open(abs_path, "rb") as f:
-                    content_b64 = _b64.b64encode(f.read()).decode()
-                blob, st = _api("POST", "/git/blobs",
-                                {"content": content_b64, "encoding": "base64"})
-                if st not in (200, 201):
-                    continue
-                tree_items.append({
-                    "path": rel_path, "mode": "100644",
-                    "type": "blob", "sha": blob["sha"]
-                })
+                    raw = f.read()
+                content_b64 = _b64.b64encode(raw).decode()
+                url = f"{base_url}/{rel_path}"
 
-            if not tree_items:
-                return
+                # GET file SHA actual (necesario para el PUT)
+                req_get = _ur.Request(url, headers=hdrs)
+                try:
+                    with _ur.urlopen(req_get, timeout=15) as r:
+                        file_sha = json.loads(r.read()).get("sha", "")
+                except _ue.HTTPError as e:
+                    if e.code == 404:
+                        file_sha = ""   # archivo nuevo
+                    else:
+                        raise
 
-            # 4. Nuevo árbol
-            tree, st = _api("POST", "/git/trees",
-                            {"base_tree": base_tree_sha, "tree": tree_items})
-            if st not in (200, 201):
-                print(f"  ⚠️ Autopush: error creando tree ({st})")
-                return
+                # PUT — actualiza el archivo con su SHA individual
+                payload = json.dumps({
+                    "message": f"auto: {short}",
+                    "content": content_b64,
+                    "sha":     file_sha,
+                }).encode()
+                req_put = _ur.Request(url, data=payload, headers=hdrs, method="PUT")
+                with _ur.urlopen(req_put, timeout=20) as r:
+                    result = json.loads(r.read())
+                commit_sha = result.get("commit", {}).get("sha", "?")[:8]
+                print(f"  ☁️  Autopush {rel_path} → {commit_sha}")
 
-            # 5. Nuevo commit
-            short = (trigger_cmd or "state update")[:60]
-            new_commit, st = _api("POST", "/git/commits", {
-                "message": f"auto: {short}",
-                "tree":    tree["sha"],
-                "parents": [base_commit_sha]
-            })
-            if st not in (200, 201):
-                print(f"  ⚠️ Autopush: error creando commit ({st})")
-                return
-
-            # 6. Actualizar ref de main
-            _, st = _api("PATCH", "/git/refs/heads/main",
-                         {"sha": new_commit["sha"]})
-            if st in (200, 201):
-                print(f"  ☁️  GitHub autopush OK: auto: {short}")
-            else:
-                print(f"  ⚠️ Autopush: error actualizando ref ({st})")
-
-        except Exception as e:
-            print(f"  ⚠️  Autopush error: {e}")
+            except Exception as e:
+                print(f"  ⚠️  Autopush {rel_path}: {e}")
 
     threading.Thread(target=_push, daemon=True).start()
 
