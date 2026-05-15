@@ -8080,6 +8080,16 @@ class Handler(BaseHTTPRequestHandler):
                 return
 
             # ── Form endpoints ────────────────────────────────────────
+            # ── JSON API endpoints ──────────────────────────────────
+            if "application/json" in ctype:
+                try:
+                    data = json.loads(raw.decode())
+                except Exception:
+                    data = {}
+                code, resp = handle_api(path, data)
+                self._send_json(code, resp)
+                return
+
             if "application/x-www-form-urlencoded" in ctype:
                 raw_str = raw.decode("utf-8")
                 form_data = {k: v[0] for k,v in parse_qs(raw_str, keep_blank_values=True).items()}
