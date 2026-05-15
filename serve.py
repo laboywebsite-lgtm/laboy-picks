@@ -14,8 +14,7 @@ BSN_DIR  = os.path.join(BASE_DIR, "BSN")
 NBA_DIR  = os.path.join(BASE_DIR, "NBA")
 MLB_DIR  = os.path.join(BASE_DIR, "MLB")
 
-BSN_LOG       = os.path.join(BSN_DIR, "bsn_picks_log.json")
-BSN_TEAM_STATS = os.path.join(BSN_DIR, "bsn_team_stats.json")
+BSN_LOG  = os.path.join(BSN_DIR, "bsn_picks_log.json")
 NBA_LOG  = os.path.join(NBA_DIR, "nba_picks_log.json")
 MLB_LOG  = os.path.join(MLB_DIR, "laboy_picks_log.json")
 NBA_IR   = os.path.join(NBA_DIR, "nba_injuries.json")
@@ -251,7 +250,6 @@ def _grade_rows(log_path, endpoint):
     <button class="btn green" style="flex:1;padding:7px 4px;font-size:0.75rem" onclick="gradePick('{endpoint}',{eid},'W')">✅ WIN</button>
     <button class="btn red" style="flex:1;padding:7px 4px;font-size:0.75rem" onclick="gradePick('{endpoint}',{eid},'L')">❌ LOSS</button>
     <button class="btn gray" style="flex:1;padding:7px 4px;font-size:0.75rem" onclick="gradePick('{endpoint}',{eid},'P')">🔄 PUSH</button>
-    <button class="btn gray" style="padding:7px 8px;font-size:0.75rem;opacity:0.6" onclick="removePick('{endpoint.replace('/grade','/remove-pick')}',{eid})">🗑</button>
   </div>
 </div>"""
     return rows
@@ -293,26 +291,10 @@ def _grade_rows_mlb(log_path, endpoint):
             f'<button class="btn green" style="flex:1;padding:7px 4px;font-size:0.75rem" onclick="gradePick(\'{endpoint}\',{eid},\'W\',{_cl_arg})">✅ WIN</button>'
             f'<button class="btn red"   style="flex:1;padding:7px 4px;font-size:0.75rem" onclick="gradePick(\'{endpoint}\',{eid},\'L\',{_cl_arg})">❌ LOSS</button>'
             f'<button class="btn gray"  style="flex:1;padding:7px 4px;font-size:0.75rem" onclick="gradePick(\'{endpoint}\',{eid},\'P\',{_cl_arg})">🔄 PUSH</button>'
-            f'<button class="btn gray"  style="padding:7px 8px;font-size:0.75rem;opacity:0.6" onclick="removePick(\'{endpoint.replace("/grade","/remove-pick")}\',{eid})">🗑</button>'
             f'</div></div>'
         )
     return rows
 
-
-def _remove_pick(log_path, data):
-    id_s = data.get("id","").strip()
-    if not id_s:
-        return False, "⚠️ ID requerido."
-    try:
-        pick_id = int(id_s)
-        log = _rj(log_path)
-        new_log = [e for e in log if e.get("id") != pick_id]
-        if len(new_log) == len(log):
-            return False, f"⚠️ Pick #{pick_id} no encontrado."
-        _wj(log_path, new_log)
-        return True, f"🗑 Pick #{pick_id} eliminado."
-    except Exception as ex:
-        return False, f"⚠️ Error: {ex}"
 
 def _grade_pick(log_path, data):
     id_s   = data.get("id","").strip()
@@ -2305,18 +2287,6 @@ async function gradePick(endpoint, id, result, closingInputId){
   }catch(e){alert('Error: '+e);}
 }
 
-// Remove pick from log
-async function removePick(endpoint, id){
-  if(!confirm('⚠️ Eliminar pick #'+id+' del log? Esta acción no se puede deshacer.')) return;
-  try{
-    const r=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},
-      body:'id='+id});
-    const d=await r.json();
-    alert(d.msg);
-    if(d.ok) location.reload();
-  }catch(e){alert('Error: '+e);}
-}
-
 // Add parlay leg
 let legCount=1;
 function addLeg(){
@@ -3437,7 +3407,6 @@ def bsn_panel():
     ('🖼', 'Record',  "openRecordModal('BSN','bsn.py','BSN','#f5a623')"),
     ('🃏', 'Parlay',  "openModal('bsn-parlay')"),
     ('🏥', 'IR',      "openBsnIrModal()"),
-    ('✏️', 'Stats ⚙',"openBsnStatsEditor()"),
     ('🎯', 'GP',      "openModal('bsn-gp')"),
   ]
 )}
@@ -4538,8 +4507,7 @@ def full_page(alert="", alert_type=""):
   <div class="panel active" id="panel-bsn">{bsn_panel()}</div>
   <div class="panel" id="panel-nba">{nba_panel()}</div>
   <div class="panel" id="panel-mlb">{mlb_panel()}</div>
-
-</main></main>
+</main>
 
 <!-- ── Detail Panel (slide-in) ── -->
 <div id="detail-overlay" class="detail-overlay" onclick="closeDetail()"></div>
@@ -6617,102 +6585,10 @@ def _nba_stats_html():
   <span style="color:#475569">Equipos sin playoffs (PO GP = —) aparecen en gris</span>
 </div>"""
 
-
-    edit_btn = ('<div style="margin-bottom:12px;text-align:right">'
-                '<button style="background:#f5a623;color:#000;border:none;cursor:pointer;font-weight:700;font-size:.72rem;padding:8px 16px;border-radius:20px;letter-spacing:.3px" '
-                'onclick="openBsnStatsEditor()">✏️ Editar Stats</button></div>')
-
-    team_cards = ""
-    for t in sorted(stats.keys()):
-        s = stats[t]
-        bg, fg = _BSN_COLORS.get(t, ("#1e293b","#f1f5f9"))
-        net = round(s["ortg"] - s["drtg"], 1) if s.get("ortg") and s.get("drtg") else 0
-        net_col = "#22c55e" if net > 2 else ("#f43f5e" if net < -2 else "#94a3b8")
-        team_cards += (
-            f'<div class="bse-card" data-team="{_esc(t)}" style="border-left:3px solid {bg}">'
-            f'<div class="bse-name" style="color:{fg};background:{bg}20">'
-            f'{_badge_bsn(t, 22)} <span>{_esc(t)}</span>'
-            f'<span class="bse-net" style="color:{net_col}">{net:+.1f}</span>'
-            f'</div>'
-            f'<div class="bse-fields">'
-            f'<label>OffRtg<input type="number" step="0.1" class="bse-inp" data-field="ortg" '
-            f'value="{s.get("ortg",100):.1f}"></label>'
-            f'<label>DefRtg<input type="number" step="0.1" class="bse-inp" data-field="drtg" '
-            f'value="{s.get("drtg",100):.1f}"></label>'
-            f'<label>Pace<input type="number" step="0.1" class="bse-inp" data-field="pace" '
-            f'value="{s.get("pace",78.5):.1f}"></label>'
-            f'</div></div>'
-        )
-
-    editor_modal = f"""
-<div id="bsn-stats-modal" style="display:none;position:fixed;inset:0;z-index:9999;
-  background:rgba(0,0,0,.85);backdrop-filter:blur(6px);overflow-y:auto;padding:20px 12px">
-  <div style="max-width:480px;margin:0 auto;background:#0f172a;border-radius:20px;
-    border:1px solid rgba(245,166,35,.25);padding:20px">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-      <div>
-        <div style="font-size:.62rem;color:#f5a623;letter-spacing:2px;font-family:monospace">BSN · STATS EDITOR</div>
-        <div style="font-size:1rem;font-weight:700;color:#f1f5f9;margin-top:2px">Team Stats 2026</div>
-      </div>
-      <button onclick="closeBsnStatsEditor()" style="background:rgba(255,255,255,.06);border:none;
-        color:#94a3b8;font-size:1.2rem;padding:6px 12px;border-radius:10px;cursor:pointer">✕</button>
-    </div>
-    <div style="font-size:.65rem;color:#475569;margin-bottom:14px;padding:8px 10px;
-      background:rgba(245,166,35,.04);border-radius:8px;border:1px solid rgba(245,166,35,.1)">
-      Edita los valores directamente. Los cambios se aplican al modelo de inmediato.
-    </div>
-    <div id="bse-cards" style="display:flex;flex-direction:column;gap:10px">
-{team_cards}
-    </div>
-    <button onclick="saveBsnStats()" class="btn gold" style="width:100%;margin-top:18px;
-      padding:13px;font-size:.85rem;border-radius:14px;font-weight:700;letter-spacing:.5px">
-      💾 Guardar Cambios
-    </button>
-    <div id="bse-msg" style="margin-top:10px;text-align:center;font-size:.78rem;color:#22c55e;min-height:20px"></div>
-  </div>
-</div>
-<style>
-.bse-card{{background:#111827;border-radius:12px;overflow:hidden}}
-.bse-name{{display:flex;align-items:center;gap:7px;padding:8px 10px;font-size:.7rem;font-weight:700;color:#f1f5f9}}
-.bse-net{{margin-left:auto;font-size:.68rem;font-weight:700;font-family:monospace}}
-.bse-fields{{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:10px}}
-.bse-fields label{{display:flex;flex-direction:column;gap:4px;font-size:.6rem;color:#64748b;letter-spacing:.5px}}
-.bse-inp{{background:#1e293b;border:1px solid rgba(245,166,35,.2);border-radius:8px;
-  color:#f1f5f9;font-size:.85rem;padding:6px 8px;width:100%;text-align:center;
-  font-family:monospace;outline:none}}
-.bse-inp:focus{{border-color:#f5a623;background:#1e293b}}
-</style>
-<script>
-function openBsnStatsEditor(){{document.getElementById('bsn-stats-modal').style.display='block';document.body.style.overflow='hidden'}}
-function closeBsnStatsEditor(){{document.getElementById('bsn-stats-modal').style.display='none';document.body.style.overflow=''}}
-async function saveBsnStats(){{
-  const msg=document.getElementById('bse-msg');
-  msg.textContent='Guardando...';msg.style.color='#f5a623';
-  const payload={{}};
-  document.querySelectorAll('.bse-card').forEach(card=>{{
-    const team=card.dataset.team;
-    payload[team]={{}};
-    card.querySelectorAll('.bse-inp').forEach(inp=>{{payload[team][inp.dataset.field]=parseFloat(inp.value)||0}});
-    // Update net display
-    const o=payload[team].ortg||0,d=payload[team].drtg||0,net=o-d;
-    const netEl=card.querySelector('.bse-net');
-    if(netEl)netEl.textContent=(net>=0?'+':'')+net.toFixed(1);
-  }});
-  try{{
-    const r=await fetch('/api/bsn/update-team-stats',{{method:'POST',
-      headers:{{'Content-Type':'application/json'}},body:JSON.stringify(payload)}});
-    const d=await r.json();
-    msg.textContent=d.msg;msg.style.color=d.ok?'#22c55e':'#f43f5e';
-    if(d.ok)setTimeout(()=>{{closeBsnStatsEditor();location.reload()}},1200);
-  }}catch(e){{msg.textContent='Error: '+e;msg.style.color='#f43f5e'}}
-}}
-</script>"""
     return (f'<div class="vw-output">'
-            f'{edit_btn}'
             f'{title_html}{hdr_html}'
             f'<div class="vpt">{rows_html}</div>'
             f'{legend}'
-            f'{editor_modal}'
             f'</div>')
 
 
@@ -6830,26 +6706,21 @@ def _bsn_stats_html():
         return (f'<div class="detail-empty">Sin datos BSN.<br>'
                 f'<span style="font-size:.7rem;color:#475569">{ex}</span></div>')
 
-    # Prefer JSON override; fallback to Excel
-    json_stats = _rj(BSN_TEAM_STATS) if os.path.exists(BSN_TEAM_STATS) else {}
+    # Parse: header row has 'TEAM','ORtg','DRtg','Pace' at columns H–K (index 7–10)
+    # Data rows start at row 5 (index 4) — team short name in col C (index 2)
     stats = {}
     for row in rows_raw:
         short = row[2] if len(row) > 2 else None
-        if not isinstance(short, str): continue
-        key = short.upper()
-        if key not in _BSN_COLORS: continue
-        if key in json_stats:
-            stats[key] = {k: float(v) for k, v in json_stats[key].items()}
-        else:
-            ortg = row[8] if len(row) > 8 else None
-            drtg = row[9] if len(row) > 9 else None
-            pace = row[10] if len(row) > 10 else None
-            if isinstance(ortg, (int, float)):
-                stats[key] = {
-                    "ortg": float(ortg),
-                    "drtg": float(drtg) if isinstance(drtg, (int, float)) else None,
-                    "pace": float(pace) if isinstance(pace, (int, float)) else None,
-                }
+        ortg  = row[8] if len(row) > 8 else None
+        drtg  = row[9] if len(row) > 9 else None
+        pace  = row[10] if len(row) > 10 else None
+        if (isinstance(short, str) and short.upper() in _BSN_COLORS
+                and isinstance(ortg, (int, float))):
+            stats[short.upper()] = {
+                "ortg": float(ortg),
+                "drtg": float(drtg) if isinstance(drtg, (int, float)) else None,
+                "pace": float(pace) if isinstance(pace, (int, float)) else None,
+            }
 
     if not stats:
         return '<div class="detail-empty">Sin datos en el Excel BSN.</div>'
@@ -7571,35 +7442,6 @@ def handle_api(path, data):
         if ok: _git_autopush_bg("bsn --grade")
         return 200, j(ok, msg)
 
-    if path == "/api/bsn/get-team-stats":
-        data = _rj(BSN_TEAM_STATS) if os.path.exists(BSN_TEAM_STATS) else {}
-        body = json.dumps({"ok": True, "stats": data}).encode()
-        self.send_response(200); self.send_header("Content-Type","application/json")
-        self.send_header("Access-Control-Allow-Origin","*"); self.end_headers()
-        self.wfile.write(body); return
-
-    if path == "/api/bsn/update-team-stats":
-        try:
-            cur = _rj(BSN_TEAM_STATS) if os.path.exists(BSN_TEAM_STATS) else {}
-            for team, vals in data.items():
-                team = team.upper().strip()
-                if team:
-                    cur[team] = {
-                        "ortg": float(vals.get("ortg", cur.get(team, {}).get("ortg", 100))),
-                        "drtg": float(vals.get("drtg", cur.get(team, {}).get("drtg", 100))),
-                        "pace": float(vals.get("pace", cur.get(team, {}).get("pace", 78.5))),
-                    }
-            _wj(BSN_TEAM_STATS, cur)
-            _git_autopush_bg("bsn --update-team-stats")
-            return 200, j(True, "✅ Stats BSN actualizados.")
-        except Exception as ex:
-            return 200, j(False, f"⚠️ Error: {ex}")
-
-    if path == "/api/bsn/remove-pick":
-        ok, msg = _remove_pick(BSN_LOG, data)
-        if ok: _git_autopush_bg("bsn --remove")
-        return 200, j(ok, msg)
-
     if path == "/api/bsn/gp":
         team = data.get("team","").strip().upper()
         gp_s = data.get("gp","").strip()
@@ -7678,11 +7520,6 @@ def handle_api(path, data):
     if path == "/api/nba/grade":
         ok, msg = _grade_pick(NBA_LOG, data)
         if ok: _git_autopush_bg("nba --grade")
-        return 200, j(ok, msg)
-
-    if path == "/api/nba/remove-pick":
-        ok, msg = _remove_pick(NBA_LOG, data)
-        if ok: _git_autopush_bg("nba --remove")
         return 200, j(ok, msg)
 
     if path == "/api/nba/auto-grade":
@@ -7765,11 +7602,6 @@ def handle_api(path, data):
     if path == "/api/mlb/grade":
         ok, msg = _grade_pick(MLB_LOG, data)
         if ok: _git_autopush_bg("mlb --grade")
-        return 200, j(ok, msg)
-
-    if path == "/api/mlb/remove-pick":
-        ok, msg = _remove_pick(MLB_LOG, data)
-        if ok: _git_autopush_bg("mlb --remove")
         return 200, j(ok, msg)
 
     if path == "/api/mlb/auto-grade":
@@ -8196,7 +8028,7 @@ class Handler(BaseHTTPRequestHandler):
 #
 # Archivos de estado que se persisten:
 _GIT_STATE_FILES = [
-    "BSN/bsn_picks_log.json", "BSN/bsn_team_stats.json",
+    "BSN/bsn_picks_log.json",
     "BSN/bsn_gp.json",
     "BSN/bsn_market_lines.json",
     "BSN/bsn_model_picks.json",
@@ -8352,19 +8184,3 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         print("\n  🛑  Servidor detenido.\n")
         server.server_close()
-
-
-# ── Autopush periódico cada 2 min (grades/record/IR) ────────────────
-def _start_periodic_autopush():
-    import threading as _pthr, time as _ptm
-    def _loop():
-        while True:
-            _ptm.sleep(120)
-            try:
-                _git_autopush_bg("periodic")
-            except Exception:
-                pass
-    _pthr.Thread(target=_loop, daemon=True).start()
-
-_start_periodic_autopush()
-# ─────────────────────────────────────────────────────────────────────
