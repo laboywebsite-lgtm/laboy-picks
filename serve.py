@@ -8430,12 +8430,14 @@ class Handler(BaseHTTPRequestHandler):
                         _odds_fmt = (f"+{int(_odds_v)}" if float(_odds_v) > 0 else str(int(_odds_v))) if _odds_v else "—"
                     except Exception:
                         _odds_fmt = str(_odds_v)
+                    from urllib.parse import quote as _qenc
+                    _enc_name = _qenc(_jname, safe="") if _ready else ""
                     _picks.append({
                         "id": _pid, "game": str(_e.get("game", "")),
                         "pick": str(_e.get("pick", "")), "odds_fmt": _odds_fmt,
                         "result": _e.get("result"), "date": _dtl,
                         "ready": _ready, "file_name": _jname,
-                        "media_url": f"/media/{_lgl}/{_jname}" if _ready else "",
+                        "media_url": f"/media/{_lgl}/{_enc_name}" if _ready else "",
                     })
                 self._send_json(200, {"picks": _picks})
             except Exception as _exl:
@@ -8452,13 +8454,15 @@ class Handler(BaseHTTPRequestHandler):
             _ldir = {"MLB": MLB_DIR, "BSN": BSN_DIR, "NBA": NBA_DIR}.get(_lg, MLB_DIR)
             import glob as _glob2
             # Look for Laboy Pick YYYY-MM-DD #N.jpg matching date (and optionally idx)
-            _prefix = {"MLB": "Laboy Pick", "BSN": "Laboy BSN Pick", "NBA": "Laboy NBA Pick"}.get(_lg, "Laboy Pick")
+            from urllib.parse import quote as _qenc2
+            _prefix = {"MLB": "Laboy Pick", "BSN": "Laboy Pick", "NBA": "Laboy NBA Pick"}.get(_lg, "Laboy Pick")
             _pattern = os.path.join(_ldir, f"{_prefix} {_dt} #*.jpg")
             _matches = sorted(_glob2.glob(_pattern), key=os.path.getmtime, reverse=True)
             if _matches:
                 _fname = os.path.basename(_matches[0])
+                _enc_fname = _qenc2(_fname, safe="")
                 self._send_json(200, {"ready": True, "file_name": _fname,
-                                      "media_url": f"/media/{_lg}/{_fname}"})
+                                      "media_url": f"/media/{_lg}/{_enc_fname}"})
             else:
                 self._send_json(200, {"ready": False})
             return
@@ -8476,7 +8480,10 @@ class Handler(BaseHTTPRequestHandler):
         # ── /media/<path> — sirve imágenes y HTML generados ─────────────
         if self.path.startswith("/media/"):
             from urllib.parse import unquote as _uq
-            _rel = _uq(self.path[len("/media/"):]).lstrip("/")
+            # Strip query string BEFORE unquoting (avoid ?dl=1 becoming part of filename)
+            _raw_path = self.path.split("?", 1)[0]
+            _dl       = "dl=1" in self.path
+            _rel      = _uq(_raw_path[len("/media/"):]).lstrip("/")
             # Solo permitir MLB/, BSN/, NBA/ para seguridad
             _parts = _rel.split("/", 1)
             if len(_parts) == 2 and _parts[0] in ("MLB", "BSN", "NBA"):
@@ -8487,7 +8494,6 @@ class Handler(BaseHTTPRequestHandler):
                     _ct  = "image/jpeg" if _ext in ("jpg","jpeg") else \
                            "image/png"  if _ext == "png" else \
                            "text/html; charset=utf-8"
-                    _dl  = "dl=1" in self.path
                     try:
                         with open(_fpath, "rb") as _ff:
                             _data = _ff.read()
@@ -8495,9 +8501,10 @@ class Handler(BaseHTTPRequestHandler):
                         self.send_header("Content-Type", _ct)
                         self.send_header("Content-Length", str(len(_data)))
                         if _dl:
-                            import urllib.parse as _up
-                            _fn = _up.quote(_parts[1])
-                            self.send_header("Content-Disposition", f'attachment; filename="{_parts[1]}"')
+                            import urllib.parse as _up3
+                            _safe_fn = _up3.quote(_parts[1], safe=" .,()-")
+                            self.send_header("Content-Disposition",
+                                f"attachment; filename*=UTF-8''{_up3.quote(_parts[1])}")
                         self.send_header("Cache-Control", "public, max-age=3600")
                         self.end_headers()
                         self.wfile.write(_data)
