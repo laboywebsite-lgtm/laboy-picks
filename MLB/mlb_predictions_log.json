@@ -98,5 +98,15 @@
     "p_over": 0.5914,
     "p_under": 0.2838,
     "actual_runs": null
+  },
+  {
+    "date": "2026-05-14",
+    "game": "TIGERS @ METS",
+    "model_total": 6.2,
+    "market_total": 7.0,
+    "pick": "Under 7.0",
+    "p_over": 0.2789,
+    "p_under": 0.5817,
+    "actual_runs": null
   }
 ]
