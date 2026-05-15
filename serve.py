@@ -2273,7 +2273,7 @@ async function submitForm(formId,endpoint,modalId){
   }catch(e){alert('Error: '+e);}
 }
 
-// ── Log Pick with auto-download ───────────────────────────────────────────
+// ── Log Pick → abre modal de picks al loguear ────────────────────────────
 async function submitLogForm(formId, endpoint, modalId, league){
   const form = document.getElementById(formId);
   const fd   = new FormData(form);
@@ -2290,34 +2290,105 @@ async function submitLogForm(formId, endpoint, modalId, league){
     form.prepend(div);
     if(d.ok){
       form.reset();
-      // Show download spinner
-      div.textContent = d.msg + ' — generando imagen...';
-      // Poll for the latest pick image (up to 40s)
-      var date = d.pick_date || new Date().toISOString().slice(0,10);
-      var idx  = d.pick_idx  !== undefined ? d.pick_idx : -1;
-      var tries = 0;
-      var poll = setInterval(async function(){
-        tries++;
-        try {
-          const pr = await fetch('/api/gallery/latest-pick?league='+league+'&date='+date+'&idx='+idx);
-          const pd = await pr.json();
-          if(pd.ready && pd.media_url){
-            clearInterval(poll);
-            div.textContent = d.msg + ' ✅';
-            // Trigger download
-            var a = document.createElement('a');
-            a.href = pd.media_url + '?dl=1';
-            a.download = pd.file_name || 'pick.jpg';
-            a.style.display = 'none';
-            document.body.appendChild(a);
-            a.click();
-            setTimeout(function(){ document.body.removeChild(a); }, 1000);
-            setTimeout(function(){ location.reload(); }, 1400);
-          }
-        } catch(e){}
-        if(tries >= 20){ clearInterval(poll); setTimeout(()=>location.reload(),1000); }
-      }, 2000);
+      var pickDate = d.pick_date || new Date().toISOString().slice(0,10);
+      // Close the log modal and open the picks gallery modal
+      setTimeout(function(){
+        closeModal(modalId);
+        openPicksModal(league, pickDate, true);
+      }, 800);
     }
+  } catch(e){ alert('Error: '+e); }
+}
+
+// ── Picks Gallery Modal (per league + date) ───────────────────────────────
+var _picksPolling = null;
+
+async function openPicksModal(league, dateStr, polling){
+  var modal = document.getElementById('modal-picks-gallery');
+  modal.style.display = 'flex';
+  var accents = {MLB:'#22c55e', BSN:'#f5a623', NBA:'#3b82f6'};
+  var accent  = accents[league] || '#f07820';
+  document.getElementById('pg-bar').style.background   = accent;
+  document.getElementById('pg-title').textContent      = league + ' · Picks ' + dateStr;
+  document.getElementById('pg-dl-all').style.borderColor = accent;
+  document.getElementById('pg-dl-all').style.color       = accent;
+  window._pgLeague = league; window._pgDate = dateStr;
+
+  await _renderPicksList(league, dateStr);
+
+  // If some picks are still generating, poll every 3s
+  if(polling){ _startPicksPolling(league, dateStr); }
+}
+
+function closePicksModal(){
+  document.getElementById('modal-picks-gallery').style.display='none';
+  if(_picksPolling){ clearInterval(_picksPolling); _picksPolling=null; }
+}
+
+function _startPicksPolling(league, dateStr){
+  if(_picksPolling) clearInterval(_picksPolling);
+  var pollCount = 0;
+  _picksPolling = setInterval(async function(){
+    pollCount++;
+    var updated = await _renderPicksList(league, dateStr);
+    // Stop polling when all picks have JPGs or after 20 tries (~60s)
+    if(updated || pollCount >= 20){
+      clearInterval(_picksPolling); _picksPolling = null;
+    }
+  }, 3000);
+}
+
+async function _renderPicksList(league, dateStr){
+  var list = document.getElementById('pg-list');
+  try {
+    const r  = await fetch('/api/gallery/picks-list?league='+league+'&date='+dateStr);
+    const d  = await r.json();
+    var picks = d.picks || [];
+    if(!picks.length){
+      list.innerHTML = '<div style="color:#475569;padding:20px;text-align:center">Sin picks para esta fecha.</div>';
+      return true;
+    }
+    var allReady = picks.every(function(p){ return p.ready; });
+    list.innerHTML = picks.map(function(p){
+      var resClass = p.result==='W'?'pg-w':p.result==='L'?'pg-l':p.result==='P'?'pg-p':'pg-pend';
+      var resBadge = p.result ? '<span class="pg-badge '+resClass+'">'+p.result+'</span>'
+                              : '<span class="pg-badge pg-pend">—</span>';
+      var dlBtn = p.ready
+        ? '<a class="pg-btn pg-dl" href="'+p.media_url+'?dl=1" download="'+p.file_name+'">⬇</a>'
+          +'<a class="pg-btn" href="'+p.media_url+'" target="_blank">👁</a>'
+        : '<span class="pg-btn pg-gen">⏳</span>';
+      return '<div class="pg-item">'
+        +'<div class="pg-item-left">'
+        +resBadge
+        +'<div class="pg-item-info">'
+        +'<span class="pg-game">'+p.game+'</span>'
+        +'<span class="pg-pick">'+p.pick+' <span class="pg-odds">'+p.odds_fmt+'</span></span>'
+        +'</div></div>'
+        +'<div class="pg-item-btns">'+dlBtn+'</div>'
+        +'</div>';
+    }).join('');
+    return allReady;
+  } catch(e){
+    list.innerHTML = '<div style="color:#ef4444;padding:20px">Error cargando picks.</div>';
+    return true;
+  }
+}
+
+async function pgDownloadAll(){
+  var league = window._pgLeague, dateStr = window._pgDate;
+  try {
+    const r = await fetch('/api/gallery/picks-list?league='+league+'&date='+dateStr);
+    const d = await r.json();
+    var picks = (d.picks||[]).filter(function(p){ return p.ready; });
+    if(!picks.length){ alert('Sin imágenes listas aún.'); return; }
+    picks.forEach(function(p, i){
+      setTimeout(function(){
+        var a = document.createElement('a');
+        a.href = p.media_url+'?dl=1'; a.download = p.file_name;
+        a.style.display = 'none'; document.body.appendChild(a);
+        a.click(); setTimeout(function(){ document.body.removeChild(a); }, 500);
+      }, i * 600);
+    });
   } catch(e){ alert('Error: '+e); }
 }
 
@@ -4771,6 +4842,42 @@ def full_page(alert="", alert_type=""):
 .rc-btn:hover{{background:#2563eb;border-color:#2563eb;color:#fff}}
 .rc-dl{{color:#64748b}}
 .rc-dl:hover{{background:#059669;border-color:#059669;color:#fff}}
+</style>
+
+<!-- ── Picks Gallery Modal (shared: MLB / BSN / NBA) ── -->
+<div id="modal-picks-gallery" onclick="if(event.target===this)closePicksModal()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;align-items:flex-end;justify-content:center">
+<div class="rc-gallery-sheet">
+  <div id="pg-bar" class="rc-gallery-bar"></div>
+  <div class="rc-gallery-header">
+    <h3 id="pg-title">Picks</h3>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button id="pg-dl-all" class="rc-gen-btn" onclick="pgDownloadAll()" style="border-color:#22c55e;color:#22c55e">⬇ Todas</button>
+      <button class="rc-close-btn" onclick="closePicksModal()">✕</button>
+    </div>
+  </div>
+  <div id="pg-list" style="overflow-y:auto;padding:6px 12px 20px;flex:1"></div>
+</div>
+</div>
+
+<style>
+.pg-item{{display:flex;align-items:center;justify-content:space-between;padding:10px 8px;border-bottom:1px solid #1e2a3a;gap:10px}}
+.pg-item:last-child{{border-bottom:none}}
+.pg-item-left{{display:flex;align-items:center;gap:10px;flex:1;min-width:0}}
+.pg-badge{{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:6px;font-size:.75rem;font-weight:900;flex-shrink:0}}
+.pg-w{{background:#14532d;color:#4ade80}}
+.pg-l{{background:#7f1d1d;color:#fca5a5}}
+.pg-p{{background:#1e3a5f;color:#93c5fd}}
+.pg-pend{{background:#1e293b;color:#475569}}
+.pg-item-info{{flex:1;min-width:0}}
+.pg-game{{display:block;font-size:.78rem;color:#e2e8f0;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+.pg-pick{{display:block;font-size:.7rem;color:#94a3b8;margin-top:1px}}
+.pg-odds{{color:#64748b;font-size:.67rem}}
+.pg-item-btns{{display:flex;gap:6px;flex-shrink:0}}
+.pg-btn{{background:#1e293b;border:1px solid #2d3f55;color:#94a3b8;border-radius:6px;padding:5px 11px;font-size:.72rem;cursor:pointer;text-decoration:none;white-space:nowrap;display:inline-block}}
+.pg-btn:hover{{background:#2563eb;border-color:#2563eb;color:#fff}}
+.pg-dl{{color:#64748b}}
+.pg-dl:hover{{background:#059669;border-color:#059669;color:#fff}}
+.pg-gen{{color:#475569;cursor:default;border-style:dashed}}
 </style>
 
 <!-- ── Record Card Gallery Modal (shared: MLB / BSN / NBA) ── -->
@@ -8143,6 +8250,53 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         if self.path == "/favicon.ico":
             self.send_response(204); self.end_headers(); return
+
+        # ── /api/gallery/picks-list — picks log + JPG status for a date ───
+        if self.path.startswith("/api/gallery/picks-list"):
+            from urllib.parse import urlparse as _upl, parse_qs as _pqsl
+            _qsl  = _pqsl(_upl(self.path).query)
+            _lgl  = _qsl.get("league", ["MLB"])[0].upper()
+            _dtl  = _qsl.get("date",   [date.today().strftime("%Y-%m-%d")])[0]
+            _logs = {"MLB": MLB_LOG, "BSN": BSN_LOG, "NBA": NBA_LOG}
+            _dirs = {"MLB": MLB_DIR, "BSN": BSN_DIR, "NBA": NBA_DIR}
+            # JPG prefix per league
+            _jpg_prefix = {"MLB": "Laboy Pick", "BSN": "Laboy Pick", "NBA": "Laboy NBA Pick"}
+            _log_path   = _logs.get(_lgl, MLB_LOG)
+            _league_dir = _dirs.get(_lgl, MLB_DIR)
+            _jpfx       = _jpg_prefix.get(_lgl, "Laboy Pick")
+            _picks = []
+            import glob as _pglob
+            try:
+                _all_picks = _rj(_log_path) if os.path.exists(_log_path) else []
+                for _e in _all_picks:
+                    if _e.get("date", "") != _dtl:
+                        continue
+                    _pid    = _e.get("id", 0)
+                    # Glob for file matching "Laboy Pick {date} #{id}*.jpg" (may have game name appended)
+                    _jpattern = os.path.join(_league_dir, f"{_jpfx} {_dtl} #{_pid}*.jpg")
+                    _jmatches = _pglob.glob(_jpattern)
+                    _ready    = bool(_jmatches)
+                    _jname    = os.path.basename(_jmatches[0]) if _ready else ""
+                    _odds_v   = _e.get("odds", 0)
+                    try:
+                        _odds_fmt = (f"+{int(_odds_v)}" if _odds_v > 0 else str(int(_odds_v))) if _odds_v else "—"
+                    except Exception:
+                        _odds_fmt = str(_odds_v)
+                    _picks.append({
+                        "id":        _pid,
+                        "game":      _e.get("game", ""),
+                        "pick":      _e.get("pick", ""),
+                        "odds_fmt":  _odds_fmt,
+                        "result":    _e.get("result"),
+                        "date":      _dtl,
+                        "ready":     _ready,
+                        "file_name": _jname,
+                        "media_url": f"/media/{_lgl}/{_jname}" if _ready else "",
+                    })
+            except Exception as _exl:
+                self._send_json(500, {"picks": [], "error": str(_exl)}); return
+            self._send_json(200, {"picks": _picks})
+            return
 
         # ── /api/gallery/latest-pick — poll for generated pick JPG ─────────
         if self.path.startswith("/api/gallery/latest-pick"):
