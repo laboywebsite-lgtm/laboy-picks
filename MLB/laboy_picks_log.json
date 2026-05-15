@@ -1090,5 +1090,17 @@
     "result": null,
     "pnl": null,
     "analysis": ""
+  },
+  {
+    "id": 91,
+    "date": "2026-05-15",
+    "game": "CUBS vs. DODGERS",
+    "pick": "DODGERS ML",
+    "odds": -110,
+    "stake": 2.0,
+    "book": "DraftKings",
+    "result": null,
+    "pnl": null,
+    "analysis": ""
   }
 ]
