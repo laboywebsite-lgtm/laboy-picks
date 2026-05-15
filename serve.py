@@ -5463,12 +5463,10 @@ def _nba_picks_html():
     if os.path.exists(frag_path):
         try:
             from datetime import datetime as _dt
-            frag_mtime    = os.path.getmtime(frag_path)
-            frag_date     = _dt.fromtimestamp(frag_mtime).strftime("%Y-%m-%d")
-            picks_mtime   = os.path.getmtime(picks_path) if os.path.exists(picks_path) else 0
-            nba_py_mtime  = os.path.getmtime(nba_py_path) if os.path.exists(nba_py_path) else 0
-            # Only use the cached HTML if it's from today and at least as fresh as picks JSON and nba.py
-            if frag_date == today_str and frag_mtime >= picks_mtime and frag_mtime >= nba_py_mtime:
+            frag_mtime = os.path.getmtime(frag_path)
+            frag_date  = _dt.fromtimestamp(frag_mtime).strftime("%Y-%m-%d")
+            # Use the fragment if it's from today — Run Modelo always regenerates it fresh
+            if frag_date == today_str:
                 with open(frag_path, "r", encoding="utf-8") as f:
                     return f.read()
         except Exception:
