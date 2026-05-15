@@ -4739,11 +4739,12 @@ def cmd_publish(html_paths):
 
     def _api_push(file_path, repo_filename):
         """Push a single file to GitHub Pages repo via API."""
+        from urllib.parse import quote as _quote
         if not _gh_token:
             return False, "GITHUB_TOKEN no configurado"
         with open(file_path, "rb") as _f:
             _content = _b64.b64encode(_f.read()).decode()
-        _api_url = f"https://api.github.com/repos/{_pages_user}/{_pages_repo}/contents/{repo_filename}"
+        _api_url = f"https://api.github.com/repos/{_pages_user}/{_pages_repo}/contents/{_quote(repo_filename)}"
         _hdrs = {
             "Authorization": f"token {_gh_token}",
             "Accept": "application/vnd.github.v3+json",
