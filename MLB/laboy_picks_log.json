@@ -1066,5 +1066,17 @@
     "result": "W",
     "pnl": 20.83,
     "analysis": ""
+  },
+  {
+    "id": 89,
+    "date": "2026-05-15",
+    "game": "BREWERS vs. TWINS",
+    "pick": "OVER 8.5",
+    "odds": -120,
+    "stake": 10.0,
+    "book": "DraftKings",
+    "result": null,
+    "pnl": null,
+    "analysis": ""
   }
 ]
