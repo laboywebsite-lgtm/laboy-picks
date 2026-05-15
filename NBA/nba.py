@@ -3357,6 +3357,7 @@ def _compute_nba_picks_model(games, stats, market_odds=None, injury_impact=None,
         #  - No está ya en strong (no clasificó por los filtros)
         #  - En playoffs: spread edge entre 0.5 y MIN_SPREAD_EDGE, o total edge cercano
         _near_misses_game = []
+        _po_round = _get_playoff_round() if _playoffs else 1  # needed for near-miss OVER threshold
         if _playoffs:
             for c in candidates:
                 if c in strong:
@@ -6320,7 +6321,8 @@ def main():
             print(f"  🏥 Injury impact activo: {len(inj_impact)} equipos afectados")
         if games:
             picks = show_picks(games, odds, stats, injury_impact=inj_impact)
-            _model_picks_save_today(picks if picks else [], TARGET_DATE)  # siempre guardar fecha de hoy
+            if picks:
+                _model_picks_save_today(picks, TARGET_DATE)
             _write_lines_json(games, stats, TARGET_DATE, injury_impact=inj_impact)
             html_file = export_picks_html(games, odds, stats, TARGET_DATE, injury_impact=inj_impact)
             print(f"  📄 Picks HTML: {os.path.basename(html_file)}")
