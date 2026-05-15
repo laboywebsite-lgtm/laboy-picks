@@ -4852,7 +4852,7 @@ def full_page(alert="", alert_type=""):
 </style>
 
 <!-- ── Picks Gallery Modal (shared: MLB / BSN / NBA) ── -->
-<div id="modal-picks-gallery" onclick="if(event.target===this){closePicksModal()}" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;align-items:flex-end;justify-content:center">
+<div id="modal-picks-gallery" onclick="if(event.target===this) closePicksModal()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;align-items:flex-end;justify-content:center">
 <div class="rc-gallery-sheet">
   <div id="pg-bar" class="rc-gallery-bar"></div>
   <div class="rc-gallery-header">
