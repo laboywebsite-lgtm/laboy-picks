@@ -1,1 +1,42 @@
-[]
+[
+  {
+    "team_abb": "DET",
+    "player": "KEVIN HUERTER",
+    "status": "questionable",
+    "note": "Questionable – Injury/Illness-LeftAdductor;Strain",
+    "ppg": 10.0,
+    "usg": 0.086,
+    "rate": 3,
+    "impact": 0.344
+  },
+  {
+    "team_abb": "DET",
+    "player": "CARIS LEVERT",
+    "status": "questionable",
+    "note": "Questionable – Injury/Illness-RightHeel;Contusion",
+    "ppg": 7.4,
+    "usg": 0.156,
+    "rate": 3,
+    "impact": 0.462
+  },
+  {
+    "team_abb": "DET",
+    "player": "DUNCAN ROBINSON",
+    "status": "questionable",
+    "note": "Questionable – Injury/Illness-LowBack;Soreness",
+    "ppg": 12.2,
+    "usg": 0.148,
+    "rate": 3,
+    "impact": 0.722
+  },
+  {
+    "team_abb": "MIN",
+    "player": "DONTE DIVINCENZO",
+    "status": "out",
+    "note": "Out",
+    "ppg": 12.2,
+    "usg": 0.16,
+    "rate": 3,
+    "impact": 1.562
+  }
+]
