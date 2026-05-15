@@ -4337,10 +4337,13 @@ function mlgSelectBook(btn,book){{
   </div>
   <div class="mlg-body">
   <form id="f-mlb-log" onsubmit="event.preventDefault();var g=document.getElementById('mlb-log-game');if(g&&!g.value){{alert('Selecciona un juego');return;}}submitForm('f-mlb-log','/api/mlb/log','mlb-log')">
-    <input type="hidden" name="date" value="{today}">
     <input type="hidden" name="away">
     <input type="hidden" name="home">
     <input type="hidden" name="book" value="DraftKings">
+    <div class="mlg-field">
+      <div class="mlg-lbl">📅 Fecha</div>
+      <input type="date" name="date" value="{today}" max="{today}">
+    </div>
     <div class="mlg-field">
       <div class="mlg-lbl">⚡ Juego del Modelo</div>
       <select id="mlb-log-game" onchange="mlbLogFillPick(this)">
