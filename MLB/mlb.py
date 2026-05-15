@@ -4786,23 +4786,6 @@ def cmd_publish(html_paths):
             else:
                 print(f"  ✅ Repo clonado.\n")
 
-    # ── API publish ───────────────────────────────────────────────────────────
-    if _use_api:
-        published = []
-        for hp in (html_paths or []):
-            if hp and os.path.isfile(hp):
-                fname = os.path.basename(hp)
-                ok, info = _api_push(hp, fname)
-                if ok:
-                    print(f"  ✅ {fname} → GitHub Pages ({info})")
-                    published.append(fname)
-                else:
-                    print(f"  ⚠️  No se pudo publicar {fname}: {info}")
-        if published:
-            print(f"\n  🌐 {GITHUB_PAGES_URL}/{published[0]}")
-            _api_update_dashboard(published)
-        return
-
     def _api_update_dashboard(new_files):
         """Actualiza dashboard-{TOKEN}.html en GitHub via API, igual que _publish_update_index."""
         from urllib.parse import quote as _quote
@@ -4885,6 +4868,23 @@ ul{{list-style:none;padding:0;margin:0}}li{{padding:6px 0;border-bottom:1px soli
             return True, _res["commit"]["sha"][:8]
         except Exception as _e:
             return False, str(_e)
+
+    # ── API publish ───────────────────────────────────────────────────────────
+    if _use_api:
+        published = []
+        for hp in (html_paths or []):
+            if hp and os.path.isfile(hp):
+                fname = os.path.basename(hp)
+                ok, info = _api_push(hp, fname)
+                if ok:
+                    print(f"  ✅ {fname} → GitHub Pages ({info})")
+                    published.append(fname)
+                else:
+                    print(f"  ⚠️  No se pudo publicar {fname}: {info}")
+        if published:
+            print(f"\n  🌐 {GITHUB_PAGES_URL}/{published[0]}")
+            _api_update_dashboard(published)
+        return
 
     copied = []
     for hp in (html_paths or []):
