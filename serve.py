@@ -5479,17 +5479,25 @@ def _nba_picks_html():
                 '<span style="font-size:.7rem;color:#475569">Corre ▶ Run Modelo primero.</span></div>')
 
     today_str = date.today().strftime("%Y-%m-%d")
-    picks = data.get(today_str, [])
+    today_entry = data.get(today_str, None)  # None=modelo no corrió; []=corrió sin picks
+    picks = today_entry if today_entry else []
     display_date = today_str
 
-    if not picks:
-        # Fall back to most recent date
+    if today_entry is None:
+        # Modelo no ha corrido hoy — mostrar picks más recientes con su fecha real
         dates = sorted(data.keys(), reverse=True)
         if dates:
             display_date = dates[0]
             picks = data[display_date]
         if not picks:
-            return '<div class="detail-empty">Sin picks disponibles.</div>'
+            return '<div class="detail-empty">Sin picks disponibles. Corre ▶ Run Modelo.</div>'
+    elif not picks:
+        # Modelo corrió hoy pero ningún pick pasó el umbral de EV
+        return ('<div class="detail-empty" style="text-align:center;padding:28px 16px">'
+                '<div style="font-size:1rem;color:#f5a623;margin-bottom:10px">✅ Modelo corrió hoy</div>'
+                '<div style="color:#94a3b8;font-size:.85rem">No hay picks con EV+ para los juegos de hoy.<br>'
+                '<span style="font-size:.75rem;color:#64748b">Intenta después de las 6PM cuando haya más líneas disponibles.</span></div>'
+                '</div>')
 
     # Sort by EV descending
     picks = sorted(picks, key=lambda p: p.get('_ev', 0) or 0, reverse=True)
