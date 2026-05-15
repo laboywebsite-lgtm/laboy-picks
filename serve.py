@@ -19,7 +19,6 @@ NBA_LOG  = os.path.join(NBA_DIR, "nba_picks_log.json")
 MLB_LOG  = os.path.join(MLB_DIR, "laboy_picks_log.json")
 NBA_IR   = os.path.join(NBA_DIR, "nba_injuries.json")
 BSN_GP   = os.path.join(BSN_DIR, "bsn_gp.json")
-BSN_STATS_JSON = os.path.join(BSN_DIR, "bsn_team_stats.json")
 MLB_PICKS = os.path.join(MLB_DIR, "mlb_model_picks.json")
 
 PORT = int(os.environ.get("PORT", 5001))   # Railway/cloud usa $PORT; local usa 5001
@@ -244,7 +243,6 @@ def _grade_rows(log_path, endpoint):
         odds_s = _fmt_odds(e.get("odds",0))
         stake_s = f"${e.get('stake',0)}"
         eid = e.get("id","")
-        rm_ep = endpoint.replace('/grade', '/remove-pick')
         rows += f"""<div style="background:#0a0a0a;border-radius:8px;padding:10px;border:1px solid #1e293b;margin-bottom:8px">
   <div style="font-size:0.68rem;color:#94a3b8;margin-bottom:3px">#{eid} · {e.get('date','')} · {odds_s} · {stake_s}</div>
   <div style="font-size:0.83rem;font-weight:700;margin-bottom:8px">{_esc(game_label)}<br><span style="color:#f07820">{_esc(pick_label)}</span></div>
@@ -252,7 +250,7 @@ def _grade_rows(log_path, endpoint):
     <button class="btn green" style="flex:1;padding:7px 4px;font-size:0.75rem" onclick="gradePick('{endpoint}',{eid},'W')">✅ WIN</button>
     <button class="btn red" style="flex:1;padding:7px 4px;font-size:0.75rem" onclick="gradePick('{endpoint}',{eid},'L')">❌ LOSS</button>
     <button class="btn gray" style="flex:1;padding:7px 4px;font-size:0.75rem" onclick="gradePick('{endpoint}',{eid},'P')">🔄 PUSH</button>
-    <button class="btn red" style="flex:0 0 34px;padding:7px 2px;font-size:0.9rem" onclick="_removePick('{rm_ep}',{eid})" title="Borrar pick">🗑</button>
+    <button class="btn gray" style="padding:7px 8px;font-size:0.75rem;opacity:0.6" onclick="removePick('{endpoint.replace('/grade','/remove-pick')}',{eid})">🗑</button>
   </div>
 </div>"""
     return rows
@@ -294,10 +292,26 @@ def _grade_rows_mlb(log_path, endpoint):
             f'<button class="btn green" style="flex:1;padding:7px 4px;font-size:0.75rem" onclick="gradePick(\'{endpoint}\',{eid},\'W\',{_cl_arg})">✅ WIN</button>'
             f'<button class="btn red"   style="flex:1;padding:7px 4px;font-size:0.75rem" onclick="gradePick(\'{endpoint}\',{eid},\'L\',{_cl_arg})">❌ LOSS</button>'
             f'<button class="btn gray"  style="flex:1;padding:7px 4px;font-size:0.75rem" onclick="gradePick(\'{endpoint}\',{eid},\'P\',{_cl_arg})">🔄 PUSH</button>'
+            f'<button class="btn gray"  style="padding:7px 8px;font-size:0.75rem;opacity:0.6" onclick="removePick(\'{endpoint.replace("/grade","/remove-pick")}\',{eid})">🗑</button>'
             f'</div></div>'
         )
     return rows
 
+
+def _remove_pick(log_path, data):
+    id_s = data.get("id","").strip()
+    if not id_s:
+        return False, "⚠️ ID requerido."
+    try:
+        pick_id = int(id_s)
+        log = _rj(log_path)
+        new_log = [e for e in log if e.get("id") != pick_id]
+        if len(new_log) == len(log):
+            return False, f"⚠️ Pick #{pick_id} no encontrado."
+        _wj(log_path, new_log)
+        return True, f"🗑 Pick #{pick_id} eliminado."
+    except Exception as ex:
+        return False, f"⚠️ Error: {ex}"
 
 def _grade_pick(log_path, data):
     id_s   = data.get("id","").strip()
@@ -2290,6 +2304,18 @@ async function gradePick(endpoint, id, result, closingInputId){
   }catch(e){alert('Error: '+e);}
 }
 
+// Remove pick from log
+async function removePick(endpoint, id){
+  if(!confirm('⚠️ Eliminar pick #'+id+' del log? Esta acción no se puede deshacer.')) return;
+  try{
+    const r=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},
+      body:'id='+id});
+    const d=await r.json();
+    alert(d.msg);
+    if(d.ok) location.reload();
+  }catch(e){alert('Error: '+e);}
+}
+
 // Add parlay leg
 let legCount=1;
 function addLeg(){
@@ -2316,31 +2342,6 @@ async function bsnEditTime(away, home, newTime){
     alert(d.msg);
     if(d.ok) location.reload();
   }catch(e){alert('Error: '+e);}
-}
-async function _saveBsnStats(){
-  const out={};
-  document.querySelectorAll('[data-bsnt]').forEach(inp=>{
-    const t=inp.dataset.bsnt,s=inp.dataset.s,v=parseFloat(inp.value);
-    if(!out[t])out[t]={};
-    if(!isNaN(v))out[t][s]=v;
-  });
-  const msg=document.getElementById('se-msg');
-  if(msg)msg.textContent='Guardando...';
-  try{
-    const r=await fetch('/api/bsn/save-stats',{method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({stats:out})});
-    const d=await r.json();
-    if(msg)msg.textContent=d.msg||(d.ok?'✅ Guardado':'❌ Error');
-    if(d.ok)setTimeout(()=>location.reload(),1500);
-  }catch(e){if(msg)msg.textContent='❌ '+e;}
-}
-async function _removePick(ep,id){
-  if(!confirm('¿Borrar este pick? Esta acción no se puede deshacer.'))return;
-  const r=await fetch(ep,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:id})});
-  const d=await r.json();
-  alert(d.msg||(d.ok?'Pick eliminado':'Error al borrar'));
-  if(d.ok)location.reload();
 }
 async function bsnRemoveGame(away, home){
   if(!confirm('¿Remover juego '+away+' @ '+home+'?')) return;
@@ -3829,7 +3830,7 @@ function nbaLogOpen(){{
         sel.appendChild(opt);
       }});
       if(games.length === 0){{
-        _mlbShowNoPicksInputs(sel);
+        sel.innerHTML = '<option value="">Sin picks del modelo para hoy</option>';
       }}
     }})
     .catch(function(){{ /* sin conexión — usa lo que hay */ }});
@@ -3947,7 +3948,7 @@ function nbaLogSelectBook(btn,book){{
     <button type="button" class="mlg-close" onclick="closeModal('nba-log')">✕</button>
   </div>
   <div class="mlg-body">
-  <form id="f-nba-log" onsubmit="event.preventDefault();var g=document.getElementById('nba-log-game');if(g&&!g.value&&!document.getElementById('mlb-np-wrap')){{alert('Selecciona un juego');return;}}submitForm('f-nba-log','/api/nba/log','nba-log')">
+  <form id="f-nba-log" onsubmit="event.preventDefault();var g=document.getElementById('nba-log-game');if(g&&!g.value){{alert('Selecciona un juego');return;}}submitForm('f-nba-log','/api/nba/log','nba-log')">
     <input type="hidden" name="date" value="{today}">
     <input type="hidden" name="away">
     <input type="hidden" name="home">
@@ -4152,14 +4153,12 @@ def mlb_panel():
         _log_hidden_teams = '<input type="hidden" name="away"><input type="hidden" name="home">'
     else:
         log_game_section = (
-            '<div class="mlg-field">'
-            '<div class="mlg-lbl">⚡ Juego (entrada directa)</div>'
-            '<div class="mlg-row2" style="margin-top:6px">'
-            '<div><div class="mlg-lbl">Away (Visitador)</div>'
-            '<input name="away" id="mlb-else-away" placeholder="Ej: YANKEES" autocapitalize="characters" style="text-transform:uppercase"></div>'
-            '<div><div class="mlg-lbl">Home (Local)</div>'
-            '<input name="home" id="mlb-else-home" placeholder="Ej: METS" autocapitalize="characters" style="text-transform:uppercase"></div>'
-            '</div></div>'
+            '<div class="mlg-row2" style="margin-bottom:0">'
+            '<div><div class="mlg-lbl">Away</div>'
+            '<select name="away" required><option value="">—</option>' + mlb_team_opts + '</select></div>'
+            '<div><div class="mlg-lbl">Home</div>'
+            '<select name="home" required><option value="">—</option>' + mlb_team_opts + '</select></div>'
+            '</div>'
         )
         _log_hidden_teams = ''
 
@@ -4196,40 +4195,6 @@ def mlb_panel():
 #mlb-log textarea{{height:60px!important;resize:none}}
 </style>
 <script>
-function _mlbNpSynced(inp,fld){{
-  inp.value=inp.value.toUpperCase();
-  var h=document.querySelector('#f-mlb-log [name='+fld+']');
-  if(h)h.value=inp.value;
-}}
-function _mlbShowNoPicksInputs(sel){{
-  if(document.getElementById('mlb-np-wrap'))return;
-  sel.style.display='none';
-  sel.innerHTML='<option value="__np__">manual</option>';
-  var _d=document.createElement('div');
-  _d.id='mlb-np-wrap';
-  _d.style.marginTop='8px';
-  var row=document.createElement('div');
-  row.style.cssText='display:grid;grid-template-columns:1fr 1fr;gap:8px';
-  var c1=document.createElement('div');
-  var l1=document.createElement('div');l1.className='mlg-lbl';l1.textContent='Away (Visitador)';
-  var ia=document.createElement('input');
-  ia.id='mlb-np-away';ia.placeholder='Ej: YANKEES';
-  ia.setAttribute('autocapitalize','characters');
-  ia.setAttribute('oninput','_mlbNpSynced(this,"away")');
-  ia.style.cssText='width:100%;background:rgba(0,0,0,.5);border:1px solid rgba(0,220,255,.2);border-radius:8px;color:#f1f5f9;padding:8px;font-size:.9rem;text-transform:uppercase;box-sizing:border-box';
-  c1.appendChild(l1);c1.appendChild(ia);
-  var c2=document.createElement('div');
-  var l2=document.createElement('div');l2.className='mlg-lbl';l2.textContent='Home (Local)';
-  var ih=document.createElement('input');
-  ih.id='mlb-np-home';ih.placeholder='Ej: METS';
-  ih.setAttribute('autocapitalize','characters');
-  ih.setAttribute('oninput','_mlbNpSynced(this,"home")');
-  ih.style.cssText='width:100%;background:rgba(0,0,0,.5);border:1px solid rgba(0,220,255,.2);border-radius:8px;color:#f1f5f9;padding:8px;font-size:.9rem;text-transform:uppercase;box-sizing:border-box';
-  c2.appendChild(l2);c2.appendChild(ih);
-  row.appendChild(c1);row.appendChild(c2);
-  _d.appendChild(row);
-  sel.parentNode.insertBefore(_d,sel.nextSibling);
-}}
 var mlbLogPicksData={{}};
 
 function mlbLogOpen(){{
@@ -4252,7 +4217,7 @@ function mlbLogOpen(){{
         sel.appendChild(opt);
       }});
       if(games.length === 0){{
-        _mlbShowNoPicksInputs(sel);
+        sel.innerHTML = '<option value="">Sin picks del modelo para hoy</option>';
       }}
     }})
     .catch(function(){{ /* sin conexión — usa lo que está */ }});
@@ -4266,13 +4231,6 @@ function mlbLogOpen(){{
   var oddsInp=document.getElementById('mlb-log-odds-inp');
   if(oddsInp) oddsInp.value='';
   openModal('mlb-log');
-  // Auto-activate manual mode when only the manual option exists
-  (function(){{
-    var _gs=document.getElementById('mlb-log-game');
-    if(_gs&&_gs.options.length===1&&_gs.options[0].value==='__manual__'){{
-      mlbLogFillPick(_gs);
-    }}
-  }})();
 }}
 
 function mlbLogFillPick(sel){{
@@ -4340,7 +4298,7 @@ function mlgSelectBook(btn,book){{
     <button type="button" class="mlg-close" onclick="closeModal('mlb-log')">✕</button>
   </div>
   <div class="mlg-body">
-  <form id="f-mlb-log" onsubmit="event.preventDefault();var g=document.getElementById('mlb-log-game');var ea=document.getElementById('mlb-else-away');var eh=document.getElementById('mlb-else-home');if(ea&&!ea.value.trim()){{alert('Ingresa el equipo visitador (Away)');ea.focus();return;}}if(eh&&!eh.value.trim()){{alert('Ingresa el equipo local (Home)');eh.focus();return;}}if(g&&!g.value){{alert('Selecciona un juego');return;}}submitForm('f-mlb-log','/api/mlb/log','mlb-log')">
+  <form id="f-mlb-log" onsubmit="event.preventDefault();var g=document.getElementById('mlb-log-game');if(g&&!g.value){{alert('Selecciona un juego');return;}}submitForm('f-mlb-log','/api/mlb/log','mlb-log')">
     <input type="hidden" name="date" value="{today}">
     <input type="hidden" name="away">
     <input type="hidden" name="home">
@@ -4665,20 +4623,6 @@ def full_page(alert="", alert_type=""):
 # ══════════════════════════════════════════════════════════════════════
 # API HANDLERS
 # ══════════════════════════════════════════════════════════════════════
-
-def _remove_pick(log_path, pick_id):
-    """Remove a pick entry by id from the JSON log. Returns (ok, msg)."""
-    try:
-        log = _rj(log_path)
-        orig_len = len(log)
-        log = [p for p in log if str(p.get("id", "")) != str(pick_id)]
-        if len(log) == orig_len:
-            return False, f"⚠️ Pick #{pick_id} no encontrado."
-        _wj(log_path, log)
-        return True, f"✅ Pick #{pick_id} eliminado."
-    except Exception as ex:
-        return False, f"⚠️ Error: {ex}"
-
 def _log_pick(log_path, data):
     """Write pick entry to JSON log. Returns (ok, msg)."""
     t1  = data.get("team1","").strip().upper() or data.get("away","").strip().upper()
@@ -4810,7 +4754,7 @@ def _render_picks_html(picks_path, accent="#f07820"):
     return html
 
 
-def _render_log_html(log_path, limit=50, remove_ep=None):
+def _render_log_html(log_path, limit=50):
     """Render recent pick history from a log JSON file."""
     log = _rj(log_path)
     if not log:
@@ -4842,11 +4786,6 @@ def _render_log_html(log_path, limit=50, remove_ep=None):
         else:
             pick_text = e.get("pick","—")
 
-        eid     = e.get("id","")
-        rm_btn  = (f'<button onclick=\"_removePick(\'{remove_ep}\',{eid})\" '
-                   f'style="background:none;border:none;color:#ef4444;cursor:pointer;'
-                   f'font-size:0.85rem;padding:0 4px;float:right" title="Borrar">🗑</button>')\
-                  if remove_ep else ''
         odds_s  = _fmt_odds(e.get("odds",0))
         stake_s = f"${e.get('stake',0):.2f}"
         book    = e.get("book","")
@@ -4857,7 +4796,7 @@ def _render_log_html(log_path, limit=50, remove_ep=None):
                  f'<div class="le-body">'
                  f'<div class="le-game">{_esc(e.get("game","—"))} · {e.get("date","")}</div>'
                  f'<div class="le-pick">{_esc(pick_text)}</div>'
-                 f'<div class="le-meta">{rm_btn}{odds_s} · {stake_s}{book_s}{pnl_s}</div>'
+                 f'<div class="le-meta">{odds_s} · {stake_s}{book_s}{pnl_s}</div>'
                  f'</div></div>')
     return html
 
@@ -5528,11 +5467,8 @@ def _nba_picks_html():
             frag_date     = _dt.fromtimestamp(frag_mtime).strftime("%Y-%m-%d")
             picks_mtime   = os.path.getmtime(picks_path) if os.path.exists(picks_path) else 0
             nba_py_mtime  = os.path.getmtime(nba_py_path) if os.path.exists(nba_py_path) else 0
-            serve_py_path = os.path.join(os.path.dirname(NBA_DIR), "serve.py")
-            serve_mtime   = os.path.getmtime(serve_py_path) if os.path.exists(serve_py_path) else 0
-            # Only use the cached HTML if it's from today, at least as fresh as the picks JSON,
-            # AND neither nba.py nor serve.py has been updated since (catches code fixes mid-day)
-            if frag_date == today_str and frag_mtime >= picks_mtime and frag_mtime >= nba_py_mtime and frag_mtime >= serve_mtime:
+            # Only use the cached HTML if it's from today and at least as fresh as picks JSON and nba.py
+            if frag_date == today_str and frag_mtime >= picks_mtime and frag_mtime >= nba_py_mtime:
                 with open(frag_path, "r", encoding="utf-8") as f:
                     return f.read()
         except Exception:
@@ -6675,12 +6611,7 @@ def _nba_stats_html():
   <span style="color:#475569">Equipos sin playoffs (PO GP = —) aparecen en gris</span>
 </div>"""
 
-    _ebtn = ('<button onclick="openView(\'/api/view/bsn/stats-edit\',\'✏️ Editar Stats BSN\')" '
-             'style="float:right;background:#1e293b;border:1px solid rgba(245,166,35,.3);color:#f5a623;'
-             'padding:5px 14px;border-radius:7px;font-size:.72rem;cursor:pointer;margin-bottom:8px">'
-             '✏️ Editar</button>')
     return (f'<div class="vw-output">'
-            f'{_ebtn}'
             f'{title_html}{hdr_html}'
             f'<div class="vpt">{rows_html}</div>'
             f'{legend}'
@@ -6797,8 +6728,9 @@ def _bsn_stats_html():
         ws = wb["BSN - Advanced"]
         rows_raw = list(ws.iter_rows(values_only=True))
         wb.close()
-    except Exception:
-        pass  # fallthrough: JSON override below
+    except Exception as ex:
+        return (f'<div class="detail-empty">Sin datos BSN.<br>'
+                f'<span style="font-size:.7rem;color:#475569">{ex}</span></div>')
 
     # Parse: header row has 'TEAM','ORtg','DRtg','Pace' at columns H–K (index 7–10)
     # Data rows start at row 5 (index 4) — team short name in col C (index 2)
@@ -6815,18 +6747,6 @@ def _bsn_stats_html():
                 "drtg": float(drtg) if isinstance(drtg, (int, float)) else None,
                 "pace": float(pace) if isinstance(pace, (int, float)) else None,
             }
-
-    # Override / merge con stats manuales de JSON
-    if os.path.exists(BSN_STATS_JSON):
-        _jst = _rj(BSN_STATS_JSON)
-        if isinstance(_jst, dict):
-            for _tk, _tv in _jst.items():
-                if isinstance(_tv, dict):
-                    stats[_tk] = {
-                        "ortg": float(_tv.get("ortg") or 0),
-                        "drtg": float(_tv.get("drtg") or 0),
-                        "pace": float(_tv.get("pace") or 0),
-                    }
 
     if not stats:
         return '<div class="detail-empty">Sin datos en el Excel BSN.</div>'
@@ -6922,82 +6842,12 @@ def _bsn_stats_html():
   <span style="color:#f43f5e;font-weight:700">DRTG &gt;116</span> = vulnerable
 </div>"""
 
-    _ebtn = ('<button onclick="openView(\'/api/view/bsn/stats-edit\',\'✏️ Editar Stats BSN\')" '
-             'style="float:right;background:#1e293b;border:1px solid rgba(245,166,35,.3);'
-             'color:#f5a623;padding:5px 14px;border-radius:7px;font-size:.72rem;'
-             'cursor:pointer;margin-bottom:8px">✏️ Editar</button>')
-
     return (f'<div class="vw-output">'
-            f'{_ebtn}'
             f'{title_html}{hdr_html}'
             f'<div class="vpt">{rows_html}</div>'
             f'{legend}'
             f'</div>')
 
-
-
-def _bsn_stats_edit_html():
-    """Formulario editable de stats BSN (ORTG / DRTG / PACE) por equipo."""
-    stats = {}
-    if os.path.exists(BSN_STATS_JSON):
-        _js = _rj(BSN_STATS_JSON)
-        if isinstance(_js, dict):
-            stats = {k: v for k, v in _js.items() if isinstance(v, dict)}
-    if not stats:
-        try:
-            import openpyxl as _xl
-            wb = _xl.load_workbook(
-                os.path.join(BSN_DIR, "Laboy Picks - Data Model Module - Last Version.xlsx"),
-                data_only=True, read_only=True)
-            ws = wb["BSN - Advanced"]
-            for _row in ws.iter_rows(values_only=True):
-                _sh = _row[2] if len(_row) > 2 else None
-                _or = _row[8] if len(_row) > 8 else None
-                _dr = _row[9] if len(_row) > 9 else None
-                _pa = _row[10] if len(_row) > 10 else None
-                if isinstance(_sh, str) and _sh.upper() in _BSN_COLORS and isinstance(_or, (int, float)):
-                    stats[_sh.upper()] = {"ortg": float(_or), "drtg": float(_dr or 0), "pace": float(_pa or 0)}
-            wb.close()
-        except Exception:
-            pass
-    if not stats:
-        for _t in sorted(_BSN_COLORS.keys()):
-            stats[_t] = {"ortg": 110.0, "drtg": 110.0, "pace": 78.0}
-
-    rows_html = ""
-    inp_style = ("width:68px;background:#0f172a;border:1px solid #334155;border-radius:6px;"
-                 "padding:5px;color:#f1f5f9;font-size:.8rem;text-align:center")
-    for abb in sorted(stats.keys()):
-        d = stats[abb]
-        o  = float(d.get("ortg") or 0)
-        dr = float(d.get("drtg") or 0)
-        p  = float(d.get("pace") or 0)
-        rows_html += (
-            f'<div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">'
-            f'<span style="width:90px;font-size:.75rem;font-weight:700;color:#f1f5f9">{_esc(abb)}</span>'
-            f'<input type="number" step="0.1" data-bsnt="{_esc(abb)}" data-s="ortg" value="{o:.1f}" style="{inp_style}">'
-            f'<input type="number" step="0.1" data-bsnt="{_esc(abb)}" data-s="drtg" value="{dr:.1f}" style="{inp_style}">'
-            f'<input type="number" step="0.1" data-bsnt="{_esc(abb)}" data-s="pace" value="{p:.1f}" style="{inp_style}">'
-            f'</div>'
-        )
-
-    return (
-        '<div style="padding:4px">'
-        '<div style="display:flex;gap:8px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #1e293b">'
-        '<span style="width:90px;font-size:.63rem;color:#64748b;font-weight:700">EQUIPO</span>'
-        '<span style="width:68px;font-size:.63rem;color:#94a3b8;text-align:center">ORTG</span>'
-        '<span style="width:68px;font-size:.63rem;color:#94a3b8;text-align:center">DRTG</span>'
-        '<span style="width:68px;font-size:.63rem;color:#94a3b8;text-align:center">PACE</span>'
-        '</div>'
-        f'{rows_html}'
-        '<div style="margin-top:14px">'
-        '<button onclick="_saveBsnStats()" '
-        'style="width:100%;background:#f5a623;color:#000;border:none;padding:11px;'
-        'border-radius:8px;font-weight:700;cursor:pointer;font-size:.85rem">💾 Guardar Stats</button>'
-        '</div>'
-        '<div id="se-msg" style="margin-top:10px;font-size:.78rem;text-align:center;min-height:1.2rem"></div>'
-        '</div>'
-    )
 
 def _mlb_lines_html():
     """Build premium MLB model lines view from mlb_model_lines.json."""
@@ -7619,31 +7469,10 @@ def handle_api(path, data):
         return 200, j(ok, msg)
 
     if path == "/api/bsn/remove-pick":
-        ok, msg = _remove_pick(BSN_LOG, data.get("id",""))
-        if ok: _git_autopush_bg("bsn --remove-pick")
+        ok, msg = _remove_pick(BSN_LOG, data)
+        if ok: _git_autopush_bg("bsn --remove")
         return 200, j(ok, msg)
 
-
-    if path == "/api/bsn/save-stats":
-        _raw = data.get("stats", {})
-        if not isinstance(_raw, dict):
-            return 200, j(False, "⚠️ Formato inválido")
-        _clean = {}
-        for _t, _v in _raw.items():
-            if isinstance(_v, dict):
-                try:
-                    _clean[str(_t)] = {
-                        "ortg": float(_v.get("ortg") or 0),
-                        "drtg": float(_v.get("drtg") or 0),
-                        "pace": float(_v.get("pace") or 0),
-                    }
-                except (ValueError, TypeError):
-                    pass
-        if not _clean:
-            return 200, j(False, "⚠️ Sin datos válidos")
-        _wj(BSN_STATS_JSON, _clean)
-        _git_autopush_bg("bsn --save-stats")
-        return 200, j(True, f"✅ Stats guardados ({len(_clean)} equipos)")
     if path == "/api/bsn/gp":
         team = data.get("team","").strip().upper()
         gp_s = data.get("gp","").strip()
@@ -7685,7 +7514,6 @@ def handle_api(path, data):
                 cmd += [ppg_s, usg_s]  # skip RealGM scrape
             out = _run(cmd, cwd=BSN_DIR, timeout=60)
         ok = "error" not in out.lower() and "❌" not in out
-        _git_autopush_bg("bsn --ir")
         return 200, j(ok, f"{'✅' if ok else '❌'} {out[:300]}")
 
     if path == "/api/bsn/lines":
@@ -7723,6 +7551,11 @@ def handle_api(path, data):
     if path == "/api/nba/grade":
         ok, msg = _grade_pick(NBA_LOG, data)
         if ok: _git_autopush_bg("nba --grade")
+        return 200, j(ok, msg)
+
+    if path == "/api/nba/remove-pick":
+        ok, msg = _remove_pick(NBA_LOG, data)
+        if ok: _git_autopush_bg("nba --remove")
         return 200, j(ok, msg)
 
     if path == "/api/nba/auto-grade":
@@ -7805,6 +7638,11 @@ def handle_api(path, data):
     if path == "/api/mlb/grade":
         ok, msg = _grade_pick(MLB_LOG, data)
         if ok: _git_autopush_bg("mlb --grade")
+        return 200, j(ok, msg)
+
+    if path == "/api/mlb/remove-pick":
+        ok, msg = _remove_pick(MLB_LOG, data)
+        if ok: _git_autopush_bg("mlb --remove")
         return 200, j(ok, msg)
 
     if path == "/api/mlb/auto-grade":
@@ -7929,9 +7767,8 @@ class Handler(BaseHTTPRequestHandler):
                 "/api/view/nba/log":   lambda: _render_log_html(NBA_LOG),
                 "/api/view/bsn/picks":  lambda: _bsn_picks_html(),
                 "/api/view/bsn/stats":   lambda: _bsn_stats_html(),
-                "/api/view/bsn/stats-edit": lambda: _bsn_stats_edit_html(),
                 "/api/view/bsn/record": lambda: _bsn_daily_record_html(),
-                "/api/view/bsn/log":    lambda: _render_log_html(BSN_LOG, remove_ep='/api/bsn/remove-pick'),
+                "/api/view/bsn/log":    lambda: _render_log_html(BSN_LOG),
                 "/api/view/record/all": lambda: _alltime_record_html(),
                 "/api/view/calendar":   lambda: _pnl_calendar_html(),
             }
@@ -8207,16 +8044,6 @@ class Handler(BaseHTTPRequestHandler):
                 return
 
             # ── Form endpoints ────────────────────────────────────────
-            # ── JSON API endpoints ──────────────────────────────────
-            if "application/json" in ctype:
-                try:
-                    data = json.loads(raw.decode())
-                except Exception:
-                    data = {}
-                code, resp = handle_api(path, data)
-                self._send_json(code, resp)
-                return
-
             if "application/x-www-form-urlencoded" in ctype:
                 raw_str = raw.decode("utf-8")
                 form_data = {k: v[0] for k,v in parse_qs(raw_str, keep_blank_values=True).items()}
@@ -8254,7 +8081,6 @@ _GIT_STATE_FILES = [
     "NBA/nba_picks_log.json",
     "NBA/nba_injuries.json",
     "NBA/nba_playoff_game_log.json",
-    "BSN/bsn_injuries.json",
 ]
 
 # Comandos que modifican estado y deben triggear autopush:
