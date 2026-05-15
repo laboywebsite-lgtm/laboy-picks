@@ -1365,6 +1365,43 @@ def _load_nba_injuries():
 def _save_nba_injuries(entries):
     with open(NBA_INJURIES_FILE, "w") as f:
         json.dump(entries, f, indent=2, ensure_ascii=False)
+    _gh_push_injuries()
+
+
+def _gh_push_injuries():
+    """Push nba_injuries.json to the laboy-picks repo so it survives Render redeploys."""
+    import base64 as _b64, urllib.request as _ur, urllib.error as _ue
+    _token = os.environ.get("LABOY_GITHUB_TOKEN", "")
+    _repo  = "laboywebsite-lgtm/laboy-picks"
+    _path  = "NBA/nba_injuries.json"
+    _api   = f"https://api.github.com/repos/{_repo}/contents/{_path}"
+    _hdrs  = {
+        "Authorization": f"token {_token}",
+        "Accept": "application/vnd.github.v3+json",
+        "Content-Type": "application/json",
+        "User-Agent": "nba-injuries-autopush",
+    }
+    try:
+        with open(NBA_INJURIES_FILE, "rb") as _f:
+            _raw = _f.read()
+        _b64c = _b64.b64encode(_raw).decode()
+        # Get current SHA from GitHub
+        _req = _ur.Request(_api, headers=_hdrs)
+        with _ur.urlopen(_req) as _r:
+            _cur = json.loads(_r.read())
+        _sha = _cur.get("sha", "")
+        _payload = json.dumps({
+            "message": f"data: nba_injuries.json — {TARGET_DATE}",
+            "content": _b64c,
+            "sha": _sha,
+        }).encode()
+        _req2 = _ur.Request(_api, data=_payload, headers=_hdrs, method="PUT")
+        with _ur.urlopen(_req2) as _r2:
+            _res = json.loads(_r2.read())
+        print(f"  📤 nba_injuries.json → GitHub ({_res['commit']['sha'][:8]})")
+    except Exception as _e:
+        print(f"  ⚠️  GitHub push injuries falló: {_e}")
+
 
 
 def _classify_rate_nba(ppg, usg_pct):
