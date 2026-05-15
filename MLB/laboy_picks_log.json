@@ -1027,8 +1027,8 @@
     "odds": -140,
     "stake": 25.0,
     "book": "BetMGM",
-    "result": "L",
-    "pnl": -25.0,
+    "result": null,
+    "pnl": null,
     "analysis": "Vientos cruzados que favorecen al pitcheo en este juego, especialmente Mets que trae a la loma su mejor pitcher Nolan McLean. "
   },
   {
@@ -1039,8 +1039,8 @@
     "odds": -135,
     "stake": 30.0,
     "book": "BetMGM",
-    "result": "W",
-    "pnl": 22.22,
+    "result": null,
+    "pnl": null,
     "analysis": "Milwaukee con 7-3 en los últimos 10, entra a este juego con un bullpen más descansado que el San Diego. La proyección de mi modelo es un 63.7% de probabilidad a que Brewers gane hoy."
   },
   {
@@ -1051,20 +1051,8 @@
     "odds": 100,
     "stake": 25.0,
     "book": "BetMGM",
-    "result": "W",
-    "pnl": 25.0,
-    "analysis": ""
-  },
-  {
-    "id": 88,
-    "date": "2026-05-15",
-    "game": "ROYALS vs. WHITE SOX",
-    "pick": "OVER 7.5",
-    "odds": -120,
-    "stake": 25.0,
-    "book": "BetMGM",
-    "result": "W",
-    "pnl": 20.83,
+    "result": null,
+    "pnl": null,
     "analysis": ""
   }
 ]
