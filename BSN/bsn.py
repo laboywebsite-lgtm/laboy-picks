@@ -6907,8 +6907,10 @@ def export_log_pick_html(entry):
 
         body = card1 + card2
 
+        _safe_game_bsn = re.sub(r'[<>:"/\\|?*]', '', game).replace('.','').strip()
+        _safe_game_bsn = re.sub(r'\s+', ' ', _safe_game_bsn)[:40].strip()
         html  = _bsn_html_wrap(f"Laboy Pick #{pick_id} · {dstr}", "BSN", dstr, yr, body)
-        fname = f"Laboy Pick {pick_date} #{pick_id}.html"
+        fname = f"Laboy Pick {pick_date} #{pick_id} {_safe_game_bsn}.html" if _safe_game_bsn else f"Laboy Pick {pick_date} #{pick_id}.html"
         fpath = os.path.join(SCRIPT_DIR, fname)
         if os.path.exists(fpath) and not FORCE_EXPORT:
             print(f"  🔒 BSN Pick HTML #{pick_id} ya existe — protegido de sobreescritura.")
