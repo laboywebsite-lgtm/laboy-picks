@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Laboy Pick #89 · FRIDAY, MAY 15 · 2026</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+
+  :root{
+    --bg:#080808;--card:#0f0f0f;--card2:#141414;--inner:#1a1a1a;
+    --accent:#f07820;--green:#22c55e;--red:#ef4444;
+    --text:#f1f5f9;--muted:#64748b;--muted2:#94a3b8;--border:#202020;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
+    padding:0 0 56px;
+  }
+  /* ── Header ── */
+  .header{
+    background:#000;padding:18px 24px 14px;text-align:center;
+    border-bottom:1px solid #1a1a1a;
+    position:relative;
+  }
+  .header::after{
+    content:'';position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);
+    width:120px;height:2px;background:var(--accent);border-radius:1px;
+  }
+  .header img.logo{height:110px;width:auto;display:block;margin:0 auto 2px}
+  .header h1{font-size:1.8rem;font-weight:900;letter-spacing:4px;color:var(--accent)}
+  .header .date{
+    color:var(--muted);margin-top:4px;font-size:0.72rem;
+    letter-spacing:2px;text-transform:uppercase;
+  }
+  /* ── Section wrapper ── */
+  .section{max-width:800px;margin:0 auto;padding:28px 18px 0}
+  .section-title{
+    font-size:0.65rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
+    color:var(--muted);margin:24px 0 10px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .section-title::after{
+    content:'';flex:1;height:1px;background:var(--border);
+  }
+  /* ── Pick card ── */
+  .pick-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:16px 18px 14px;
+    margin-bottom:16px;
+    overflow:hidden;
+    box-shadow:0 4px 24px rgba(0,0,0,0.6);
+  }
+  .pick-time{font-size:0.68rem;color:var(--muted);margin-bottom:6px;letter-spacing:.5px}
+  .teams-row{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+  .teams-row img{width:48px;height:48px;object-fit:contain}
+  .pick-main{flex:1;min-width:0}
+  .game-label{font-size:0.78rem;color:var(--muted);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .pick-label{font-size:1.25rem;font-weight:800;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .odds-badge{
+    background:#f0782018;color:var(--accent);
+    border:1px solid #f0782030;
+    border-radius:5px;padding:2px 8px;font-size:0.85rem;font-weight:700;
+  }
+  /* ── Stat chips ── */
+  .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+  .stat{
+    background:var(--inner);border:1px solid var(--border);
+    border-radius:8px;padding:8px 6px;text-align:center;
+  }
+  .stat-label{font-size:0.58rem;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:3px}
+  .stat-val{font-size:0.9rem;font-weight:700}
+  /* ── No picks ── */
+  .no-picks{color:var(--muted);text-align:center;padding:32px;font-size:0.85rem}
+  /* ── Lines card ── */
+  .line-card{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:12px;padding:14px 16px;margin-bottom:10px;
+    box-shadow:0 4px 20px rgba(0,0,0,0.5);
+  }
+  .line-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+  .team-logo{display:flex;align-items:center;gap:6px;font-size:0.8rem;font-weight:700}
+  .team-logo img{width:34px;height:34px;object-fit:contain}
+  .line-time{font-size:0.72rem;color:var(--muted)}
+  .sp-row{font-size:0.7rem;color:var(--muted);margin-bottom:6px}
+  .line-stats{display:flex;gap:10px;flex-wrap:wrap;font-size:0.78rem;margin-bottom:4px}
+  .weather-row{font-size:0.72rem;color:var(--muted);margin-top:4px}
+  .mkt-row{font-size:0.72rem;color:#475569;margin-top:2px}
+  /* ── Footer ── */
+  .footer{
+    text-align:center;padding:36px 16px 0;
+    color:#2a2a2a;font-size:0.72rem;letter-spacing:1px;
+  }
+  .footer a{color:var(--accent);text-decoration:none}
+
+/* ══════════════════════════════════════════════
+   AI-STYLE OVERRIDES — Debug Report only
+   ══════════════════════════════════════════════ */
+
+/* Grid background */
+body {
+  background:#050508;
+  background-image:
+    linear-gradient(rgba(0,220,255,.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,220,255,.018) 1px, transparent 1px);
+  background-size:32px 32px;
+}
+
+/* ── Header ── */
+.dbg-header {
+  background:linear-gradient(180deg,#000 0%,#06060a 100%);
+  padding:22px 24px 18px;
+  text-align:center;
+  border-bottom:1px solid #0ff2;
+  position:relative;
+  overflow:hidden;
+}
+/* Animated horizontal scan line */
+@keyframes dbg-scan {
+  0%   { transform:translateY(-120%) }
+  100% { transform:translateY(1200%) }
+}
+.dbg-header::before {
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;height:60px;
+  background:linear-gradient(180deg,transparent,rgba(0,220,255,.09),transparent);
+  animation:dbg-scan 4s linear infinite;
+  pointer-events:none;
+}
+/* Bottom glow line */
+.dbg-header::after {
+  content:'';
+  position:absolute;
+  bottom:-1px;left:10%;right:10%;
+  height:1px;
+  background:linear-gradient(90deg,transparent,#00dcff80,#f0782080,transparent);
+}
+.dbg-logo {
+  height:80px;width:auto;display:block;margin:0 auto 10px;
+  filter:drop-shadow(0 0 12px rgba(240,120,32,.45));
+}
+.dbg-wordmark {
+  font-size:2rem;font-weight:900;letter-spacing:6px;
+  background:linear-gradient(90deg,#f07820,#00dcff);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  display:block;margin-bottom:8px;
+}
+.dbg-title {
+  font-size:0.6rem;font-weight:800;letter-spacing:4px;
+  text-transform:uppercase;margin-bottom:4px;
+  background:linear-gradient(90deg,#00dcff,#7c3aed,#00dcff);
+  background-size:200% auto;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  animation:dbg-gradient 4s linear infinite;
+}
+@keyframes dbg-gradient {
+  0%   { background-position:0% center }
+  100% { background-position:200% center }
+}
+.dbg-date {
+  color:#475569;font-size:0.65rem;letter-spacing:2.5px;text-transform:uppercase;
+  margin-top:2px;
+}
+/* AI badge */
+.dbg-badge {
+  display:inline-flex;align-items:center;gap:5px;
+  background:rgba(0,220,255,.07);border:1px solid rgba(0,220,255,.2);
+  border-radius:20px;padding:2px 10px;margin-top:8px;
+  font-size:0.58rem;font-weight:700;letter-spacing:2px;color:#00dcff99;
+  text-transform:uppercase;
+}
+.dbg-badge-dot {
+  width:5px;height:5px;border-radius:50%;
+  background:#00dcff;
+  box-shadow:0 0 6px #00dcff;
+  animation:dbg-pulse 1.8s ease-in-out infinite;
+}
+@keyframes dbg-pulse {
+  0%,100%{ opacity:1;transform:scale(1) }
+  50%    { opacity:.4;transform:scale(.7) }
+}
+
+/* ── Pick card AI glow ── */
+.pick-card {
+  border:1px solid rgba(0,220,255,.12);
+  background:linear-gradient(160deg,#0d0d10 0%,#0a0a0d 100%);
+  box-shadow:
+    0 0 0 1px rgba(0,220,255,.04),
+    0 4px 32px rgba(0,0,0,.8),
+    inset 0 1px 0 rgba(255,255,255,.03);
+}
+
+/* ── Section titles ── */
+.section-title {
+  color:transparent;
+  background:linear-gradient(90deg,#00dcff,#94a3b8);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  font-size:0.6rem;font-weight:800;letter-spacing:3px;
+}
+.section-title::after {
+  background:linear-gradient(90deg,rgba(0,220,255,.25),transparent);
+}
+
+/* ── Stat chips ── */
+.stat {
+  background:rgba(0,220,255,.025);
+  border:1px solid rgba(0,220,255,.08);
+}
+.stat-val {
+  font-family:'JetBrains Mono','SF Mono','Fira Code','Courier New',monospace;
+  font-size:0.88rem;letter-spacing:-.5px;
+}
+.stat-label { color:#4a6272 }
+
+/* ── Odds badge pulse ── */
+@keyframes dbg-odds-glow {
+  0%,100%{ box-shadow:0 0 4px rgba(240,120,32,.3) }
+  50%    { box-shadow:0 0 10px rgba(240,120,32,.6) }
+}
+.odds-badge {
+  animation:dbg-odds-glow 2.5s ease-in-out infinite;
+}
+
+/* ── Inner stat cells in debug cards ── */
+/* Numbers inside debug sections get mono font automatically */
+.dbg-mono {
+  font-family:'JetBrains Mono','SF Mono','Fira Code','Courier New',monospace;
+  letter-spacing:-.3px;
+}
+
+/* ── Footer ── */
+.footer {
+  color:#1a2530;border-top:1px solid #0ff1;
+  margin-top:20px;padding-top:16px;
+}
+.footer a { color:#00dcff44 }
+
+/* ── Scrollbar AI style ── */
+::-webkit-scrollbar{ width:5px }
+::-webkit-scrollbar-track{ background:#050508 }
+::-webkit-scrollbar-thumb{
+  background:linear-gradient(180deg,#00dcff40,#f0782040);
+  border-radius:3px;
+}
+
+  .fa-icon{font-size:0.85em;opacity:0.75;margin-right:4px}
+  .section-title .fa-icon{font-size:0.9em;opacity:1;margin-right:6px}
+</style>
+</head>
+<body>
+<div class="dbg-header">
+  <span class="dbg-wordmark">LABOY</span>
+  <div class="dbg-title">&#9632;&nbsp;Model Report&nbsp;&#9632;</div>
+  <div class="dbg-date">MLB &nbsp;·&nbsp; FRIDAY, MAY 15 · 2026</div>
+  <div><span class="dbg-badge"><span class="dbg-badge-dot"></span>AI Analysis Engine · Active</span></div>
+</div>
+<div class="section">
+
+        <div class="pick-card" style="border-left:4px solid #BA0021;background:linear-gradient(140deg,#090910 0%,#07080d 100%);
+             border-top:1px solid #BA002122;
+             box-shadow:0 0 0 1px #BA002110,0 0 28px #BA00210a,0 6px 32px rgba(0,0,0,.85)">
+          <!-- pick header row -->
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+            <div style="font-size:0.62rem;color:#4a6272;font-family:monospace;letter-spacing:0.08em">
+              <i class="fa-solid fa-ticket fa-icon"></i>PICK&nbsp;#89&nbsp;&nbsp;·&nbsp;&nbsp;2026-05-15
+            </div>
+            <span style="background:#f0782022;color:#f07820;border-radius:6px;padding:3px 10px;font-size:0.85rem;font-weight:700">⏳ PENDING</span>
+          </div>
+          <!-- game + pick -->
+          <div class="teams-row">
+            <img src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/mlb/500/laa.png&w=80&h=80&scale=crop&cquality=40" alt="ANGELS" width="64" height="64" style="object-fit:contain" onerror="this.style.display='none'">
+            <div>
+              <div class="game-label" style="font-family:monospace;font-size:0.72rem;letter-spacing:0.04em">
+                <i class="fa-solid fa-baseball fa-icon"></i>ANGELS vs. ASTROS
+              </div>
+              <div class="pick-label" style="font-size:1.3rem;letter-spacing:0.02em">
+                ANGELS ML&nbsp;<span class="odds-badge">-100</span>
+              </div>
+            </div>
+          </div>
+          <!-- stat chips -->
+          <div class="stats-grid">
+            <div class="stat"><div class="stat-label">DraftKings</div>
+              <div class="stat-val" style="color:#f07820">-100</div></div>
+            <div class="stat"><div class="stat-label">Apostado</div>
+              <div class="stat-val">$12.00</div></div>
+            <div class="stat"><div class="stat-label">Fecha</div>
+              <div class="stat-val" style="font-size:0.72rem">2026-05-15</div></div>
+            <div class="stat"><div class="stat-label">Resultado</div><div class="stat-val">—</div></div>
+          </div>
+        </div>
+</div>
+<div class="footer" style="text-align:center;padding:28px 16px 0;font-size:0.68rem;letter-spacing:1px">
+  <p>Data Model by <a href="https://instagram.com/laboypicks">Laboy Picks</a> &nbsp;·&nbsp; 2026</p>
+</div>
+</body>
+</html>
