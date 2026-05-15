@@ -6320,8 +6320,7 @@ def main():
             print(f"  🏥 Injury impact activo: {len(inj_impact)} equipos afectados")
         if games:
             picks = show_picks(games, odds, stats, injury_impact=inj_impact)
-            if picks:
-                _model_picks_save_today(picks, TARGET_DATE)
+            _model_picks_save_today(picks if picks else [], TARGET_DATE)  # siempre guardar fecha de hoy
             _write_lines_json(games, stats, TARGET_DATE, injury_impact=inj_impact)
             html_file = export_picks_html(games, odds, stats, TARGET_DATE, injury_impact=inj_impact)
             print(f"  📄 Picks HTML: {os.path.basename(html_file)}")
