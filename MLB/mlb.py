@@ -4738,7 +4738,7 @@ def cmd_publish(html_paths):
     import glob as _glob
 
     repo      = GITHUB_PAGES_REPO
-    _gh_token = os.environ.get("LABOY_GITHUB_TOKEN", "")
+    _gh_token = os.environ.get("GITHUB_TOKEN", "") or os.environ.get("LABOY_GITHUB_TOKEN", "")
     _clone_base = "https://github.com/laboywebsite-lgtm/mlb-picks"
     _clone_url  = (f"https://{_gh_token}@github.com/laboywebsite-lgtm/mlb-picks"
                    if _gh_token else _clone_base)
@@ -11161,7 +11161,12 @@ if __name__ == "__main__":
             if card_path:
                 print(f"\n  📄 HTML: {os.path.basename(card_path)}")
                 if PUBLISH_MODE:
-                    cmd_publish([card_path])
+                    try:
+                        cmd_publish([card_path])
+                    except Exception as _ep:
+                        print(f"  ⚠️  Publish falló: {_ep}")
+            else:
+                print("\n  ⚠️  No hay picks gradeados para esa fecha.")
             sys.exit(0)
         if GRADE_MODE:       cmd_grade_pick();  sys.exit(0)
         if REMOVE_MODE:      cmd_remove_pick(); sys.exit(0)
