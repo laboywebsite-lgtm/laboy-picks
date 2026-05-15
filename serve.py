@@ -243,6 +243,7 @@ def _grade_rows(log_path, endpoint):
         odds_s = _fmt_odds(e.get("odds",0))
         stake_s = f"${e.get('stake',0)}"
         eid = e.get("id","")
+        rm_ep = endpoint.replace('/grade', '/remove-pick')
         rows += f"""<div style="background:#0a0a0a;border-radius:8px;padding:10px;border:1px solid #1e293b;margin-bottom:8px">
   <div style="font-size:0.68rem;color:#94a3b8;margin-bottom:3px">#{eid} · {e.get('date','')} · {odds_s} · {stake_s}</div>
   <div style="font-size:0.83rem;font-weight:700;margin-bottom:8px">{_esc(game_label)}<br><span style="color:#f07820">{_esc(pick_label)}</span></div>
@@ -2313,6 +2314,13 @@ async function bsnEditTime(away, home, newTime){
     alert(d.msg);
     if(d.ok) location.reload();
   }catch(e){alert('Error: '+e);}
+}
+async function _removePick(ep,id){
+  if(!confirm('¿Borrar este pick? Esta acción no se puede deshacer.'))return;
+  const r=await fetch(ep,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:id})});
+  const d=await r.json();
+  alert(d.msg||(d.ok?'Pick eliminado':'Error al borrar'));
+  if(d.ok)location.reload();
 }
 async function bsnRemoveGame(away, home){
   if(!confirm('¿Remover juego '+away+' @ '+home+'?')) return;
@@ -4637,6 +4645,20 @@ def full_page(alert="", alert_type=""):
 # ══════════════════════════════════════════════════════════════════════
 # API HANDLERS
 # ══════════════════════════════════════════════════════════════════════
+
+def _remove_pick(log_path, pick_id):
+    """Remove a pick entry by id from the JSON log. Returns (ok, msg)."""
+    try:
+        log = _rj(log_path)
+        orig_len = len(log)
+        log = [p for p in log if str(p.get("id", "")) != str(pick_id)]
+        if len(log) == orig_len:
+            return False, f"⚠️ Pick #{pick_id} no encontrado."
+        _wj(log_path, log)
+        return True, f"✅ Pick #{pick_id} eliminado."
+    except Exception as ex:
+        return False, f"⚠️ Error: {ex}"
+
 def _log_pick(log_path, data):
     """Write pick entry to JSON log. Returns (ok, msg)."""
     t1  = data.get("team1","").strip().upper() or data.get("away","").strip().upper()
@@ -4768,7 +4790,7 @@ def _render_picks_html(picks_path, accent="#f07820"):
     return html
 
 
-def _render_log_html(log_path, limit=50):
+def _render_log_html(log_path, limit=50, remove_ep=None):
     """Render recent pick history from a log JSON file."""
     log = _rj(log_path)
     if not log:
@@ -4800,6 +4822,11 @@ def _render_log_html(log_path, limit=50):
         else:
             pick_text = e.get("pick","—")
 
+        eid     = e.get("id","")
+        rm_btn  = (f'<button onclick="_removePick(\"{remove_ep}\",{eid})" '
+                   f'style="background:none;border:none;color:#ef4444;cursor:pointer;'
+                   f'font-size:0.85rem;padding:0 4px;float:right" title="Borrar">🗑</button>')\
+                  if remove_ep else ''
         odds_s  = _fmt_odds(e.get("odds",0))
         stake_s = f"${e.get('stake',0):.2f}"
         book    = e.get("book","")
@@ -4810,7 +4837,7 @@ def _render_log_html(log_path, limit=50):
                  f'<div class="le-body">'
                  f'<div class="le-game">{_esc(e.get("game","—"))} · {e.get("date","")}</div>'
                  f'<div class="le-pick">{_esc(pick_text)}</div>'
-                 f'<div class="le-meta">{odds_s} · {stake_s}{book_s}{pnl_s}</div>'
+                 f'<div class="le-meta">{rm_btn}{odds_s} · {stake_s}{book_s}{pnl_s}</div>'
                  f'</div></div>')
     return html
 
@@ -7485,6 +7512,11 @@ def handle_api(path, data):
         if ok: _git_autopush_bg("bsn --grade")
         return 200, j(ok, msg)
 
+    if path == "/api/bsn/remove-pick":
+        ok, msg = _remove_pick(BSN_LOG, data.get("id",""))
+        if ok: _git_autopush_bg("bsn --remove-pick")
+        return 200, j(ok, msg)
+
     if path == "/api/bsn/gp":
         team = data.get("team","").strip().upper()
         gp_s = data.get("gp","").strip()
@@ -7771,7 +7803,7 @@ class Handler(BaseHTTPRequestHandler):
                 "/api/view/bsn/picks":  lambda: _bsn_picks_html(),
                 "/api/view/bsn/stats":   lambda: _bsn_stats_html(),
                 "/api/view/bsn/record": lambda: _bsn_daily_record_html(),
-                "/api/view/bsn/log":    lambda: _render_log_html(BSN_LOG),
+                "/api/view/bsn/log":    lambda: _render_log_html(BSN_LOG, remove_ep='/api/bsn/remove-pick'),
                 "/api/view/record/all": lambda: _alltime_record_html(),
                 "/api/view/calendar":   lambda: _pnl_calendar_html(),
             }
