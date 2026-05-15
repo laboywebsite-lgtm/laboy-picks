@@ -2317,6 +2317,24 @@ async function bsnEditTime(away, home, newTime){
     if(d.ok) location.reload();
   }catch(e){alert('Error: '+e);}
 }
+async function _saveBsnStats(){
+  const out={};
+  document.querySelectorAll('[data-bsnt]').forEach(inp=>{
+    const t=inp.dataset.bsnt,s=inp.dataset.s,v=parseFloat(inp.value);
+    if(!out[t])out[t]={};
+    if(!isNaN(v))out[t][s]=v;
+  });
+  const msg=document.getElementById('se-msg');
+  if(msg)msg.textContent='Guardando...';
+  try{
+    const r=await fetch('/api/bsn/save-stats',{method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({stats:out})});
+    const d=await r.json();
+    if(msg)msg.textContent=d.msg||(d.ok?'✅ Guardado':'❌ Error');
+    if(d.ok)setTimeout(()=>location.reload(),1500);
+  }catch(e){if(msg)msg.textContent='❌ '+e;}
+}
 async function _removePick(ep,id){
   if(!confirm('¿Borrar este pick? Esta acción no se puede deshacer.'))return;
   const r=await fetch(ep,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:id})});
@@ -7905,6 +7923,7 @@ class Handler(BaseHTTPRequestHandler):
                 "/api/view/nba/log":   lambda: _render_log_html(NBA_LOG),
                 "/api/view/bsn/picks":  lambda: _bsn_picks_html(),
                 "/api/view/bsn/stats":   lambda: _bsn_stats_html(),
+                "/api/view/bsn/stats-edit": lambda: _bsn_stats_edit_html(),
                 "/api/view/bsn/record": lambda: _bsn_daily_record_html(),
                 "/api/view/bsn/log":    lambda: _render_log_html(BSN_LOG, remove_ep='/api/bsn/remove-pick'),
                 "/api/view/record/all": lambda: _alltime_record_html(),
