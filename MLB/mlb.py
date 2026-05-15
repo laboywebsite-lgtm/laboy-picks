@@ -4726,31 +4726,80 @@ def display_lines(results, odds={}):
 
 def cmd_publish(html_paths):
     """
-    Copia los HTMLs generados al repo local de GitHub Pages y hace push.
-    Uso: python3 mlb.py --export-lines --publish
-         python3 mlb.py --lines --publish
-
-    Requiere:
-      - Repo clonado localmente en GITHUB_PAGES_REPO (o env MLB_GITHUB_REPO)
-      - git configurado con acceso push al repo
+    Publica HTMLs al repo de GitHub Pages (laboywebsite-lgtm/mlb-picks).
+    Usa GitHub API directamente — no requiere git CLI ni repo local.
     """
+    import base64 as _b64, urllib.request as _ur, urllib.error as _ue
     import shutil, subprocess
     import glob as _glob
 
-    repo      = GITHUB_PAGES_REPO
     _gh_token = os.environ.get("GITHUB_TOKEN", "") or os.environ.get("LABOY_GITHUB_TOKEN", "")
-    _clone_base = "https://github.com/laboywebsite-lgtm/mlb-picks"
-    _clone_url  = (f"https://{_gh_token}@github.com/laboywebsite-lgtm/mlb-picks"
-                   if _gh_token else _clone_base)
+    _pages_user = "laboywebsite-lgtm"
+    _pages_repo = "mlb-picks"
 
-    if not os.path.isdir(repo):
-        print(f"\n  📥 Repo mlb-picks no encontrado. Clonando...")
-        os.makedirs(os.path.dirname(repo), exist_ok=True)
-        _r = subprocess.run(["git", "clone", _clone_url, repo], capture_output=True, text=True)
-        if _r.returncode != 0:
-            print(f"\n  ❌ Error al clonar: {_r.stderr.strip()}")
-            return
-        print(f"  ✅ Repo clonado.\n")
+    def _api_push(file_path, repo_filename):
+        """Push a single file to GitHub Pages repo via API."""
+        if not _gh_token:
+            return False, "GITHUB_TOKEN no configurado"
+        with open(file_path, "rb") as _f:
+            _content = _b64.b64encode(_f.read()).decode()
+        _api_url = f"https://api.github.com/repos/{_pages_user}/{_pages_repo}/contents/{repo_filename}"
+        _hdrs = {
+            "Authorization": f"token {_gh_token}",
+            "Accept": "application/vnd.github.v3+json",
+            "Content-Type": "application/json",
+            "User-Agent": "laboy-mlb-publish",
+        }
+        # Get current SHA if file exists
+        _sha = ""
+        try:
+            _req = _ur.Request(_api_url, headers=_hdrs)
+            with _ur.urlopen(_req) as _r:
+                _sha = json.loads(_r.read()).get("sha", "")
+        except Exception:
+            pass
+        _payload = {"message": f"MLB record {TARGET_DATE}", "content": _content}
+        if _sha:
+            _payload["sha"] = _sha
+        try:
+            _req2 = _ur.Request(_api_url, data=json.dumps(_payload).encode(), headers=_hdrs, method="PUT")
+            with _ur.urlopen(_req2) as _r2:
+                _res = json.loads(_r2.read())
+            return True, _res["commit"]["sha"][:8]
+        except Exception as _e:
+            return False, str(_e)
+
+    # ── Fallback: git clone approach (local dev) ─────────────────────────────
+    repo = GITHUB_PAGES_REPO
+    _use_api = not repo or not os.path.isdir(os.path.dirname(repo) if repo else "")
+
+    if not _use_api:
+        _clone_url = (f"https://{_gh_token}@github.com/{_pages_user}/{_pages_repo}"
+                      if _gh_token else f"https://github.com/{_pages_user}/{_pages_repo}")
+        if not os.path.isdir(repo):
+            print(f"\n  📥 Repo mlb-picks no encontrado. Clonando...")
+            os.makedirs(os.path.dirname(repo), exist_ok=True)
+            _r = subprocess.run(["git", "clone", _clone_url, repo], capture_output=True, text=True)
+            if _r.returncode != 0:
+                _use_api = True  # fallback to API
+            else:
+                print(f"  ✅ Repo clonado.\n")
+
+    # ── API publish ───────────────────────────────────────────────────────────
+    if _use_api:
+        published = []
+        for hp in (html_paths or []):
+            if hp and os.path.isfile(hp):
+                fname = os.path.basename(hp)
+                ok, info = _api_push(hp, fname)
+                if ok:
+                    print(f"  ✅ {fname} → GitHub Pages ({info})")
+                    published.append(fname)
+                else:
+                    print(f"  ⚠️  No se pudo publicar {fname}: {info}")
+        if published:
+            print(f"\n  🌐 {GITHUB_PAGES_URL}/{published[0]}")
+        return
 
     copied = []
     for hp in (html_paths or []):
