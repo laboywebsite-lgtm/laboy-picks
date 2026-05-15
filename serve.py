@@ -4124,14 +4124,11 @@ def mlb_panel():
         _log_hidden_teams = '<input type="hidden" name="away"><input type="hidden" name="home">'
     else:
         log_game_section = (
-            '<div class="mlg-row2" style="margin-bottom:0">'
-            '<div><div class="mlg-lbl">Away</div>'
-            '<select name="away" required><option value="">—</option>' + mlb_team_opts + '</select></div>'
-            '<div><div class="mlg-lbl">Home</div>'
-            '<select name="home" required><option value="">—</option>' + mlb_team_opts + '</select></div>'
-            '</div>'
+            '<select id="mlb-log-game" onchange="mlbLogFillPick(this)">'
+            '<option value="__manual__">✍️ Loguear juego de hoy (ya empezó)</option>'
+            '</select>'
         )
-        _log_hidden_teams = ''
+        _log_hidden_teams = '<input type="hidden" name="away"><input type="hidden" name="home">'
 
     _log_modal_html = f"""<style>
 #mlb-log .modal{{background:linear-gradient(160deg,#070710 0%,#05050d 100%);border:1px solid rgba(0,220,255,.18);border-radius:20px;padding:0;overflow:hidden;box-shadow:0 0 0 1px rgba(0,220,255,.04),0 24px 80px rgba(0,0,0,.95),inset 0 1px 0 rgba(255,255,255,.05);max-width:480px}}
@@ -4202,6 +4199,13 @@ function mlbLogOpen(){{
   var oddsInp=document.getElementById('mlb-log-odds-inp');
   if(oddsInp) oddsInp.value='';
   openModal('mlb-log');
+  // Auto-activate manual mode when only the manual option exists
+  (function(){{
+    var _gs=document.getElementById('mlb-log-game');
+    if(_gs&&_gs.options.length===1&&_gs.options[0].value==='__manual__'){{
+      mlbLogFillPick(_gs);
+    }}
+  }})();
 }}
 
 function mlbLogFillPick(sel){{
