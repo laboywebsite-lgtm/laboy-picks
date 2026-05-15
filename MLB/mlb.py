@@ -4791,21 +4791,30 @@ def cmd_publish(html_paths):
         from urllib.parse import quote as _quote
         import re as _re
         if not _gh_token:
+            print("  ⚠️  Dashboard: no hay GITHUB_TOKEN, skip.")
             return
-        _base = f"https://api.github.com/repos/{_pages_user}/{_pages_repo}"
-        _hdrs2 = {"Authorization": f"token {_gh_token}", "Accept": "application/vnd.github.v3+json",
-                  "Content-Type": "application/json", "User-Agent": "laboy-mlb-publish"}
-        def _gh2(method, path, payload=None):
-            data = json.dumps(payload).encode() if payload else None
-            req  = _ur.Request(f"{_base}{path}", data=data, headers=_hdrs2, method=method)
-            try:
-                with _ur.urlopen(req) as r: return json.loads(r.read())
-            except Exception: return {}
+        _base    = f"https://api.github.com/repos/{_pages_user}/{_pages_repo}"
+        _hdrs2   = {"Authorization": f"token {_gh_token}", "Accept": "application/vnd.github.v3+json",
+                    "Content-Type": "application/json", "User-Agent": "laboy-mlb-publish"}
 
-        # Lista todos los archivos del repo
-        tree = _gh2("GET", "/git/trees/main?recursive=1")
-        all_names = [item["path"] for item in tree.get("tree", [])
-                     if item.get("type") == "blob" and item["path"].startswith("Laboy ") and item["path"].endswith(".html")]
+        # Lista archivos raíz del repo via Contents API (más confiable que git trees)
+        all_names = []
+        try:
+            _req_ls = _ur.Request(f"{_base}/contents/", headers=_hdrs2)
+            with _ur.urlopen(_req_ls, timeout=15) as _r_ls:
+                _items = json.loads(_r_ls.read())
+            all_names = [
+                item["name"] for item in _items
+                if item.get("type") == "file"
+                and item["name"].startswith("Laboy ")
+                and item["name"].endswith(".html")
+            ]
+            print(f"  📂 Dashboard: encontré {len(all_names)} archivo(s) Laboy *.html")
+        except Exception as _e_ls:
+            print(f"  ⚠️  Dashboard: error listando archivos: {_e_ls}")
+            # fallback: al menos incluir los nuevos archivos que acabamos de publicar
+            all_names = list(new_files or [])
+
         all_names = sorted(all_names, reverse=True)
 
         _MONTH = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
@@ -11300,7 +11309,7 @@ if __name__ == "__main__":
                     except Exception as _ep:
                         print(f"  ⚠️  Publish falló: {_ep}")
             else:
-                print("\n  ⚠️  No hay picks gradeados para esa fecha.")
+                print("\n  ⚠️  No hay picks en el log para esa fecha.")
             sys.exit(0)
         if GRADE_MODE:       cmd_grade_pick();  sys.exit(0)
         if REMOVE_MODE:      cmd_remove_pick(); sys.exit(0)
