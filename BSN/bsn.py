@@ -508,16 +508,6 @@ def load_bsn_advanced(wb):
     Si D-F tienen None/fórmula sin caché, recalcula blend desde cols I-K/N-P.
     PACE siempre usa 100% 2026 (col K).
     """
-    # Load JSON 2026 stats override
-    _bsn_stats_json = {}
-    _stats_json_path = os.path.join(SCRIPT_DIR, "bsn_team_stats.json")
-    if os.path.exists(_stats_json_path):
-        try:
-            with open(_stats_json_path, "r", encoding="utf-8") as _f:
-                _bsn_stats_json = json.load(_f)
-        except Exception:
-            pass
-
     ws     = wb[BSN_ADV_SHEET]
     data   = {}
     gp_map = _load_gp()   # {team_short: gp}
@@ -549,11 +539,9 @@ def load_bsn_advanced(wb):
         drtg_cached = row[4]   # col E
         pace_cached = row[5]   # col F
 
-        # JSON override (bsn_team_stats.json) takes priority for 2026 stats
-        _js = _bsn_stats_json.get(team, {})
-        o26 = _js.get("ortg") if _js.get("ortg") else row[8]    # col I — ORtg 2026
-        d26 = _js.get("drtg") if _js.get("drtg") else row[9]    # col J — DRtg 2026
-        p26 = _js.get("pace") if _js.get("pace") else row[10]   # col K — Pace 2026
+        o26 = row[8]    # col I — ORtg 2026
+        d26 = row[9]    # col J — DRtg 2026
+        p26 = row[10]   # col K — Pace 2026
         h26 = str(row[7]).strip() if row[7] else ""  # col H = nombre completo 2026
 
         team25 = tbl25.get(h26, {})
@@ -7114,11 +7102,13 @@ def cmd_publish(html_paths):
     import shutil, subprocess, glob as _glob
 
     repo      = GITHUB_PAGES_REPO
-    clone_url = "https://github.com/laboywebsite-lgtm/bsn-picks"
+    _gh_token = os.environ.get("LABOY_GITHUB_TOKEN", "")
+    clone_url = (f"https://{_gh_token}@github.com/laboywebsite-lgtm/bsn-picks"
+                 if _gh_token else "https://github.com/laboywebsite-lgtm/bsn-picks")
 
     if not os.path.isdir(repo):
         print(f"\n  📥 Repo no encontrado localmente. Clonando...")
-        print(f"     {clone_url}  →  {repo}")
+        print(f"     https://github.com/laboywebsite-lgtm/bsn-picks  →  {repo}")
         parent = os.path.dirname(repo)
         os.makedirs(parent, exist_ok=True)
         result = subprocess.run(["git", "clone", clone_url, repo],
