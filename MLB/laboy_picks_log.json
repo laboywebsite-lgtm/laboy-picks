@@ -1027,8 +1027,8 @@
     "odds": -140,
     "stake": 25.0,
     "book": "BetMGM",
-    "result": null,
-    "pnl": null,
+    "result": "L",
+    "pnl": -25.0,
     "analysis": "Vientos cruzados que favorecen al pitcheo en este juego, especialmente Mets que trae a la loma su mejor pitcher Nolan McLean. "
   },
   {
