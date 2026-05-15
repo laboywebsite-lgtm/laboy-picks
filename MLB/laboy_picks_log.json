@@ -1078,5 +1078,17 @@
     "result": null,
     "pnl": null,
     "analysis": ""
+  },
+  {
+    "id": 90,
+    "date": "2026-05-15",
+    "game": "PHILLIES vs. PIRATES",
+    "pick": "OVER 8.0",
+    "odds": -118,
+    "stake": 25.0,
+    "book": "BetMGM",
+    "result": null,
+    "pnl": null,
+    "analysis": ""
   }
 ]
