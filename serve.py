@@ -7526,6 +7526,7 @@ def handle_api(path, data):
                 cmd += [ppg_s, usg_s]  # skip RealGM scrape
             out = _run(cmd, cwd=BSN_DIR, timeout=60)
         ok = "error" not in out.lower() and "❌" not in out
+        _git_autopush_bg("bsn --ir")
         return 200, j(ok, f"{'✅' if ok else '❌'} {out[:300]}")
 
     if path == "/api/bsn/lines":
@@ -8083,6 +8084,7 @@ _GIT_STATE_FILES = [
     "NBA/nba_picks_log.json",
     "NBA/nba_injuries.json",
     "NBA/nba_playoff_game_log.json",
+    "BSN/bsn_injuries.json",
 ]
 
 # Comandos que modifican estado y deben triggear autopush:
