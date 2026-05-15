@@ -3801,7 +3801,7 @@ function nbaLogOpen(){{
         sel.appendChild(opt);
       }});
       if(games.length === 0){{
-        sel.innerHTML = '<option value="">Sin picks del modelo para hoy</option>';
+        _mlbShowNoPicksInputs(sel);
       }}
     }})
     .catch(function(){{ /* sin conexión — usa lo que hay */ }});
@@ -4168,6 +4168,39 @@ def mlb_panel():
 #mlb-log textarea{{height:60px!important;resize:none}}
 </style>
 <script>
+function _mlbNpSynced(inp,fld){{
+  inp.value=inp.value.toUpperCase();
+  var h=document.querySelector('#f-mlb-log [name='+fld+']');
+  if(h)h.value=inp.value;
+}}
+function _mlbShowNoPicksInputs(sel){{
+  if(document.getElementById('mlb-np-wrap'))return;
+  sel.style.display='none';
+  var _d=document.createElement('div');
+  _d.id='mlb-np-wrap';
+  _d.style.marginTop='8px';
+  var row=document.createElement('div');
+  row.style.cssText='display:grid;grid-template-columns:1fr 1fr;gap:8px';
+  var c1=document.createElement('div');
+  var l1=document.createElement('div');l1.className='mlg-lbl';l1.textContent='Away (Visitador)';
+  var ia=document.createElement('input');
+  ia.id='mlb-np-away';ia.placeholder='Ej: YANKEES';
+  ia.setAttribute('autocapitalize','characters');
+  ia.setAttribute('oninput','_mlbNpSynced(this,"away")');
+  ia.style.cssText='width:100%;background:rgba(0,0,0,.5);border:1px solid rgba(0,220,255,.2);border-radius:8px;color:#f1f5f9;padding:8px;font-size:.9rem;text-transform:uppercase;box-sizing:border-box';
+  c1.appendChild(l1);c1.appendChild(ia);
+  var c2=document.createElement('div');
+  var l2=document.createElement('div');l2.className='mlg-lbl';l2.textContent='Home (Local)';
+  var ih=document.createElement('input');
+  ih.id='mlb-np-home';ih.placeholder='Ej: METS';
+  ih.setAttribute('autocapitalize','characters');
+  ih.setAttribute('oninput','_mlbNpSynced(this,"home")');
+  ih.style.cssText='width:100%;background:rgba(0,0,0,.5);border:1px solid rgba(0,220,255,.2);border-radius:8px;color:#f1f5f9;padding:8px;font-size:.9rem;text-transform:uppercase;box-sizing:border-box';
+  c2.appendChild(l2);c2.appendChild(ih);
+  row.appendChild(c1);row.appendChild(c2);
+  _d.appendChild(row);
+  sel.parentNode.insertBefore(_d,sel.nextSibling);
+}}
 var mlbLogPicksData={{}};
 
 function mlbLogOpen(){{
