@@ -6315,7 +6315,14 @@ def main():
     elif cmd == '--picks':
         games       = get_nba_schedule(TARGET_DATE)
         odds        = get_market_odds()
-        inj_entries = _load_nba_injuries()
+        # Siempre buscar el PDF más reciente de la NBA al correr --picks
+        print("  🏥 Actualizando injury report...")
+        _fresh_inj = fetch_nba_injuries(TARGET_DATE)
+        if _fresh_inj:
+            _save_nba_injuries(_fresh_inj)
+            inj_entries = _fresh_inj
+        else:
+            inj_entries = _load_nba_injuries()  # fallback al cache
         inj_impact  = compute_nba_injury_impact(inj_entries)
         if inj_impact:
             print(f"  🏥 Injury impact activo: {len(inj_impact)} equipos afectados")
