@@ -1102,5 +1102,17 @@
     "result": null,
     "pnl": null,
     "analysis": ""
+  },
+  {
+    "id": 92,
+    "date": "2026-05-15",
+    "game": "ANGELS vs. BRAVES",
+    "pick": "BRAV",
+    "odds": -120,
+    "stake": 54.0,
+    "book": "BetMGM",
+    "result": null,
+    "pnl": null,
+    "analysis": ""
   }
 ]
