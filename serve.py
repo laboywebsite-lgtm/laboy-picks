@@ -2323,6 +2323,8 @@ async function openPicksModal(league, dateStr, polling){
 function closePicksModal(){
   document.getElementById('modal-picks-gallery').style.display='none';
   if(_picksPolling){ clearInterval(_picksPolling); _picksPolling=null; }
+  // Reload page so Grade/Log section reflects the newly logged pick
+  location.reload();
 }
 
 function _startPicksPolling(league, dateStr){
@@ -2341,36 +2343,41 @@ function _startPicksPolling(league, dateStr){
 async function _renderPicksList(league, dateStr){
   var list = document.getElementById('pg-list');
   try {
-    const r  = await fetch('/api/gallery/picks-list?league='+league+'&date='+dateStr);
+    const r  = await fetch('/api/gallery/picks-list?league='+encodeURIComponent(league)+'&date='+encodeURIComponent(dateStr));
+    if(!r.ok){ throw new Error('HTTP '+r.status); }
     const d  = await r.json();
-    var picks = d.picks || [];
+    var picks = (d && d.picks) ? d.picks : [];
     if(!picks.length){
-      list.innerHTML = '<div style="color:#475569;padding:20px;text-align:center">Sin picks para esta fecha.</div>';
+      list.innerHTML = '<div style="color:#475569;padding:20px;text-align:center">Sin picks para '+dateStr+'.</div>';
       return true;
     }
     var allReady = picks.every(function(p){ return p.ready; });
     list.innerHTML = picks.map(function(p){
-      var resClass = p.result==='W'?'pg-w':p.result==='L'?'pg-l':p.result==='P'?'pg-p':'pg-pend';
-      var resBadge = p.result ? '<span class="pg-badge '+resClass+'">'+p.result+'</span>'
-                              : '<span class="pg-badge pg-pend">—</span>';
+      var res = p.result || '';
+      var resClass = res==='W'?'pg-w':res==='L'?'pg-l':res==='P'?'pg-p':'pg-pend';
+      var resBadge = res ? '<span class="pg-badge '+resClass+'">'+res+'</span>'
+                         : '<span class="pg-badge pg-pend">—</span>';
       var dlBtn = p.ready
         ? '<a class="pg-btn pg-dl" href="'+p.media_url+'?dl=1" download="'+p.file_name+'">⬇</a>'
           +'<a class="pg-btn" href="'+p.media_url+'" target="_blank">👁</a>'
-        : '<span class="pg-btn pg-gen">⏳</span>';
+        : '<span class="pg-btn pg-gen" title="Generando imagen...">⏳</span>';
+      var gameStr = p.game ? String(p.game) : '—';
+      var pickStr = p.pick ? String(p.pick) : '—';
+      var oddsStr = p.odds_fmt ? String(p.odds_fmt) : '';
       return '<div class="pg-item">'
         +'<div class="pg-item-left">'
         +resBadge
         +'<div class="pg-item-info">'
-        +'<span class="pg-game">'+p.game+'</span>'
-        +'<span class="pg-pick">'+p.pick+' <span class="pg-odds">'+p.odds_fmt+'</span></span>'
+        +'<span class="pg-game">'+gameStr+'</span>'
+        +'<span class="pg-pick">'+pickStr+' <span class="pg-odds">'+oddsStr+'</span></span>'
         +'</div></div>'
         +'<div class="pg-item-btns">'+dlBtn+'</div>'
         +'</div>';
     }).join('');
     return allReady;
   } catch(e){
-    list.innerHTML = '<div style="color:#ef4444;padding:20px">Error cargando picks.</div>';
-    return true;
+    list.innerHTML = '<div style="color:#64748b;padding:20px;text-align:center">Generando imágenes... <br><small style="font-size:.7rem">'+String(e)+'</small></div>';
+    return false;
   }
 }
 
@@ -4845,7 +4852,7 @@ def full_page(alert="", alert_type=""):
 </style>
 
 <!-- ── Picks Gallery Modal (shared: MLB / BSN / NBA) ── -->
-<div id="modal-picks-gallery" onclick="if(event.target===this)closePicksModal()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;align-items:flex-end;justify-content:center">
+<div id="modal-picks-gallery" onclick="if(event.target===this){closePicksModal()}" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;align-items:flex-end;justify-content:center">
 <div class="rc-gallery-sheet">
   <div id="pg-bar" class="rc-gallery-bar"></div>
   <div class="rc-gallery-header">
@@ -8253,49 +8260,46 @@ class Handler(BaseHTTPRequestHandler):
 
         # ── /api/gallery/picks-list — picks log + JPG status for a date ───
         if self.path.startswith("/api/gallery/picks-list"):
-            from urllib.parse import urlparse as _upl, parse_qs as _pqsl
-            _qsl  = _pqsl(_upl(self.path).query)
-            _lgl  = _qsl.get("league", ["MLB"])[0].upper()
-            _dtl  = _qsl.get("date",   [date.today().strftime("%Y-%m-%d")])[0]
-            _logs = {"MLB": MLB_LOG, "BSN": BSN_LOG, "NBA": NBA_LOG}
-            _dirs = {"MLB": MLB_DIR, "BSN": BSN_DIR, "NBA": NBA_DIR}
-            # JPG prefix per league
-            _jpg_prefix = {"MLB": "Laboy Pick", "BSN": "Laboy Pick", "NBA": "Laboy NBA Pick"}
-            _log_path   = _logs.get(_lgl, MLB_LOG)
-            _league_dir = _dirs.get(_lgl, MLB_DIR)
-            _jpfx       = _jpg_prefix.get(_lgl, "Laboy Pick")
-            _picks = []
-            import glob as _pglob
             try:
-                _all_picks = _rj(_log_path) if os.path.exists(_log_path) else []
-                for _e in _all_picks:
-                    if _e.get("date", "") != _dtl:
+                import glob as _pglob
+                _qs_raw = self.path.split("?", 1)[1] if "?" in self.path else ""
+                _qs_p   = {}
+                for _kv in _qs_raw.split("&"):
+                    if "=" in _kv:
+                        _k, _v = _kv.split("=", 1)
+                        _qs_p[_k] = _v
+                _lgl  = _qs_p.get("league", "MLB").upper()
+                _dtl  = _qs_p.get("date", date.today().strftime("%Y-%m-%d"))
+                _logs = {"MLB": MLB_LOG, "BSN": BSN_LOG, "NBA": NBA_LOG}
+                _dirs = {"MLB": MLB_DIR, "BSN": BSN_DIR, "NBA": NBA_DIR}
+                _pfxs = {"MLB": "Laboy Pick", "BSN": "Laboy Pick", "NBA": "Laboy NBA Pick"}
+                _log_path   = _logs.get(_lgl, MLB_LOG)
+                _league_dir = _dirs.get(_lgl, MLB_DIR)
+                _jpfx       = _pfxs.get(_lgl, "Laboy Pick")
+                _all_picks  = _rj(_log_path) if os.path.exists(_log_path) else []
+                _picks = []
+                for _e in (_all_picks if isinstance(_all_picks, list) else []):
+                    if str(_e.get("date", "")) != _dtl:
                         continue
-                    _pid    = _e.get("id", 0)
-                    # Glob for file matching "Laboy Pick {date} #{id}*.jpg" (may have game name appended)
-                    _jpattern = os.path.join(_league_dir, f"{_jpfx} {_dtl} #{_pid}*.jpg")
-                    _jmatches = _pglob.glob(_jpattern)
-                    _ready    = bool(_jmatches)
-                    _jname    = os.path.basename(_jmatches[0]) if _ready else ""
-                    _odds_v   = _e.get("odds", 0)
+                    _pid = _e.get("id", 0)
+                    _jmatches = _pglob.glob(os.path.join(_league_dir, f"{_jpfx} {_dtl} #{_pid}*.jpg"))
+                    _ready  = bool(_jmatches)
+                    _jname  = os.path.basename(_jmatches[0]) if _ready else ""
+                    _odds_v = _e.get("odds", 0)
                     try:
-                        _odds_fmt = (f"+{int(_odds_v)}" if _odds_v > 0 else str(int(_odds_v))) if _odds_v else "—"
+                        _odds_fmt = (f"+{int(_odds_v)}" if float(_odds_v) > 0 else str(int(_odds_v))) if _odds_v else "—"
                     except Exception:
                         _odds_fmt = str(_odds_v)
                     _picks.append({
-                        "id":        _pid,
-                        "game":      _e.get("game", ""),
-                        "pick":      _e.get("pick", ""),
-                        "odds_fmt":  _odds_fmt,
-                        "result":    _e.get("result"),
-                        "date":      _dtl,
-                        "ready":     _ready,
-                        "file_name": _jname,
+                        "id": _pid, "game": str(_e.get("game", "")),
+                        "pick": str(_e.get("pick", "")), "odds_fmt": _odds_fmt,
+                        "result": _e.get("result"), "date": _dtl,
+                        "ready": _ready, "file_name": _jname,
                         "media_url": f"/media/{_lgl}/{_jname}" if _ready else "",
                     })
+                self._send_json(200, {"picks": _picks})
             except Exception as _exl:
-                self._send_json(500, {"picks": [], "error": str(_exl)}); return
-            self._send_json(200, {"picks": _picks})
+                self._send_json(200, {"picks": [], "error": str(_exl)})
             return
 
         # ── /api/gallery/latest-pick — poll for generated pick JPG ─────────
