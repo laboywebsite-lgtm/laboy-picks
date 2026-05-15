@@ -2273,6 +2273,94 @@ async function submitForm(formId,endpoint,modalId){
   }catch(e){alert('Error: '+e);}
 }
 
+// ── Log Pick with auto-download ───────────────────────────────────────────
+async function submitLogForm(formId, endpoint, modalId, league){
+  const form = document.getElementById(formId);
+  const fd   = new FormData(form);
+  var pairs  = [];
+  fd.forEach(function(v,k){ pairs.push(encodeURIComponent(k)+'='+encodeURIComponent(v)); });
+  var body = pairs.join('&');
+  try {
+    const r = await fetch(endpoint, {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:body});
+    const d = await r.json();
+    const old = form.querySelector('.alert'); if(old) old.remove();
+    const div = document.createElement('div');
+    div.className = 'alert '+(d.ok?'ok':'err');
+    div.textContent = d.msg;
+    form.prepend(div);
+    if(d.ok){
+      form.reset();
+      // Show download spinner
+      div.textContent = d.msg + ' — generando imagen...';
+      // Poll for the latest pick image (up to 40s)
+      var date = d.pick_date || new Date().toISOString().slice(0,10);
+      var idx  = d.pick_idx  !== undefined ? d.pick_idx : -1;
+      var tries = 0;
+      var poll = setInterval(async function(){
+        tries++;
+        try {
+          const pr = await fetch('/api/gallery/latest-pick?league='+league+'&date='+date+'&idx='+idx);
+          const pd = await pr.json();
+          if(pd.ready && pd.media_url){
+            clearInterval(poll);
+            div.textContent = d.msg + ' ✅';
+            // Trigger download
+            var a = document.createElement('a');
+            a.href = pd.media_url + '?dl=1';
+            a.download = pd.file_name || 'pick.jpg';
+            a.style.display = 'none';
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(function(){ document.body.removeChild(a); }, 1000);
+            setTimeout(function(){ location.reload(); }, 1400);
+          }
+        } catch(e){}
+        if(tries >= 20){ clearInterval(poll); setTimeout(()=>location.reload(),1000); }
+      }, 2000);
+    }
+  } catch(e){ alert('Error: '+e); }
+}
+
+// ── Record Card Gallery popup ─────────────────────────────────────────────
+async function openRecordGallery(league, script, cwd, accent){
+  // Store for "Generate New" fallback
+  window._rcLeague = league; window._rcScript = script;
+  window._rcCwd    = cwd;    window._rcAccent = accent;
+  var modal = document.getElementById('modal-rc-gallery');
+  modal.style.display = 'flex';
+  var list = document.getElementById('rc-gallery-list');
+  list.innerHTML = '<div style="color:#475569;padding:20px;text-align:center">Cargando...</div>';
+  document.getElementById('rc-gallery-title').textContent = league + ' · Record Cards';
+  document.getElementById('rc-gallery-bar').style.background = accent || '#f07820';
+  try {
+    const r  = await fetch('/api/gallery/files');
+    const d  = await r.json();
+    var files = (d.files||[]).filter(f => f.league === league && f.type === 'html');
+    if(!files.length){
+      list.innerHTML = '<div style="color:#475569;padding:20px;text-align:center">Sin record cards generados.</div>';
+      return;
+    }
+    list.innerHTML = files.map(function(f){
+      var enc = encodeURIComponent(f.path);
+      return '<div class="rc-item">'
+        +'<div class="rc-item-info"><span class="rc-item-name">'+f.name+'</span><span class="rc-item-date">'+f.date+'</span></div>'
+        +'<div class="rc-item-btns">'
+        +'<a class="rc-btn" href="/media/'+enc+'" target="_blank">👁 Ver</a>'
+        +'<a class="rc-btn rc-dl" href="/media/'+enc+'?dl=1" download="'+f.name+'">⬇</a>'
+        +'</div></div>';
+    }).join('');
+  } catch(e){
+    list.innerHTML = '<div style="color:#ef4444;padding:20px">Error cargando archivos.</div>';
+  }
+}
+function closeRcGallery(){
+  document.getElementById('modal-rc-gallery').style.display='none';
+}
+function rcGalleryGenerate(){
+  closeRcGallery();
+  openRecordModal(window._rcLeague, window._rcScript, window._rcCwd, window._rcAccent);
+}
+
 // Grade pick
 async function autoGrade(endpoint, modalId){
   if(!confirm('Auto-gradear picks pendientes jalando scores reales?')) return;
@@ -3433,7 +3521,7 @@ def bsn_panel():
     ('📊', 'Stats',    "openView('/api/view/bsn/stats','BSN · Stats')"),
     ('✓',  'Grade',   "openModal('bsn-grade')"),
     ('📜', 'Historial',"openView('/api/view/bsn/log','BSN · Historial')"),
-    ('🖼', 'Record',  "openRecordModal('BSN','bsn.py','BSN','#f5a623')"),
+    ('🖼', 'Record',  "openRecordGallery('BSN','bsn.py','BSN','#f5a623')"),
     ('🃏', 'Parlay',  "openModal('bsn-parlay')"),
     ('🏥', 'IR',      "openBsnIrModal()"),
     ('🎯', 'GP',      "openModal('bsn-gp')"),
@@ -3460,7 +3548,7 @@ def bsn_panel():
 <div class="modal-bg" id="bsn-log">
 <div class="modal">
   <h2>BSN — Log Pick</h2>
-  <form id="f-bsn-log" onsubmit="event.preventDefault();submitForm('f-bsn-log','/api/bsn/log','bsn-log')">
+  <form id="f-bsn-log" onsubmit="event.preventDefault();submitLogForm('f-bsn-log','/api/bsn/log','bsn-log','BSN')">
     <input type="hidden" name="date" value="{today}">
     <input type="hidden" name="team1" id="bsn-log-t1">
     <input type="hidden" name="team2" id="bsn-log-t2">
@@ -3740,7 +3828,7 @@ def nba_panel():
     ('📊', 'Stats',    "openView('/api/view/nba/stats','NBA · Stats')"),
     ('✓',  'Grade',   "openModal('nba-grade')"),
     ('📜', 'Historial',"openView('/api/view/nba/log','NBA · Historial')"),
-    ('🖼', 'Record',  "openRecordModal('NBA','nba.py','NBA','#3b82f6')"),
+    ('🖼', 'Record',  "openRecordGallery('NBA','nba.py','NBA','#3b82f6')"),
     ('🏥', 'IR',      "openNbaIR()"),
     ('🔄', 'Refresh IR',"refreshAndShowIR()"),
     ('📤', 'Publish', "runCmd('python3 nba.py --picks --publish','NBA','NBA → Publish')"),
@@ -3986,7 +4074,7 @@ function nbaLogSelectBook(btn,book){{
     <button type="button" class="mlg-close" onclick="closeModal('nba-log')">✕</button>
   </div>
   <div class="mlg-body">
-  <form id="f-nba-log" onsubmit="event.preventDefault();var g=document.getElementById('nba-log-game');if(g&&!g.value){{alert('Selecciona un juego');return;}}submitForm('f-nba-log','/api/nba/log','nba-log')">
+  <form id="f-nba-log" onsubmit="event.preventDefault();var g=document.getElementById('nba-log-game');if(g&&!g.value){{alert('Selecciona un juego');return;}}submitLogForm('f-nba-log','/api/nba/log','nba-log','NBA')">
     <input type="hidden" name="date" value="{today}">
     <input type="hidden" name="away">
     <input type="hidden" name="home">
@@ -4338,7 +4426,7 @@ function mlgSelectBook(btn,book){{
     <button type="button" class="mlg-close" onclick="closeModal('mlb-log')">✕</button>
   </div>
   <div class="mlg-body">
-  <form id="f-mlb-log" onsubmit="event.preventDefault();submitForm('f-mlb-log','/api/mlb/log','mlb-log')">
+  <form id="f-mlb-log" onsubmit="event.preventDefault();submitLogForm('f-mlb-log','/api/mlb/log','mlb-log','MLB')">
     <input type="hidden" name="book" value="DraftKings">
     <div class="mlg-field">
       <div class="mlg-lbl">📅 Fecha</div>
@@ -4465,7 +4553,7 @@ function mlgSelectBook(btn,book){{
     ('⛅', 'Weather',  "openView('/api/view/mlb/weather','MLB · Weather')"),
     ('✓',  'Grade',   "openModal('mlb-grade')"),
     ('📜', 'Historial',"openView('/api/view/mlb/log','MLB · Historial')"),
-    ('🖼', 'Record',  "openRecordModal('MLB','mlb.py','MLB','#22c55e')"),
+    ('🖼', 'Record',  "openRecordGallery('MLB','mlb.py','MLB','#22c55e')"),
     ('🔍', 'Debug',   "openModal('mlb-debug')"),
     ('📈', 'Feedback', "runInView('python3 mlb.py --feedback','MLB','MLB · Feedback')"),
   ]
@@ -4663,7 +4751,42 @@ def full_page(alert="", alert_type=""):
 }}
 .rec-chip:hover{{background:rgba(255,255,255,.09);color:#cbd5e1}}
 .rec-chip.active{{border-color:var(--rec-accent,#f07820);color:var(--rec-accent,#f07820);background:rgba(240,120,32,.08)}}
+/* Record Card Gallery Modal */
+#modal-rc-gallery{{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;align-items:flex-end;justify-content:center}}
+.rc-gallery-sheet{{background:#111827;border-radius:18px 18px 0 0;width:100%;max-width:540px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden}}
+.rc-gallery-bar{{height:3px;border-radius:3px 3px 0 0}}
+.rc-gallery-header{{display:flex;align-items:center;justify-content:space-between;padding:16px 18px 10px}}
+.rc-gallery-header h3{{font-size:.9rem;font-weight:800;color:#f1f5f9}}
+.rc-gen-btn{{background:#1e293b;border:1px solid #334155;color:#94a3b8;border-radius:8px;padding:7px 14px;font-size:.72rem;cursor:pointer;font-family:inherit;font-weight:700}}
+.rc-gen-btn:hover{{background:#2563eb;border-color:#2563eb;color:#fff}}
+.rc-close-btn{{background:none;border:none;color:#475569;font-size:1.3rem;cursor:pointer;padding:0 4px;line-height:1}}
+#rc-gallery-list{{overflow-y:auto;padding:6px 12px 20px;flex:1}}
+.rc-item{{display:flex;align-items:center;justify-content:space-between;padding:10px 8px;border-bottom:1px solid #1e2a3a;gap:10px}}
+.rc-item:last-child{{border-bottom:none}}
+.rc-item-info{{flex:1;min-width:0}}
+.rc-item-name{{display:block;font-size:.75rem;color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600}}
+.rc-item-date{{display:block;font-size:.67rem;color:#475569;margin-top:2px}}
+.rc-item-btns{{display:flex;gap:6px;flex-shrink:0}}
+.rc-btn{{background:#1e293b;border:1px solid #2d3f55;color:#94a3b8;border-radius:6px;padding:5px 11px;font-size:.72rem;cursor:pointer;text-decoration:none;white-space:nowrap}}
+.rc-btn:hover{{background:#2563eb;border-color:#2563eb;color:#fff}}
+.rc-dl{{color:#64748b}}
+.rc-dl:hover{{background:#059669;border-color:#059669;color:#fff}}
 </style>
+
+<!-- ── Record Card Gallery Modal (shared: MLB / BSN / NBA) ── -->
+<div id="modal-rc-gallery" onclick="if(event.target===this)closeRcGallery()">
+<div class="rc-gallery-sheet">
+  <div id="rc-gallery-bar" class="rc-gallery-bar"></div>
+  <div class="rc-gallery-header">
+    <h3 id="rc-gallery-title">Record Cards</h3>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button class="rc-gen-btn" onclick="rcGalleryGenerate()">+ Generar Nuevo</button>
+      <button class="rc-close-btn" onclick="closeRcGallery()">✕</button>
+    </div>
+  </div>
+  <div id="rc-gallery-list"></div>
+</div>
+</div>
 
 <script>{JS}</script>
 {_MC_MODAL_HTML}
@@ -7493,6 +7616,222 @@ def _render_cmd_output(text):
     return '<div class="detail-empty">Sin datos.</div>'
 
 
+# ══════════════════════════════════════════════════════════════════════
+# GALERÍA — Picks (.jpg) y Record Cards (.html) de todas las ligas
+# ══════════════════════════════════════════════════════════════════════
+
+def _gallery_list_files():
+    """Devuelve lista de archivos ordenados por fecha descendente."""
+    import re as _re
+    dirs = {"MLB": MLB_DIR, "BSN": BSN_DIR, "NBA": NBA_DIR}
+    files = []
+    for league, d in dirs.items():
+        if not os.path.isdir(d):
+            continue
+        for fname in os.listdir(d):
+            fpath = os.path.join(d, fname)
+            if not os.path.isfile(fpath):
+                continue
+            ext = fname.lower().rsplit(".", 1)[-1] if "." in fname else ""
+            if ext == "jpg":
+                ftype = "jpg"
+            elif ext == "html" and ("Record Card" in fname or "record card" in fname.lower()):
+                ftype = "html"
+            else:
+                continue
+            dm = _re.search(r"(\d{4}-\d{2}-\d{2})", fname)
+            fdate = dm.group(1) if dm else "0000-00-00"
+            rel = f"{league}/{fname}"
+            files.append({"name": fname, "league": league, "type": ftype,
+                          "date": fdate, "path": rel,
+                          "size": os.path.getsize(fpath)})
+    files.sort(key=lambda x: (x["date"], x["name"]), reverse=True)
+    return files
+
+
+def _gallery_html():
+    return r"""<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Laboy Picks — Galería</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#0d0f14;color:#e2e8f0;font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh}
+  header{background:#111827;border-bottom:1px solid #1e2a3a;padding:14px 20px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100}
+  header h1{font-size:1.1rem;font-weight:700;color:#f8fafc;letter-spacing:.5px}
+  header span{font-size:.8rem;color:#64748b;margin-left:auto}
+  .filters{display:flex;gap:8px;padding:16px 20px 8px;flex-wrap:wrap;align-items:center}
+  .filters label{font-size:.75rem;color:#64748b;margin-right:4px}
+  .btn-filter{background:#1e2a3a;border:1px solid #2d3f55;color:#94a3b8;border-radius:20px;padding:5px 14px;font-size:.78rem;cursor:pointer;transition:all .15s}
+  .btn-filter.active,.btn-filter:hover{background:#2563eb;border-color:#2563eb;color:#fff}
+  .btn-filter.active-mlb{background:#16a34a;border-color:#16a34a;color:#fff}
+  .btn-filter.active-bsn{background:#dc2626;border-color:#dc2626;color:#fff}
+  .btn-filter.active-nba{background:#7c3aed;border-color:#7c3aed;color:#fff}
+  #count{font-size:.75rem;color:#475569;margin-left:auto;padding:0 20px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;padding:12px 20px 40px}
+  .card{background:#151c27;border:1px solid #1e2a3a;border-radius:10px;overflow:hidden;transition:transform .15s,box-shadow .15s;cursor:pointer}
+  .card:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(0,0,0,.5)}
+  .card-img{width:100%;aspect-ratio:1;object-fit:cover;display:block;background:#0d1117}
+  .card-html{width:100%;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#0d1117;color:#475569;font-size:2.5rem}
+  .card-html span{font-size:.7rem;color:#334155;margin-top:6px;letter-spacing:.5px;text-transform:uppercase}
+  .card-info{padding:8px 10px}
+  .card-name{font-size:.72rem;color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .card-meta{font-size:.68rem;color:#475569;margin-top:2px;display:flex;gap:6px;align-items:center}
+  .badge{display:inline-block;border-radius:4px;padding:1px 6px;font-size:.65rem;font-weight:700}
+  .badge-MLB{background:#14532d;color:#4ade80}
+  .badge-BSN{background:#7f1d1d;color:#fca5a5}
+  .badge-NBA{background:#3b0764;color:#c4b5fd}
+  /* Lightbox */
+  #lb{display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:999;flex-direction:column;align-items:center;justify-content:center}
+  #lb.open{display:flex}
+  #lb-close{position:absolute;top:16px;right:20px;font-size:1.6rem;color:#94a3b8;cursor:pointer;background:none;border:none;line-height:1}
+  #lb-close:hover{color:#f1f5f9}
+  #lb-img{max-width:94vw;max-height:86vh;border-radius:8px;object-fit:contain}
+  #lb-frame{width:94vw;height:88vh;border:none;border-radius:8px;background:#fff}
+  #lb-bar{display:flex;gap:12px;align-items:center;margin-top:12px}
+  #lb-title{color:#94a3b8;font-size:.8rem;max-width:60vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .lb-btn{background:#1e293b;border:1px solid #334155;color:#94a3b8;border-radius:6px;padding:6px 16px;font-size:.78rem;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+  .lb-btn:hover{background:#2563eb;border-color:#2563eb;color:#fff}
+  .empty{text-align:center;padding:60px 20px;color:#334155;font-size:.9rem}
+  #spinner{display:none;text-align:center;padding:60px;color:#475569;font-size:.9rem}
+</style>
+</head>
+<body>
+<header>
+  <h1>📁 Galería — Laboy Picks</h1>
+  <span id="ts"></span>
+</header>
+<div class="filters">
+  <label>Liga:</label>
+  <button class="btn-filter active" data-f="ALL" onclick="setFilter('ALL',this)">Todas</button>
+  <button class="btn-filter" data-f="MLB" onclick="setFilter('MLB',this)">⚾ MLB</button>
+  <button class="btn-filter" data-f="BSN" onclick="setFilter('BSN',this)">⚾ BSN</button>
+  <button class="btn-filter" data-f="NBA" onclick="setFilter('NBA',this)">🏀 NBA</button>
+  <label style="margin-left:12px">Tipo:</label>
+  <button class="btn-filter active" data-t="ALL" onclick="setType('ALL',this)">Todos</button>
+  <button class="btn-filter" data-t="jpg" onclick="setType('jpg',this)">🖼 Picks</button>
+  <button class="btn-filter" data-t="html" onclick="setType('html',this)">📄 Record Cards</button>
+  <span id="count"></span>
+</div>
+<div id="spinner">Cargando...</div>
+<div id="grid" class="grid"></div>
+
+<!-- Lightbox -->
+<div id="lb">
+  <button id="lb-close" onclick="closeLb()">✕</button>
+  <img id="lb-img" src="" alt="">
+  <iframe id="lb-frame" src="" style="display:none"></iframe>
+  <div id="lb-bar">
+    <span id="lb-title"></span>
+    <a id="lb-dl" class="lb-btn" href="#" download>⬇ Descargar</a>
+    <a id="lb-open" class="lb-btn" href="#" target="_blank">↗ Abrir</a>
+  </div>
+</div>
+
+<script>
+let ALL=[], curF='ALL', curT='ALL';
+
+async function load(){
+  document.getElementById('spinner').style.display='block';
+  try{
+    const r=await fetch('/api/gallery/files');
+    const d=await r.json();
+    ALL=d.files||[];
+    render();
+  }catch(e){
+    document.getElementById('grid').innerHTML='<div class="empty">Error cargando archivos.</div>';
+  }
+  document.getElementById('spinner').style.display='none';
+  document.getElementById('ts').textContent='Actualizado '+new Date().toLocaleTimeString();
+}
+
+function filtered(){
+  return ALL.filter(f=>
+    (curF==='ALL'||f.league===curF) &&
+    (curT==='ALL'||f.type===curT)
+  );
+}
+
+function render(){
+  const list=filtered();
+  document.getElementById('count').textContent=list.length+' archivo'+(list.length!==1?'s':'');
+  const g=document.getElementById('grid');
+  if(!list.length){g.innerHTML='<div class="empty">Sin archivos.</div>';return;}
+  g.innerHTML=list.map(f=>{
+    const enc=encodeURIComponent(f.path);
+    if(f.type==='jpg'){
+      return `<div class="card" onclick="openImg('/media/${enc}','${esc(f.name)}')">
+        <img class="card-img" src="/media/${enc}" loading="lazy" alt="${esc(f.name)}">
+        <div class="card-info">
+          <div class="card-name">${esc(f.name)}</div>
+          <div class="card-meta"><span class="badge badge-${f.league}">${f.league}</span>${f.date}</div>
+        </div>
+      </div>`;
+    } else {
+      return `<div class="card" onclick="openHtml('/media/${enc}','${esc(f.name)}')">
+        <div class="card-html">📄<span>Record Card</span></div>
+        <div class="card-info">
+          <div class="card-name">${esc(f.name)}</div>
+          <div class="card-meta"><span class="badge badge-${f.league}">${f.league}</span>${f.date}</div>
+        </div>
+      </div>`;
+    }
+  }).join('');
+}
+
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');}
+
+function setFilter(v,btn){
+  curF=v;
+  document.querySelectorAll('[data-f]').forEach(b=>b.className='btn-filter');
+  btn.className='btn-filter active';
+  render();
+}
+function setType(v,btn){
+  curT=v;
+  document.querySelectorAll('[data-t]').forEach(b=>b.className='btn-filter');
+  btn.className='btn-filter active';
+  render();
+}
+
+function openImg(url,name){
+  document.getElementById('lb-img').src=url;
+  document.getElementById('lb-img').style.display='block';
+  document.getElementById('lb-frame').style.display='none';
+  document.getElementById('lb-frame').src='';
+  document.getElementById('lb-title').textContent=name;
+  document.getElementById('lb-dl').href=url+'?dl=1';
+  document.getElementById('lb-dl').download=name;
+  document.getElementById('lb-open').href=url;
+  document.getElementById('lb').classList.add('open');
+}
+function openHtml(url,name){
+  document.getElementById('lb-frame').src=url;
+  document.getElementById('lb-frame').style.display='block';
+  document.getElementById('lb-img').style.display='none';
+  document.getElementById('lb-img').src='';
+  document.getElementById('lb-title').textContent=name;
+  document.getElementById('lb-dl').href=url+'?dl=1';
+  document.getElementById('lb-dl').download=name;
+  document.getElementById('lb-open').href=url;
+  document.getElementById('lb').classList.add('open');
+}
+function closeLb(){
+  document.getElementById('lb').classList.remove('open');
+  document.getElementById('lb-frame').src='';
+  document.getElementById('lb-img').src='';
+}
+document.getElementById('lb').addEventListener('click',function(e){if(e.target===this)closeLb();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLb();});
+
+load();
+</script>
+</body>
+</html>"""
+
+
 def handle_api(path, data):
     """Returns (status_code, json_dict)"""
     j = lambda ok, msg: {"ok": ok, "msg": msg}
@@ -7502,17 +7841,20 @@ def handle_api(path, data):
         ok, msg = _log_pick(BSN_LOG, data)
         if ok:
             _git_autopush_bg("bsn --log")
+            _pick_date_bsn = data.get("date", date.today().strftime("%Y-%m-%d"))
+            _pick_idx_bsn  = -1
             try:
                 log_now = _rj(BSN_LOG)
-                pick_idx = len(log_now) - 1
+                _pick_idx_bsn = len(log_now) - 1
                 def _bsn_auto_pub(idx):
                     try:
                         _run(["python3","bsn.py","--export-log", str(idx), "--publish"],
                              cwd=BSN_DIR, timeout=90)
                     except Exception as _e:
                         print(f"  ⚠️  bsn auto-publish pick #{idx}: {_e}")
-                threading.Thread(target=_bsn_auto_pub, args=(pick_idx,), daemon=True).start()
+                threading.Thread(target=_bsn_auto_pub, args=(_pick_idx_bsn,), daemon=True).start()
             except Exception: pass
+            return 200, {"ok": True, "msg": msg, "pick_date": _pick_date_bsn, "pick_idx": _pick_idx_bsn}
         return 200, j(ok, msg)
 
     if path == "/api/bsn/log-parlay":
@@ -7602,7 +7944,22 @@ def handle_api(path, data):
     # ── NBA ──────────────────────────────────────────────────────
     if path == "/api/nba/log":
         ok, msg = _log_pick(NBA_LOG, data)
-        if ok: _git_autopush_bg("nba --log")
+        if ok:
+            _git_autopush_bg("nba --log")
+            _pick_date_nba = data.get("date", date.today().strftime("%Y-%m-%d"))
+            _pick_idx_nba  = -1
+            try:
+                log_now = _rj(NBA_LOG)
+                _pick_idx_nba = len(log_now) - 1
+                def _nba_auto_pub(idx):
+                    try:
+                        _run(["python3","nba.py","--export-log", str(idx), "--publish"],
+                             cwd=NBA_DIR, timeout=90)
+                    except Exception as _e:
+                        print(f"  ⚠️  nba auto-publish pick #{idx}: {_e}")
+                threading.Thread(target=_nba_auto_pub, args=(_pick_idx_nba,), daemon=True).start()
+            except Exception: pass
+            return 200, {"ok": True, "msg": msg, "pick_date": _pick_date_nba, "pick_idx": _pick_idx_nba}
         return 200, j(ok, msg)
 
     if path == "/api/nba/grade":
@@ -7679,17 +8036,20 @@ def handle_api(path, data):
         ok, msg = _log_pick(MLB_LOG, data)
         if ok:
             _git_autopush_bg("mlb --log")
+            _pick_date_mlb = data.get("date", date.today().strftime("%Y-%m-%d"))
+            _pick_idx_mlb  = -1
             try:
                 log_now = _rj(MLB_LOG)
-                pick_idx = len(log_now) - 1
+                _pick_idx_mlb = len(log_now) - 1
                 def _auto_pub(idx):
                     try:
                         _run(["python3","mlb.py","--export-log", str(idx), "--publish"],
                              cwd=MLB_DIR, timeout=90)
                     except Exception as _e:
                         print(f"  ⚠️  auto-publish pick #{idx}: {_e}")
-                threading.Thread(target=_auto_pub, args=(pick_idx,), daemon=True).start()
+                threading.Thread(target=_auto_pub, args=(_pick_idx_mlb,), daemon=True).start()
             except Exception: pass
+            return 200, {"ok": True, "msg": msg, "pick_date": _pick_date_mlb, "pick_idx": _pick_idx_mlb}
         return 200, j(ok, msg)
 
     if path == "/api/mlb/grade":
@@ -7783,6 +8143,71 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         if self.path == "/favicon.ico":
             self.send_response(204); self.end_headers(); return
+
+        # ── /api/gallery/latest-pick — poll for generated pick JPG ─────────
+        if self.path.startswith("/api/gallery/latest-pick"):
+            from urllib.parse import urlparse as _up2, parse_qs as _pqs2
+            _qs2 = _pqs2(_up2(self.path).query)
+            _lg  = _qs2.get("league", ["MLB"])[0].upper()
+            _dt  = _qs2.get("date",   [date.today().strftime("%Y-%m-%d")])[0]
+            _idx = _qs2.get("idx",    ["-1"])[0]
+            _ldir = {"MLB": MLB_DIR, "BSN": BSN_DIR, "NBA": NBA_DIR}.get(_lg, MLB_DIR)
+            import glob as _glob2
+            # Look for Laboy Pick YYYY-MM-DD #N.jpg matching date (and optionally idx)
+            _prefix = {"MLB": "Laboy Pick", "BSN": "Laboy BSN Pick", "NBA": "Laboy NBA Pick"}.get(_lg, "Laboy Pick")
+            _pattern = os.path.join(_ldir, f"{_prefix} {_dt} #*.jpg")
+            _matches = sorted(_glob2.glob(_pattern), key=os.path.getmtime, reverse=True)
+            if _matches:
+                _fname = os.path.basename(_matches[0])
+                self._send_json(200, {"ready": True, "file_name": _fname,
+                                      "media_url": f"/media/{_lg}/{_fname}"})
+            else:
+                self._send_json(200, {"ready": False})
+            return
+
+        # ── /gallery — galería de picks y record cards ───────────────────
+        if self.path == "/gallery":
+            self._send_html(200, _gallery_html())
+            return
+
+        # ── /api/gallery/files — lista de archivos ───────────────────────
+        if self.path == "/api/gallery/files":
+            self._send_json(200, {"files": _gallery_list_files()})
+            return
+
+        # ── /media/<path> — sirve imágenes y HTML generados ─────────────
+        if self.path.startswith("/media/"):
+            from urllib.parse import unquote as _uq
+            _rel = _uq(self.path[len("/media/"):]).lstrip("/")
+            # Solo permitir MLB/, BSN/, NBA/ para seguridad
+            _parts = _rel.split("/", 1)
+            if len(_parts) == 2 and _parts[0] in ("MLB", "BSN", "NBA"):
+                _league_dir = {"MLB": MLB_DIR, "BSN": BSN_DIR, "NBA": NBA_DIR}[_parts[0]]
+                _fpath = os.path.join(_league_dir, _parts[1])
+                if os.path.isfile(_fpath):
+                    _ext = _fpath.lower().rsplit(".", 1)[-1] if "." in _fpath else ""
+                    _ct  = "image/jpeg" if _ext in ("jpg","jpeg") else \
+                           "image/png"  if _ext == "png" else \
+                           "text/html; charset=utf-8"
+                    _dl  = "dl=1" in self.path
+                    try:
+                        with open(_fpath, "rb") as _ff:
+                            _data = _ff.read()
+                        self.send_response(200)
+                        self.send_header("Content-Type", _ct)
+                        self.send_header("Content-Length", str(len(_data)))
+                        if _dl:
+                            import urllib.parse as _up
+                            _fn = _up.quote(_parts[1])
+                            self.send_header("Content-Disposition", f'attachment; filename="{_parts[1]}"')
+                        self.send_header("Cache-Control", "public, max-age=3600")
+                        self.end_headers()
+                        self.wfile.write(_data)
+                    except Exception as _ex:
+                        self._send_json(500, {"error": str(_ex)})
+                    return
+            self._send_json(404, {"error": "Archivo no encontrado"})
+            return
 
         # ── /api/test-autopush — diagnóstico del autopush ─────────────────
         if self.path == "/api/test-autopush":
