@@ -4737,13 +4737,20 @@ def cmd_publish(html_paths):
     import shutil, subprocess
     import glob as _glob
 
-    repo = GITHUB_PAGES_REPO
+    repo      = GITHUB_PAGES_REPO
+    _gh_token = os.environ.get("LABOY_GITHUB_TOKEN", "")
+    _clone_base = "https://github.com/laboywebsite-lgtm/mlb-picks"
+    _clone_url  = (f"https://{_gh_token}@github.com/laboywebsite-lgtm/mlb-picks"
+                   if _gh_token else _clone_base)
+
     if not os.path.isdir(repo):
-        print(f"\n  ❌ Repo no encontrado: {repo}")
-        print(f"     Clona el repo primero:")
-        print(f"     git clone https://github.com/laboywebsite-lgtm/mlb-picks {repo}")
-        print(f"     O define la variable: export MLB_GITHUB_REPO=/tu/path/mlb-picks")
-        return
+        print(f"\n  📥 Repo mlb-picks no encontrado. Clonando...")
+        os.makedirs(os.path.dirname(repo), exist_ok=True)
+        _r = subprocess.run(["git", "clone", _clone_url, repo], capture_output=True, text=True)
+        if _r.returncode != 0:
+            print(f"\n  ❌ Error al clonar: {_r.stderr.strip()}")
+            return
+        print(f"  ✅ Repo clonado.\n")
 
     copied = []
     for hp in (html_paths or []):
