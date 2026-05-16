@@ -1111,8 +1111,8 @@
     "odds": -135,
     "stake": 25.0,
     "book": "BetMGM",
-    "result": null,
-    "pnl": null,
+    "result": "W",
+    "pnl": 18.52,
     "analysis": ""
   }
 ]
