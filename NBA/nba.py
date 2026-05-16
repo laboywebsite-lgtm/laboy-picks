@@ -5695,7 +5695,7 @@ def _nba_pick_card_jpg(entry):
     except Exception as _e:
         print(f"  ⚠️  _nba_pick_card_jpg: {_e}"); return None
 
-def html_to_jpg(html_path, width=800, scale=3):
+def html_to_jpg(html_path, width=800, scale=4):
     """
     Convierte un HTML file a JPG.
     Intenta en orden:
@@ -5753,7 +5753,7 @@ def html_to_jpg(html_path, width=800, scale=3):
                 pass
             full_h = page.evaluate("document.body.scrollHeight")
             page.set_viewport_size({"width": width, "height": max(900, full_h + 40)})
-            page.screenshot(path=jpg_path, full_page=True, type="jpeg", quality=92)
+            page.screenshot(path=jpg_path, full_page=True, type="jpeg", quality=95)
             browser.close()
         print(f"  🖼️  JPG via Playwright ✅")
         return jpg_path
