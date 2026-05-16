@@ -5695,7 +5695,7 @@ def _nba_pick_card_jpg(entry):
     except Exception as _e:
         print(f"  ⚠️  _nba_pick_card_jpg: {_e}"); return None
 
-def html_to_jpg(html_path, width=800, scale=2):
+def html_to_jpg(html_path, width=800, scale=3):
     """
     Convierte un HTML file a JPG.
     Intenta en orden:
