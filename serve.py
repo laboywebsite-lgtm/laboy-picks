@@ -8111,8 +8111,17 @@ def handle_api(path, data):
             for _old in _rglob.glob(os.path.join(MLB_DIR, f"Laboy Pick {_d} #*.jpg")):
                 try: os.remove(_old)
                 except Exception: pass
-        # Correr secuencial en un solo thread para no matar el servidor
+        # Correr en un solo thread: primero repoblar cache, luego exportar
         def _regen_all(_entries=_todo):
+            # Paso 1: refrescar el cache del modelo para hoy
+            try:
+                print("  🔄 Refreshing MLB picks cache...")
+                _run(["python3", os.path.join(MLB_DIR,"mlb.py"), "--picks"],
+                     cwd=MLB_DIR, timeout=180)
+                print("  ✅ Cache refreshed")
+            except Exception as _ex:
+                print(f"  ⚠️  Cache refresh failed: {_ex}")
+            # Paso 2: exportar cada pick secuencialmente
             for _entry in _entries:
                 try:
                     _run(["python3", os.path.join(MLB_DIR,"mlb.py"),
@@ -8122,9 +8131,9 @@ def handle_api(path, data):
                 except Exception as _ex:
                     print(f"  ⚠️  regen MLB #{_entry.get('id')}: {_ex}")
         threading.Thread(target=_regen_all, daemon=True).start()
-        _wait = len(_todo) * 30
+        _wait = len(_todo) * 30 + 60
         return 200, {"ok": True, "count": len(_todo),
-                     "msg": f"Regenerando {len(_todo)} pick(s) MLB... recarga en ~{_wait} seg." if _todo
+                     "msg": f"Regenerando {len(_todo)} pick(s) MLB (refreshing cache primero)... recarga en ~{_wait} seg." if _todo
                             else "Sin picks de MLB para hoy/ayer."}
 
     # ── BSN ──────────────────────────────────────────────────────
