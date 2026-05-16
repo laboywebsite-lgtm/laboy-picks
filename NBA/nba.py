@@ -4676,10 +4676,13 @@ def export_log_pick_html(entry):
         with open(fpath, "w", encoding="utf-8") as f:
             f.write(html)
 
-        # Auto-generar JPG
-        jpg_path = html_to_jpg(fpath)
-        if jpg_path:
-            print(f"  🖼️  JPG: {os.path.basename(jpg_path)}")
+        # Auto-generar JPG usando PIL directo (Playwright no disponible en Render)
+        try:
+            jpg_path = _nba_pick_card_jpg(entry)
+            if jpg_path:
+                print(f"  🖼️  JPG: {os.path.basename(jpg_path)}")
+        except Exception as _je:
+            print(f"  ⚠️  JPG PIL export: {_je}")
 
         return fpath
     except Exception as e:
@@ -5560,8 +5563,133 @@ body{font-family:'Inter',system-ui,sans-serif;background:#080c12;color:#e2e8f0}
     return html_path
 
 # ============================================================================
-# SCREENSHOT EXPORT
+# SCREENSHOT EXPORT / PIL PICK CARD
 # ============================================================================
+
+_NBA_FONTS_DIR = os.path.join(SCRIPT_DIR, "..", ".claude", "skills", "canvas-design", "canvas-fonts")
+
+try:
+    from PIL import Image as _PIL_Image, ImageDraw as _PIL_Draw, ImageFont as _PIL_Font
+    _NBA_HAS_PIL = True
+except ImportError:
+    _NBA_HAS_PIL = False
+
+def _nba_pick_card_jpg(entry):
+    """Genera JPG del pick card NBA usando PIL. Directo, sin Playwright."""
+    if not _NBA_HAS_PIL: return None
+    try:
+        import textwrap as _tw, re as _re, io as _io
+        import urllib.request as _ur
+        C_BG=(10,10,10); C_CARD=(34,34,34); C_ACCENT=(59,130,246)  # NBA blue
+        C_TEXT=(241,245,249); C_MUTED=(148,163,184); C_BORDER=(42,42,42)
+        C_GREEN=(34,197,94); C_RED=(239,68,68); C_STAT=(24,24,24)
+        pick_date=entry.get("date",""); pick_id=entry.get("id",0)
+        game=entry.get("game","").upper(); pick_str=entry.get("pick","")
+        odds_v=entry.get("odds",0); analysis=entry.get("analysis","").strip()
+        book=entry.get("book",""); result=entry.get("result")
+        odds_s=_fmt_odds_nba(odds_v); is_pos=odds_v>=0
+        try:
+            dstr=__import__("datetime").datetime.strptime(pick_date,"%Y-%m-%d").strftime("%A, %B %d · %Y").upper()
+        except: dstr=pick_date.upper()
+        # Team color from pick/game
+        parts=_re.split(r'\s+(?:@|VS\.?)\s+',game,flags=_re.IGNORECASE)
+        away_abb=parts[0].strip() if parts else ""; home_abb=parts[1].strip() if len(parts)>1 else ""
+        def h2r(h):
+            h=h.lstrip('#'); return tuple(int(h[i:i+2],16) for i in (0,2,4))
+        C_TEAM=h2r(TEAM_COLORS.get(away_abb,"#3b82f6"))
+        RES_C={"W":C_GREEN,"L":C_RED,"P":(148,163,184)}.get(result,C_TEAM)
+        pick_disp=_fmt_pick(pick_str)
+        # Fonts
+        def fnt(size,bold=False):
+            sfx="-Bold" if bold else ""
+            for p in [os.path.join(_NBA_FONTS_DIR,f"BigShoulders{'Bold' if bold else 'Regular'}.ttf"),
+                      f"/usr/share/fonts/truetype/dejavu/DejaVuSans{sfx}.ttf",
+                      f"/usr/share/fonts/truetype/liberation/LiberationSans{sfx}.ttf",
+                      "/System/Library/Fonts/Helvetica.ttc"]:
+                if os.path.exists(p):
+                    try: return _PIL_Font.truetype(p,size)
+                    except: pass
+            try: return _PIL_Font.load_default(size=size)
+            except: return _PIL_Font.load_default()
+        F_TITLE=fnt(44,True); F_PICK=fnt(60,True); F_ODDS=fnt(34,True)
+        F_LBL=fnt(20); F_STAT=fnt(26,True); F_DATE=fnt(22); F_GAME=fnt(24,True)
+        F_BODY=fnt(22); F_ANHEAD=fnt(34,True)
+        W=1080; PAD=52; CR=18
+        alines=_tw.wrap(analysis,42) if analysis else []
+        AH=60+len(alines)*34+40 if alines else 0
+        C2H=max(AH,120) if alines else 0
+        H=max(140+30+380+(30+C2H if C2H else 0)+80,1080)
+        img=_PIL_Image.new("RGB",(W,H),C_BG); d=_PIL_Draw.Draw(img)
+        def tw(t,f):
+            bb=d.textbbox((0,0),t,font=f); return bb[2]-bb[0]
+        def cx(t,f,y,c): d.text(((W-tw(t,f))//2,y),t,font=f,fill=c)
+        def rr(xy,r,fill=None,ol=None,w=1):
+            d.rounded_rectangle([xy[:2],xy[2:]],radius=r,fill=fill,outline=ol,width=w)
+        # Try to download NBA logo from ESPN CDN
+        def get_nba_logo(abb,size=72):
+            esp=ESPN_ABB.get(abb.upper(),"")
+            if not esp: return None
+            try:
+                req=_ur.Request(f"https://a.espncdn.com/i/teamlogos/nba/500/{esp}.png",
+                                headers={"User-Agent":"Mozilla/5.0"})
+                with _ur.urlopen(req,timeout=6) as r:
+                    return _PIL_Image.open(_io.BytesIO(r.read())).convert("RGBA").resize((size,size),_PIL_Image.LANCZOS)
+            except: return None
+        # Top stripe + header
+        d.rectangle([(0,0),(W,6)],fill=C_ACCENT)
+        y=18; cx("LABOY PICKS",F_TITLE,y,C_ACCENT); y+=54
+        cx("NBA",fnt(26),y,C_MUTED); y+=30
+        cx(dstr,F_DATE,y,C_MUTED); y+=32
+        d.rectangle([(0,y+8),(W,y+10)],fill=C_ACCENT); y+=26
+        # Card 1
+        C1X,C1Y=PAD,y; C1W=W-PAD*2; C1H=370
+        rr((C1X,C1Y,C1X+C1W,C1Y+C1H),CR,fill=C_CARD,ol=RES_C,w=2)
+        d.rounded_rectangle((C1X,C1Y,C1X+5,C1Y+C1H),radius=CR,fill=C_TEAM)
+        iy=C1Y+22; cx(game,F_GAME,iy,C_MUTED); iy+=42
+        # Team logos or colored circles
+        for ii,(lx,abb) in enumerate([(W//2-160,away_abb),(W//2+88,home_abb)]):
+            logo=get_nba_logo(abb)
+            if logo:
+                img.paste(logo,(lx,iy),logo)
+            else:
+                tc=h2r(TEAM_COLORS.get(abb,"#3b82f6"))
+                d.ellipse([(lx,iy),(lx+72,iy+72)],fill=tc)
+                ini=(TEAM_NICKNAMES.get(abb,abb)[:2]).upper()
+                iw=tw(ini,F_LBL); d.text((lx+36-iw//2,iy+26),ini,font=F_LBL,fill=(255,255,255))
+        cx("VS",fnt(22),iy+26,C_MUTED); iy+=86
+        cx(pick_disp.upper(),F_PICK,iy,C_TEXT); iy+=72
+        ob_w=tw(odds_s,F_ODDS); bx=(W-ob_w-48)//2
+        rr((bx,iy,bx+ob_w+48,iy+46),10,fill=(8,40,22) if is_pos else (30,20,20),ol=C_GREEN if is_pos else C_RED,w=2)
+        d.text((bx+24,iy+6),odds_s,font=F_ODDS,fill=C_GREEN if is_pos else C_RED); iy+=56
+        # Stats grid
+        SLBLS=["JUEGO","PICK","ODDS","BOOK"]
+        SVALS=[game[:12] if game else "—",pick_disp[:12] if pick_disp else "—",odds_s,book[:8] if book else "—"]
+        sgw=(C1W-32)//4; sx0=C1X+16; sy=C1Y+C1H-86
+        for i,(lb,vl) in enumerate(zip(SLBLS,SVALS)):
+            sx=sx0+i*sgw; rr((sx+2,sy,sx+sgw-4,sy+76),8,fill=C_STAT)
+            lw=tw(lb,F_LBL); d.text((sx+(sgw-lw)//2,sy+6),lb,font=F_LBL,fill=C_MUTED)
+            vw=tw(vl,F_STAT); d.text((sx+(sgw-vw)//2,sy+32),vl,font=F_STAT,
+                fill=C_GREEN if (i==2 and is_pos) else C_TEXT)
+        y=C1Y+C1H+22
+        # Card 2 analysis
+        if alines:
+            C2X,C2Y=PAD,y; C2W=C1W
+            rr((C2X,C2Y,C2X+C2W,C2Y+C2H),CR,fill=C_CARD,ol=C_BORDER,w=1)
+            d.rounded_rectangle((C2X,C2Y,C2X+5,C2Y+C2H),radius=CR,fill=C_MUTED)
+            ay=C2Y+18; cx("ANÁLISIS",F_ANHEAD,ay,C_ACCENT); ay+=48
+            d.line([(C2X+16,ay),(C2X+C2W-16,ay)],fill=C_BORDER,width=1); ay+=12
+            for line in alines:
+                lw=tw(line,F_BODY); d.text(((W-lw)//2,ay),line,font=F_BODY,fill=C_TEXT); ay+=34
+            y=C2Y+C2H+22
+        # Footer
+        d.rectangle([(0,H-6),(W,H)],fill=C_ACCENT)
+        cx("Laboy Picks · NBA · dubclub.win",F_DATE,H-44,C_MUTED)
+        fname=f"Laboy NBA Pick {pick_date} #{pick_id}.jpg"
+        fpath=os.path.join(SCRIPT_DIR,fname)
+        img.convert("RGB").save(fpath,"JPEG",quality=92)
+        print(f"  🖼️  NBA Pick JPG: {fname}"); return fpath
+    except Exception as _e:
+        print(f"  ⚠️  _nba_pick_card_jpg: {_e}"); return None
 
 def html_to_jpg(html_path, width=800, scale=2):
     """
