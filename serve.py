@@ -372,7 +372,8 @@ def _grade_rows(log_path, endpoint):
             pick_label = e.get("pick","—")
         odds_s = _fmt_odds(e.get("odds",0))
         stake_s = f"${e.get('stake',0)}"
-        eid = e.get("id","")
+        try: eid = int(float(str(e.get("id",""))))
+        except: eid = e.get("id","")
         rows += f"""<div style="background:#0a0a0a;border-radius:8px;padding:10px;border:1px solid #1e293b;margin-bottom:8px">
   <div style="font-size:0.68rem;color:#94a3b8;margin-bottom:3px">#{eid} · {e.get('date','')} · {odds_s} · {stake_s}</div>
   <div style="font-size:0.83rem;font-weight:700;margin-bottom:8px">{_esc(game_label)}<br><span style="color:#f07820">{_esc(pick_label)}</span></div>
@@ -397,7 +398,8 @@ def _grade_rows_mlb(log_path, endpoint):
         pick_label = e.get("pick","—")
         odds_s  = _fmt_odds(e.get("odds",0))
         stake_s = f"${e.get('stake',0)}"
-        eid     = e.get("id","")
+        try: eid = int(float(str(e.get("id",""))))  # normalizar a int siempre
+        except: eid = e.get("id","")
         is_total = any(w in pick_label.upper() for w in ("OVER","UNDER"))
         extra_fields = ""
         if is_total:
@@ -433,9 +435,12 @@ def _remove_pick(log_path, data):
     if not id_s:
         return False, "⚠️ ID requerido."
     try:
-        pick_id = int(id_s)
+        pick_id = int(float(id_s))
         log = _rj(log_path)
-        new_log = [e for e in log if str(e.get("id","")) != str(pick_id)]
+        def _norm_id(v):
+            try: return int(float(str(v)))
+            except: return None
+        new_log = [e for e in log if _norm_id(e.get("id")) != pick_id]
         if len(new_log) == len(log):
             return False, f"⚠️ Pick #{pick_id} no encontrado."
         _wj(log_path, new_log)
@@ -451,10 +456,13 @@ def _grade_pick(log_path, data):
     if result not in ("W","L","P"):
         return False, "⚠️ Resultado inválido (W/L/P)."
     try:
-        pick_id = int(id_s)
+        pick_id = int(float(id_s))   # maneja "93", "93.0", 93, 93.0
         log     = _rj(log_path)
-        # Comparar como string Y como int — por si el ID está guardado con tipo distinto
-        entry   = next((e for e in log if str(e.get("id","")) == str(pick_id)), None)
+        # Normalizar ID a int para comparar — maneja int, float, string
+        def _norm_id(v):
+            try: return int(float(str(v)))
+            except: return None
+        entry   = next((e for e in log if _norm_id(e.get("id")) == pick_id), None)
         if not entry:
             return False, f"⚠️ Pick #{pick_id} no encontrado."
         entry["result"] = result
