@@ -435,7 +435,7 @@ def _remove_pick(log_path, data):
     try:
         pick_id = int(id_s)
         log = _rj(log_path)
-        new_log = [e for e in log if e.get("id") != pick_id]
+        new_log = [e for e in log if str(e.get("id","")) != str(pick_id)]
         if len(new_log) == len(log):
             return False, f"⚠️ Pick #{pick_id} no encontrado."
         _wj(log_path, new_log)
@@ -453,7 +453,8 @@ def _grade_pick(log_path, data):
     try:
         pick_id = int(id_s)
         log     = _rj(log_path)
-        entry   = next((e for e in log if e.get("id") == pick_id), None)
+        # Comparar como string Y como int — por si el ID está guardado con tipo distinto
+        entry   = next((e for e in log if str(e.get("id","")) == str(pick_id)), None)
         if not entry:
             return False, f"⚠️ Pick #{pick_id} no encontrado."
         entry["result"] = result
@@ -5448,6 +5449,54 @@ function _renderDetail(ds,picks){
     L:{bg:'#14060a',bdr:'#ef4444',badge_bg:'rgba(239,68,68,.22)',badge_c:'#ef4444'},
     P:{bg:'#09090f',bdr:'#94a3b8',badge_bg:'rgba(148,163,184,.15)',badge_c:'#94a3b8'}
   };
+  var _MLB={
+    'ATHLETICS':'oak','A\'S':'oak','ASTROS':'hou','YANKEES':'nyy','RED SOX':'bos',
+    'DODGERS':'lad','METS':'nym','BRAVES':'atl','CUBS':'chc','WHITE SOX':'cws',
+    'CARDINALS':'stl','PHILLIES':'phi','GIANTS':'sf','PADRES':'sd','MARINERS':'sea',
+    'RANGERS':'tex','TWINS':'min','GUARDIANS':'cle','TIGERS':'det','RAYS':'tb',
+    'ORIOLES':'bal','BLUE JAYS':'tor','ROYALS':'kc','ANGELS':'laa','PIRATES':'pit',
+    'BREWERS':'mil','REDS':'cin','ROCKIES':'col','DIAMONDBACKS':'ari','D-BACKS':'ari',
+    'NATIONALS':'wsh','MARLINS':'mia','ORIOLES':'bal'
+  };
+  var _NBA={
+    'SPURS':'sas','CAVS':'cle','CAVALIERS':'cle','PISTONS':'det','WOLVES':'min',
+    'TIMBERWOLVES':'min','CELTICS':'bos','LAKERS':'lal','WARRIORS':'gs',
+    'BUCKS':'mil','HEAT':'mia','KNICKS':'ny','SIXERS':'phi','76ERS':'phi',
+    'NETS':'bkn','RAPTORS':'tor','BULLS':'chi','HAWKS':'atl','HORNETS':'cha',
+    'MAGIC':'orl','WIZARDS':'wsh','PACERS':'ind','PISTONS':'det','GRIZZLIES':'mem',
+    'PELICANS':'no','THUNDER':'okc','NUGGETS':'den','JAZZ':'utah','SUNS':'phx',
+    'CLIPPERS':'lac','KINGS':'sac','BLAZERS':'por','ROCKETS':'hou','MAVS':'dal',
+    'MAVERICKS':'dal','TRAIL BLAZERS':'por','THUNDER':'okc'
+  };
+  var _BSN_COLORS={
+    'CRIOLLOS':'#e53e3e','INDIOS':'#3182ce','GIGANTES':'#f6ad55','LEONES':'#f6e05e',
+    'CANGREJEROS':'#68d391','TIBURONES':'#63b3ed','ATENIENSES':'#b794f4',
+    'SENADORES':'#4299e1','LOBOS':'#fc8181'
+  };
+  function _pickLogo(p){
+    var pick=p.pick.toUpperCase().trim();
+    // Over/Under
+    if(/^(OVER|UNDER)/.test(pick)){
+      return '<div style="width:36px;height:36px;border-radius:50%;background:rgba(249,115,22,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0">'+
+        '<span style="font-size:1rem;line-height:1">⬆⬇</span></div>';
+    }
+    // Strip spread/ML suffix to get team name
+    var team=pick.replace(/\s*[+-]?\d+(\.\d+)?\s*$/, '').replace(/\s*ML\s*$/, '').trim();
+    var url='';
+    if(p.league==='MLB'&&_MLB[team]){
+      url='https://a.espncdn.com/i/teamlogos/mlb/500/'+_MLB[team]+'.png';
+    } else if(p.league==='NBA'&&_NBA[team]){
+      url='https://a.espncdn.com/i/teamlogos/nba/500/'+_NBA[team]+'.png';
+    }
+    if(url){
+      return '<div style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden">'+
+        '<img src="'+url+'" style="width:30px;height:30px;object-fit:contain" onerror="this.parentNode.innerHTML=\''+team.slice(0,2)+'\'" /></div>';
+    }
+    // BSN or unknown → colored circle with initials
+    var col=_BSN_COLORS[team]||'#f07820';
+    return '<div style="width:36px;height:36px;border-radius:50%;background:'+col+'22;border:2px solid '+col+'66;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.5rem;font-weight:900;color:'+col+'">'+
+      team.split(' ').map(function(w){return w[0]||'';}).join('').slice(0,2)+'</div>';
+  }
   var rows=picks.map(function(p){
     var ppc=p.pnl>0?'#22c55e':p.pnl<0?'#ef4444':'#94a3b8';
     var rc=_RC[p.result]||_RC.P;
@@ -5455,7 +5504,7 @@ function _renderDetail(ds,picks){
     return '<div style="border-radius:12px;padding:12px 14px;margin-top:8px;display:flex;align-items:center;gap:11px;'+
       'border-left:4px solid '+rc.bdr+';border-top:1px solid '+rc.bdr+'22;border-right:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);'+
       'background:'+rc.bg+';box-shadow:0 2px 16px rgba(0,0,0,.5)">'+
-      '<div style="width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.58rem;font-weight:900;letter-spacing:.04em;background:'+rc.badge_bg+';color:'+rc.badge_c+'">'+p.result+'</div>'+
+      _pickLogo(p)+
       '<div style="flex:1;min-width:0">'+
         '<div style="font-size:.8rem;font-weight:700;color:#f1f5f9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+
           p.pick+(odds?' <span style="color:#64748b;font-weight:400;font-size:.66rem">'+odds+'</span>':'')+
