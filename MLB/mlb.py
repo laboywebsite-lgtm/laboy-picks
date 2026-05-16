@@ -4012,7 +4012,10 @@ def cmd_log_pick():
         print(f"\n  ❌ Entrada inválida ({_e}). Intenta de nuevo.\n"); return
 
     log   = _load_log()
-    entry = {"id": len(log), "date": TARGET_DATE, "game": game, "pick": pick,
+    # Usar max(id)+1 en vez de len(log) para evitar duplicados si hay retro entries
+    _existing_ids = [e.get("id", 0) for e in log if isinstance(e.get("id"), int)]
+    _new_id = (max(_existing_ids) + 1) if _existing_ids else 0
+    entry = {"id": _new_id, "date": TARGET_DATE, "game": game, "pick": pick,
              "odds": odds_v, "stake": stake, "book": book, "result": None, "pnl": None,
              "analysis": analysis or ""}
     log.append(entry)
