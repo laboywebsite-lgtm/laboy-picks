@@ -5443,17 +5443,25 @@ function _renderDetail(ds,picks){
   el.style.display='block';
   var tot=picks.reduce(function(a,p){return a+p.pnl;},0);
   var pc=tot>0?'#22c55e':tot<0?'#ef4444':'#64748b';
+  var _RC={
+    W:{border:'border-left:4px solid #22c55e',bg:'background:linear-gradient(135deg,rgba(34,197,94,.10) 0%,rgba(255,255,255,.03) 70%)',badge:'background:rgba(34,197,94,.18);color:#22c55e'},
+    L:{border:'border-left:4px solid #ef4444',bg:'background:linear-gradient(135deg,rgba(239,68,68,.10) 0%,rgba(255,255,255,.03) 70%)',badge:'background:rgba(239,68,68,.18);color:#ef4444'},
+    P:{border:'border-left:4px solid #94a3b8',bg:'background:rgba(255,255,255,.04)',badge:'background:rgba(148,163,184,.12);color:#94a3b8'}
+  };
   var rows=picks.map(function(p){
-    var ppc=p.pnl>0?'#22c55e':p.pnl<0?'#ef4444':'#64748b';
-    var odds=p.odds?(p.odds>0?'+'+p.odds:p.odds):'';
-    return '<div class="cal-det-row '+p.result+'">'+
-      '<div class="cal-det-badge '+p.result+'">'+p.result+'</div>'+
-      '<div class="cal-det-info">'+
-        '<div class="cal-det-pick-name">'+p.pick+(odds?' <span style="color:#64748b;font-weight:400;font-size:.65rem">'+odds+'</span>':'')+'</div>'+
-        '<div class="cal-det-game">'+p.game+'</div>'+
+    var ppc=p.pnl>0?'#22c55e':p.pnl<0?'#ef4444':'#94a3b8';
+    var rc=_RC[p.result]||_RC.P;
+    var odds=p.odds?(p.odds>0?'+'+p.odds:String(p.odds)):'';
+    return '<div style="border-radius:10px;padding:10px 13px;margin-top:7px;display:flex;align-items:center;gap:10px;'+rc.border+';'+rc.bg+';border:1px solid rgba(255,255,255,.07);overflow:hidden">'+
+      '<div style="font-size:.52rem;font-weight:800;letter-spacing:.06em;padding:3px 9px;border-radius:20px;flex-shrink:0;'+rc.badge+'">'+p.result+'</div>'+
+      '<div style="flex:1;min-width:0">'+
+        '<div style="font-size:.76rem;font-weight:700;color:#f1f5f9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+
+          p.pick+(odds?' <span style="color:#64748b;font-weight:400;font-size:.64rem">'+odds+'</span>':'')+
+        '</div>'+
+        '<div style="font-size:.6rem;color:#475569;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+p.game+'</div>'+
       '</div>'+
-      '<div class="cal-det-lg">'+p.league+'</div>'+
-      '<div class="cal-det-pnl" style="color:'+ppc+'">'+_ps(p.pnl)+'</div>'+
+      '<div style="font-size:.46rem;font-weight:800;letter-spacing:.1em;padding:2px 7px;border-radius:3px;background:rgba(240,120,32,.12);color:#f07820;flex-shrink:0">'+p.league+'</div>'+
+      '<div style="font-size:.76rem;font-weight:800;flex-shrink:0;min-width:58px;text-align:right;color:'+ppc+'">'+_ps(p.pnl)+'</div>'+
     '</div>';
   }).join('');
   var w=picks.filter(function(p){return p.result==='W';}).length;
