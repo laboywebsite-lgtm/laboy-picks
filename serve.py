@@ -5264,6 +5264,7 @@ def _pnl_calendar_html():
 
     all_picks = _norm(bsn_raw,"BSN") + _norm(nba_raw,"NBA") + _norm(mlb_raw,"MLB")
     picks_json = _json.dumps(all_picks, ensure_ascii=False)
+    ou_url     = _ou_icon_b64_url() or ""
 
     # Build HTML — JS is in a separate <script> block that openView will re-execute
     html = """
@@ -5382,7 +5383,7 @@ def _pnl_calendar_html():
   <div class="cal-summary" id="calSummary"></div>
   <div class="cal-detail" id="calDetail" style="display:none"></div>
 </div>
-""" + "<script>(function(){\n" + f"var _PICKS={picks_json};\n" + r"""
+""" + "<script>(function(){\n" + f"var _PICKS={picks_json};\nvar _OU_URL={_json.dumps(ou_url)};\n" + r"""
 var _league='ALL', _range=0, _selDate=null;
 var _td=new Date(); _td.setHours(0,0,0,0);
 var _vy=_td.getFullYear(), _vm=_td.getMonth();
@@ -5484,9 +5485,13 @@ function _renderDetail(ds,picks){
   function _pickLogo(p){
     var pick=p.pick.toUpperCase().trim();
     // Over/Under
-    if(/^(OVER|UNDER)/.test(pick)){
+    if(/^(OVER|UNDER)\b/.test(pick)||/^[OU]\s*\d/.test(pick)){
+      if(_OU_URL){
+        return '<div style="width:36px;height:36px;border-radius:50%;background:rgba(249,115,22,.08);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden">'+
+          '<img src="'+_OU_URL+'" style="width:32px;height:32px;object-fit:contain" /></div>';
+      }
       return '<div style="width:36px;height:36px;border-radius:50%;background:rgba(249,115,22,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0">'+
-        '<span style="font-size:1rem;line-height:1">⬆⬇</span></div>';
+        '<span style="font-size:.7rem;font-weight:900;color:#f97316">O/U</span></div>';
     }
     // Strip spread/ML suffix to get team name
     var team=pick.replace(/\s*[+-]?\d+(\.\d+)?\s*$/, '').replace(/\s*ML\s*$/, '').trim();
