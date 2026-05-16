@@ -1114,5 +1114,17 @@
     "result": "W",
     "pnl": 18.52,
     "analysis": ""
+  },
+  {
+    "id": 93,
+    "date": "2026-05-16",
+    "game": "ROYALS vs. CARDINALS",
+    "pick": "CARDINALS ML",
+    "odds": -118,
+    "stake": 35.0,
+    "book": "BetMGM",
+    "result": null,
+    "pnl": null,
+    "analysis": ""
   }
 ]
