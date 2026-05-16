@@ -8098,14 +8098,19 @@ def handle_api(path, data):
     # ── Regenerar JPGs de todos los picks de MLB de hoy ─────────
     if path == "/api/regen-picks-jpg":
         import glob as _rglob
-        _today = date.today().strftime("%Y-%m-%d")
+        from datetime import timedelta
+        # Usar AST (UTC-4) para no perder picks de la noche anterior
+        _now_ast   = datetime.utcnow() - timedelta(hours=4)
+        _today     = _now_ast.strftime("%Y-%m-%d")
+        _yesterday = (_now_ast - timedelta(days=1)).strftime("%Y-%m-%d")
         _all   = _rj(MLB_LOG) if os.path.exists(MLB_LOG) else []
         _all   = _all if isinstance(_all, list) else []
-        _todo  = [e for e in _all if str(e.get("date","")) == _today]
-        # Borrar JPGs existentes de hoy (pueden ser corruptos/viejos)
-        for _old in _rglob.glob(os.path.join(MLB_DIR, f"Laboy Pick {_today} #*.jpg")):
-            try: os.remove(_old)
-            except Exception: pass
+        _todo  = [e for e in _all if str(e.get("date","")) in (_today, _yesterday)]
+        # Borrar JPGs existentes (pueden ser corruptos/viejos)
+        for _d in (_today, _yesterday):
+            for _old in _rglob.glob(os.path.join(MLB_DIR, f"Laboy Pick {_d} #*.jpg")):
+                try: os.remove(_old)
+                except Exception: pass
         for _e in _todo:
             def _do(_entry=_e):
                 try:
