@@ -5441,7 +5441,7 @@ function _render(){
   var pc=tp>0?'#22c55e':tp<0?'#ef4444':'#64748b';
   var rc=roi>0?'#22c55e':roi<0?'#ef4444':'#64748b';
   document.getElementById('calSummary').innerHTML=
-    '<div class="cal-sum-card"><div class="cal-sum-lbl">P&L</div><div class="cal-sum-val" style="color:'+pc+'">'+_ps(tp)+'</div></div>'+
+    '<div class="cal-sum-card"><div class="cal-sum-lbl">Profit</div><div class="cal-sum-val" style="color:'+pc+'">'+_ps(tp)+'</div></div>'+
     '<div class="cal-sum-card"><div class="cal-sum-lbl">Record</div><div class="cal-sum-val" style="color:#f1f5f9;font-size:.88rem">'+tw+'-'+tl+(tpu?'-'+tpu:'')+'</div></div>'+
     '<div class="cal-sum-card"><div class="cal-sum-lbl">ROI</div><div class="cal-sum-val" style="color:'+rc+'">'+roi.toFixed(1)+'%</div></div>'+
     '<div class="cal-sum-card"><div class="cal-sum-lbl">Picks</div><div class="cal-sum-val" style="color:#f07820">'+(tw+tl+tpu)+'</div></div>';
@@ -5487,8 +5487,7 @@ function _renderDetail(ds,picks){
     // Over/Under
     if(/^(OVER|UNDER)\b/.test(pick)||/^[OU]\s*\d/.test(pick)){
       if(_OU_URL){
-        return '<div style="width:36px;height:36px;border-radius:50%;background:rgba(249,115,22,.08);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden">'+
-          '<img src="'+_OU_URL+'" style="width:32px;height:32px;object-fit:contain" /></div>';
+        return '<img src="'+_OU_URL+'" style="width:36px;height:36px;object-fit:contain;flex-shrink:0" />';
       }
       return '<div style="width:36px;height:36px;border-radius:50%;background:rgba(249,115,22,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0">'+
         '<span style="font-size:.7rem;font-weight:900;color:#f97316">O/U</span></div>';
@@ -5534,7 +5533,11 @@ function _renderDetail(ds,picks){
   var l=picks.filter(function(p){return p.result==='L';}).length;
   var pu=picks.filter(function(p){return p.result==='P';}).length;
   var rec=w+'-'+l+(pu?'-'+pu:'');
-  el.innerHTML='<div class="cal-det-hdr"><span>'+ds+' &nbsp;&middot;&nbsp; <b style="color:#f1f5f9">'+rec+'</b> &nbsp;&middot;&nbsp; '+picks.length+' pick'+(picks.length!==1?'s':'')+'</span>'+
+  el.innerHTML='<div class="cal-det-hdr"><span style="display:flex;align-items:center;gap:8px">'+
+    '<span style="font-size:.56rem;color:#475569">'+ds+'</span>'+
+    '<span style="font-size:1.05rem;font-weight:900;color:#f1f5f9;letter-spacing:.02em">'+rec+'</span>'+
+    '<span style="font-size:.54rem;color:#475569">&middot; '+picks.length+' pick'+(picks.length!==1?'s':'')+'</span>'+
+    '</span>'+
     '<span class="cal-det-hdr-pnl" style="color:'+pc+'">'+_ps(tot)+'</span></div>'+rows;
 }
 
