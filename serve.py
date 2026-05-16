@@ -8111,18 +8111,21 @@ def handle_api(path, data):
             for _old in _rglob.glob(os.path.join(MLB_DIR, f"Laboy Pick {_d} #*.jpg")):
                 try: os.remove(_old)
                 except Exception: pass
-        for _e in _todo:
-            def _do(_entry=_e):
+        # Correr secuencial en un solo thread para no matar el servidor
+        def _regen_all(_entries=_todo):
+            for _entry in _entries:
                 try:
                     _run(["python3", os.path.join(MLB_DIR,"mlb.py"),
                           "--export-log", str(_entry.get("id",0))],
-                         cwd=MLB_DIR, timeout=90)
+                         cwd=MLB_DIR, timeout=120)
+                    print(f"  ✅ Regen #{_entry.get('id')} done")
                 except Exception as _ex:
                     print(f"  ⚠️  regen MLB #{_entry.get('id')}: {_ex}")
-            threading.Thread(target=_do, daemon=True).start()
+        threading.Thread(target=_regen_all, daemon=True).start()
+        _wait = len(_todo) * 30
         return 200, {"ok": True, "count": len(_todo),
-                     "msg": f"Regenerando {len(_todo)} pick(s) MLB de hoy... recarga en ~30 seg." if _todo
-                            else "Sin picks de MLB para hoy."}
+                     "msg": f"Regenerando {len(_todo)} pick(s) MLB... recarga en ~{_wait} seg." if _todo
+                            else "Sin picks de MLB para hoy/ayer."}
 
     # ── BSN ──────────────────────────────────────────────────────
     if path == "/api/bsn/log":
