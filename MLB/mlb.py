@@ -9222,7 +9222,7 @@ def export_html(results, odds={}):
 # HTML → JPG  (wkhtmltoimage primero, playwright como fallback)
 # ──────────────────────────────────────────────────────
 
-def html_to_jpg(html_path, width=800, scale=2):
+def html_to_jpg(html_path, width=800, scale=3):
     """
     Convierte un HTML file a JPG.
     Intenta en orden:
