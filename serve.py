@@ -5444,24 +5444,28 @@ function _renderDetail(ds,picks){
   var tot=picks.reduce(function(a,p){return a+p.pnl;},0);
   var pc=tot>0?'#22c55e':tot<0?'#ef4444':'#64748b';
   var _RC={
-    W:{border:'border-left:4px solid #22c55e',bg:'background:linear-gradient(135deg,rgba(34,197,94,.10) 0%,rgba(255,255,255,.03) 70%)',badge:'background:rgba(34,197,94,.18);color:#22c55e'},
-    L:{border:'border-left:4px solid #ef4444',bg:'background:linear-gradient(135deg,rgba(239,68,68,.10) 0%,rgba(255,255,255,.03) 70%)',badge:'background:rgba(239,68,68,.18);color:#ef4444'},
-    P:{border:'border-left:4px solid #94a3b8',bg:'background:rgba(255,255,255,.04)',badge:'background:rgba(148,163,184,.12);color:#94a3b8'}
+    W:{bg:'#061410',bdr:'#22c55e',badge_bg:'rgba(34,197,94,.22)',badge_c:'#22c55e'},
+    L:{bg:'#14060a',bdr:'#ef4444',badge_bg:'rgba(239,68,68,.22)',badge_c:'#ef4444'},
+    P:{bg:'#09090f',bdr:'#94a3b8',badge_bg:'rgba(148,163,184,.15)',badge_c:'#94a3b8'}
   };
   var rows=picks.map(function(p){
     var ppc=p.pnl>0?'#22c55e':p.pnl<0?'#ef4444':'#94a3b8';
     var rc=_RC[p.result]||_RC.P;
     var odds=p.odds?(p.odds>0?'+'+p.odds:String(p.odds)):'';
-    return '<div style="border-radius:10px;padding:10px 13px;margin-top:7px;display:flex;align-items:center;gap:10px;'+rc.border+';'+rc.bg+';border:1px solid rgba(255,255,255,.07);overflow:hidden">'+
-      '<div style="font-size:.52rem;font-weight:800;letter-spacing:.06em;padding:3px 9px;border-radius:20px;flex-shrink:0;'+rc.badge+'">'+p.result+'</div>'+
+    return '<div style="border-radius:12px;padding:12px 14px;margin-top:8px;display:flex;align-items:center;gap:11px;'+
+      'border-left:4px solid '+rc.bdr+';border-top:1px solid '+rc.bdr+'22;border-right:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);'+
+      'background:'+rc.bg+';box-shadow:0 2px 16px rgba(0,0,0,.5)">'+
+      '<div style="width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.58rem;font-weight:900;letter-spacing:.04em;background:'+rc.badge_bg+';color:'+rc.badge_c+'">'+p.result+'</div>'+
       '<div style="flex:1;min-width:0">'+
-        '<div style="font-size:.76rem;font-weight:700;color:#f1f5f9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+
-          p.pick+(odds?' <span style="color:#64748b;font-weight:400;font-size:.64rem">'+odds+'</span>':'')+
+        '<div style="font-size:.8rem;font-weight:700;color:#f1f5f9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+
+          p.pick+(odds?' <span style="color:#64748b;font-weight:400;font-size:.66rem">'+odds+'</span>':'')+
         '</div>'+
-        '<div style="font-size:.6rem;color:#475569;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+p.game+'</div>'+
+        '<div style="font-size:.62rem;color:#4a6272;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+p.game+'</div>'+
       '</div>'+
-      '<div style="font-size:.46rem;font-weight:800;letter-spacing:.1em;padding:2px 7px;border-radius:3px;background:rgba(240,120,32,.12);color:#f07820;flex-shrink:0">'+p.league+'</div>'+
-      '<div style="font-size:.76rem;font-weight:800;flex-shrink:0;min-width:58px;text-align:right;color:'+ppc+'">'+_ps(p.pnl)+'</div>'+
+      '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0">'+
+        '<div style="font-size:.44rem;font-weight:800;letter-spacing:.1em;padding:2px 7px;border-radius:4px;background:rgba(240,120,32,.15);color:#f07820">'+p.league+'</div>'+
+        '<div style="font-size:.8rem;font-weight:800;color:'+ppc+'">'+_ps(p.pnl)+'</div>'+
+      '</div>'+
     '</div>';
   }).join('');
   var w=picks.filter(function(p){return p.result==='W';}).length;
