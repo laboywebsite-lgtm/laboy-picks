@@ -6920,10 +6920,13 @@ def export_log_pick_html(entry):
         with open(fpath, "w", encoding="utf-8") as f:
             f.write(html)
 
-        # Auto-generar JPG del mismo HTML
-        jpg_path = html_to_jpg(fpath)
-        if jpg_path:
-            print(f"  🖼️  JPG: {os.path.basename(jpg_path)}")
+        # Auto-generar JPG usando PIL directo (Playwright no disponible en Render)
+        try:
+            jpg_path = _bsn_pick_card_jpg(entry)
+            if jpg_path:
+                print(f"  🖼️  JPG: {os.path.basename(jpg_path)}")
+        except Exception as _je:
+            print(f"  ⚠️  JPG PIL export: {_je}")
 
         return fpath
 
@@ -7480,6 +7483,117 @@ def _fnt_bsn(name, size):
     except:
         try:    return ImageFont.load_default(size=size)
         except: return ImageFont.load_default()
+
+def _bsn_pick_card_jpg(entry):
+    """Genera JPG del pick card usando PIL. Directo, sin Playwright."""
+    if not HAS_PIL: return None
+    try:
+        import textwrap as _tw, re as _re
+        C_BG=(10,10,10); C_CARD=(34,34,34); C_ACCENT=(240,95,8)
+        C_TEXT=(241,245,249); C_MUTED=(148,163,184); C_BORDER=(42,42,42)
+        C_GREEN=(34,197,94); C_RED=(239,68,68); C_STAT=(24,24,24)
+        pick_date=entry.get("date",TARGET_DATE); pick_id=entry.get("id",0)
+        game=entry.get("game","").upper(); pick_str=entry.get("pick","").upper()
+        odds_v=entry.get("odds",0); analysis=entry.get("analysis","").strip()
+        book=entry.get("book",""); stake=entry.get("stake",0)
+        result=entry.get("result"); pnl=entry.get("pnl")
+        odds_s=_fmt_odds(odds_v); is_pos=odds_v>=0
+        try:
+            dstr=__import__("datetime").datetime.strptime(pick_date,"%Y-%m-%d").strftime("%A, %B %d · %Y").upper()
+        except: dstr=pick_date.upper()
+        # Team color
+        is_total=any(k in pick_str for k in ("OVER","UNDER")) or bool(_re.match(r'^[OU][\s]?[\d.]',pick_str))
+        team_nm=None
+        if not is_total:
+            for t in BSN_TEAMS:
+                if t in pick_str: team_nm=t; break
+        if not team_nm and not is_total:
+            pp=_re.split(r'\s+(?:vs\.?|@)\s+',game,flags=_re.IGNORECASE)
+            team_nm=pp[0].strip() if pp else None
+        def h2r(h):
+            h=h.lstrip('#'); return tuple(int(h[i:i+2],16) for i in (0,2,4))
+        C_TEAM=h2r(_bsn_team_color(team_nm) if team_nm else "#f07820")
+        # Result
+        RES_C={"W":C_GREEN,"L":C_RED,"P":(148,163,184)}.get(result,C_TEAM)
+        # Fonts — custom → Linux DejaVu → default
+        def fnt(size,bold=False):
+            sfx="-Bold" if bold else ""
+            for p in [os.path.join(_FONTS_DIR,f"BigShoulders{'Bold' if bold else 'Regular'}.ttf"),
+                      f"/usr/share/fonts/truetype/dejavu/DejaVuSans{sfx}.ttf",
+                      f"/usr/share/fonts/truetype/liberation/LiberationSans{sfx}.ttf",
+                      "/System/Library/Fonts/Helvetica.ttc"]:
+                if os.path.exists(p):
+                    try: return ImageFont.truetype(p,size)
+                    except: pass
+            try: return ImageFont.load_default(size=size)
+            except: return ImageFont.load_default()
+        F_TITLE=fnt(44,True); F_PICK=fnt(64,True); F_ODDS=fnt(36,True)
+        F_LBL=fnt(20); F_STAT=fnt(26,True); F_DATE=fnt(22); F_GAME=fnt(24,True)
+        F_BODY=fnt(22); F_ANHEAD=fnt(34,True)
+        W=1080; PAD=52; CR=18
+        alines=_tw.wrap(analysis,42) if analysis else []
+        AH=60+len(alines)*34+40 if alines else 0
+        C2H=max(AH,120) if alines else 0
+        H=max(140+30+380+(30+C2H if C2H else 0)+80,1080)
+        img=Image.new("RGB",(W,H),C_BG); d=ImageDraw.Draw(img)
+        def tw(t,f):
+            bb=d.textbbox((0,0),t,font=f); return bb[2]-bb[0]
+        def cx(t,f,y,c): d.text(((W-tw(t,f))//2,y),t,font=f,fill=c)
+        def rr(xy,r,fill=None,ol=None,w=1):
+            d.rounded_rectangle([xy[:2],xy[2:]],radius=r,fill=fill,outline=ol,width=w)
+        # Top stripe + header
+        d.rectangle([(0,0),(W,6)],fill=C_ACCENT)
+        y=18; cx("LABOY PICKS",F_TITLE,y,C_ACCENT); y+=54
+        cx("BSN",fnt(26),y,C_MUTED); y+=30
+        cx(dstr,F_DATE,y,C_MUTED); y+=32
+        d.rectangle([(0,y+8),(W,y+10)],fill=C_ACCENT); y+=26
+        # Card 1
+        C1X,C1Y=PAD,y; C1W=W-PAD*2; C1H=360
+        rr((C1X,C1Y,C1X+C1W,C1Y+C1H),CR,fill=C_CARD,ol=RES_C,w=2)
+        d.rounded_rectangle((C1X,C1Y,C1X+5,C1Y+C1H),radius=CR,fill=C_TEAM)
+        iy=C1Y+22; cx(game,F_GAME,iy,C_MUTED); iy+=42
+        # Team circles
+        gp=_re.split(r'\s+(?:vs\.?|@)\s+',game,flags=_re.IGNORECASE)
+        for ii,(lx,tn) in enumerate([(W//2-160,gp[0].strip() if gp else ""),
+                                      (W//2+88,gp[1].strip() if len(gp)>1 else "")]):
+            tc=h2r(_bsn_team_color(tn)); d.ellipse([(lx,iy),(lx+72,iy+72)],fill=tc)
+            ini=(tn[:2] if tn else "?").upper(); iw=tw(ini,F_LBL)
+            d.text((lx+36-iw//2,iy+26),ini,font=F_LBL,fill=(255,255,255))
+        cx("VS",fnt(22),iy+26,C_MUTED); iy+=86
+        # Pick + odds
+        cx(pick_str,F_PICK,iy,C_TEXT); iy+=76
+        ob_w=tw(odds_s,F_ODDS); bx=(W-ob_w-48)//2
+        rr((bx,iy,bx+ob_w+48,iy+48),10,fill=(8,40,22) if is_pos else (30,20,20),ol=C_GREEN if is_pos else C_RED,w=2)
+        d.text((bx+24,iy+8),odds_s,font=F_ODDS,fill=C_GREEN if is_pos else C_RED); iy+=58
+        # Stats grid
+        SLBLS=["JUEGO","PICK","ODDS","BOOK"]
+        SVALS=[game[:12] if game else "—",pick_str[:12] if pick_str else "—",odds_s,book[:8] if book else "—"]
+        sgw=(C1W-32)//4; sx0=C1X+16; sy=C1Y+C1H-86
+        for i,(lb,vl) in enumerate(zip(SLBLS,SVALS)):
+            sx=sx0+i*sgw; rr((sx+2,sy,sx+sgw-4,sy+76),8,fill=C_STAT)
+            lw=tw(lb,F_LBL); d.text((sx+(sgw-lw)//2,sy+6),lb,font=F_LBL,fill=C_MUTED)
+            vw=tw(vl,F_STAT); d.text((sx+(sgw-vw)//2,sy+32),vl,font=F_STAT,
+                fill=C_GREEN if (i==2 and is_pos) else C_TEXT)
+        y=C1Y+C1H+22
+        # Card 2 analysis
+        if alines:
+            C2X,C2Y=PAD,y; C2W=C1W
+            rr((C2X,C2Y,C2X+C2W,C2Y+C2H),CR,fill=C_CARD,ol=C_BORDER,w=1)
+            d.rounded_rectangle((C2X,C2Y,C2X+5,C2Y+C2H),radius=CR,fill=C_MUTED)
+            ay=C2Y+18; cx("ANÁLISIS",F_ANHEAD,ay,C_ACCENT); ay+=48
+            d.line([(C2X+16,ay),(C2X+C2W-16,ay)],fill=C_BORDER,width=1); ay+=12
+            for line in alines:
+                lw=tw(line,F_BODY); d.text(((W-lw)//2,ay),line,font=F_BODY,fill=C_TEXT); ay+=34
+            y=C2Y+C2H+22
+        # Footer
+        d.rectangle([(0,H-6),(W,H)],fill=C_ACCENT)
+        cx("Laboy Picks · BSN · dubclub.win",F_DATE,H-44,C_MUTED)
+        fname=f"Laboy Pick {pick_date} #{pick_id}.jpg"
+        fpath=os.path.join(SCRIPT_DIR,fname)
+        img.convert("RGB").save(fpath,"JPEG",quality=92)
+        print(f"  🖼️  BSN Pick JPG: {fname}"); return fpath
+    except Exception as _e:
+        print(f"  ⚠️  _bsn_pick_card_jpg: {_e}"); return None
 
 # Paleta (identical to mlb.py)
 _BG_B      = (6,  8, 15)
