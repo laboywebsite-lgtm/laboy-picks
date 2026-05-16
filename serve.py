@@ -8092,6 +8092,8 @@ load();
 def handle_api(path, data):
     """Returns (status_code, json_dict)"""
     j = lambda ok, msg: {"ok": ok, "msg": msg}
+    # Strip query string from path before matching
+    path = path.split("?")[0]
 
     # ── Regenerar JPGs de todos los picks de MLB de hoy ─────────
     if path == "/api/regen-picks-jpg":
@@ -8878,6 +8880,16 @@ class Handler(BaseHTTPRequestHandler):
                 raw_str = raw.decode("utf-8")
                 form_data = {k: v[0] for k,v in parse_qs(raw_str, keep_blank_values=True).items()}
                 code, resp = handle_api(path, form_data)
+                self._send_json(code, resp)
+                return
+
+            # ── JSON endpoints (generic fallthrough to handle_api) ────
+            if "application/json" in ctype or ctype == "":
+                try:
+                    body = json.loads(raw.decode()) if raw.strip() else {}
+                except Exception:
+                    body = {}
+                code, resp = handle_api(path, body)
                 self._send_json(code, resp)
                 return
 
