@@ -5299,23 +5299,49 @@ def _pnl_calendar_html():
   border-radius:8px;padding:13px 10px;text-align:center}
 .cal-sum-lbl{font-size:.48rem;color:#475569;text-transform:uppercase;letter-spacing:.12em;margin-bottom:6px;font-weight:800}
 .cal-sum-val{font-size:1.1rem;font-weight:900;line-height:1}
-.cal-detail{margin-top:14px;border:1px solid rgba(255,255,255,.07);border-radius:8px;overflow:hidden}
-.cal-det-hdr{padding:10px 14px;background:rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.06);
-  font-size:.6rem;font-weight:800;letter-spacing:.1em;color:#64748b;text-transform:uppercase;
-  display:flex;align-items:center;justify-content:space-between}
-.cal-det-hdr-pnl{font-size:.75rem;font-weight:900}
-.cal-det-row{display:flex;align-items:center;gap:9px;padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.04)}
-.cal-det-row:last-child{border-bottom:none}
-.cal-det-badge{font-size:.5rem;font-weight:800;letter-spacing:.1em;padding:2px 8px;border-radius:3px;flex-shrink:0;min-width:26px;text-align:center}
-.cal-det-badge.W{background:rgba(34,197,94,.16);color:#22c55e}
-.cal-det-badge.L{background:rgba(239,68,68,.16);color:#ef4444}
-.cal-det-badge.P{background:rgba(148,163,184,.1);color:#94a3b8}
+/* ── Day detail — record card style ── */
+.cal-detail{margin-top:14px}
+.cal-det-hdr{padding:10px 14px 10px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);
+  border-radius:8px 8px 0 0;font-size:.6rem;font-weight:800;letter-spacing:.1em;color:#64748b;
+  text-transform:uppercase;display:flex;align-items:center;justify-content:space-between}
+.cal-det-hdr-pnl{font-size:.78rem;font-weight:900}
+.cal-det-row{border-radius:10px;padding:10px 13px;margin-top:6px;position:relative;overflow:hidden;
+  display:flex;align-items:center;gap:10px;border:1px solid rgba(255,255,255,.07);
+  background:rgba(255,255,255,.04)}
+.cal-det-row.W{border-left:4px solid #22c55e;background:linear-gradient(135deg,rgba(34,197,94,.09) 0%,rgba(255,255,255,.03) 60%)}
+.cal-det-row.L{border-left:4px solid #ef4444;background:linear-gradient(135deg,rgba(239,68,68,.09) 0%,rgba(255,255,255,.03) 60%)}
+.cal-det-row.P{border-left:4px solid #94a3b8;background:rgba(255,255,255,.04)}
+.cal-det-badge{font-size:.52rem;font-weight:800;letter-spacing:.08em;padding:3px 8px;border-radius:20px;flex-shrink:0}
+.cal-det-badge.W{background:rgba(34,197,94,.18);color:#22c55e}
+.cal-det-badge.L{background:rgba(239,68,68,.18);color:#ef4444}
+.cal-det-badge.P{background:rgba(148,163,184,.12);color:#94a3b8}
 .cal-det-info{flex:1;min-width:0}
-.cal-det-pick-name{font-size:.7rem;font-weight:700;color:#f1f5f9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.cal-det-game{font-size:.58rem;color:#475569;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
-.cal-det-lg{font-size:.46rem;font-weight:800;letter-spacing:.1em;padding:2px 6px;border-radius:3px;
+.cal-det-pick-name{font-size:.76rem;font-weight:700;color:#f1f5f9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cal-det-game{font-size:.6rem;color:#475569;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+.cal-det-lg{font-size:.46rem;font-weight:800;letter-spacing:.1em;padding:2px 7px;border-radius:3px;
   background:rgba(240,120,32,.12);color:#f07820;flex-shrink:0}
-.cal-det-pnl{font-size:.72rem;font-weight:800;flex-shrink:0;min-width:54px;text-align:right}
+.cal-det-pnl{font-size:.76rem;font-weight:800;flex-shrink:0;min-width:58px;text-align:right}
+/* ── Mobile responsive ── */
+@media(max-width:480px){
+  #calRoot{padding:0 0 16px}
+  .cal-toolbar{flex-direction:column;align-items:flex-start;gap:6px;margin-bottom:12px}
+  .cal-filter-row{gap:4px}
+  .cal-pill{font-size:.52rem;padding:4px 10px}
+  .cal-grid{gap:2px}
+  .cal-cell{min-height:52px;padding:4px 3px 4px}
+  .cal-day-num{font-size:.52rem;margin-bottom:3px}
+  .cal-pnl{font-size:.62rem}
+  .cal-rec{font-size:.42rem}
+  .cal-ldots{gap:2px;padding-top:2px}
+  .cal-ldot{width:3px;height:3px}
+  .cal-summary{grid-template-columns:repeat(2,1fr);gap:5px;margin-top:10px}
+  .cal-sum-card{padding:10px 8px}
+  .cal-sum-val{font-size:.92rem}
+  .cal-det-row{padding:9px 10px;gap:8px}
+  .cal-det-pick-name{font-size:.7rem}
+  .cal-det-game{font-size:.56rem}
+  .cal-det-pnl{font-size:.7rem;min-width:48px}
+}
 </style>
 
 <div id="calRoot">
@@ -5394,7 +5420,7 @@ function _render(){
     var pc=tot>0?'pos':tot<0?'neg':'zero';
     cell.innerHTML='<div class="cal-day-num">'+d+'</div>'+
       (dp.length?'<div class="cal-pnl '+pc+'">'+_ps(tot)+'</div>':'')+
-      (dp.length?'<div class="cal-rec">'+w+'W-'+l+'L'+(pu?'-'+pu+'P':'')+'</div>':'')+
+      (dp.length?'<div class="cal-rec">'+w+'-'+l+(pu?'-'+pu:'')+'</div>':'')+
       '<div class="cal-ldots">'+dots+'</div>';
     (function(date,dpicks){cell.addEventListener('click',function(){_selDate=date;_renderDetail(date,dpicks);_render();});})(ds,dp);
     grid.appendChild(cell);
@@ -5406,7 +5432,7 @@ function _render(){
   var rc=roi>0?'#22c55e':roi<0?'#ef4444':'#64748b';
   document.getElementById('calSummary').innerHTML=
     '<div class="cal-sum-card"><div class="cal-sum-lbl">P&L</div><div class="cal-sum-val" style="color:'+pc+'">'+_ps(tp)+'</div></div>'+
-    '<div class="cal-sum-card"><div class="cal-sum-lbl">Record</div><div class="cal-sum-val" style="color:#f1f5f9;font-size:.88rem">'+tw+'W &middot; '+tl+'L'+(tpu?' &middot; '+tpu+'P':'')+'</div></div>'+
+    '<div class="cal-sum-card"><div class="cal-sum-lbl">Record</div><div class="cal-sum-val" style="color:#f1f5f9;font-size:.88rem">'+tw+'-'+tl+(tpu?'-'+tpu:'')+'</div></div>'+
     '<div class="cal-sum-card"><div class="cal-sum-lbl">ROI</div><div class="cal-sum-val" style="color:'+rc+'">'+roi.toFixed(1)+'%</div></div>'+
     '<div class="cal-sum-card"><div class="cal-sum-lbl">Picks</div><div class="cal-sum-val" style="color:#f07820">'+(tw+tl+tpu)+'</div></div>';
 }
@@ -5419,17 +5445,22 @@ function _renderDetail(ds,picks){
   var pc=tot>0?'#22c55e':tot<0?'#ef4444':'#64748b';
   var rows=picks.map(function(p){
     var ppc=p.pnl>0?'#22c55e':p.pnl<0?'#ef4444':'#64748b';
-    return '<div class="cal-det-row">'+
+    var odds=p.odds?(p.odds>0?'+'+p.odds:p.odds):'';
+    return '<div class="cal-det-row '+p.result+'">'+
       '<div class="cal-det-badge '+p.result+'">'+p.result+'</div>'+
       '<div class="cal-det-info">'+
-        '<div class="cal-det-pick-name">'+p.pick+'</div>'+
-        '<div class="cal-det-game">'+p.game+' &nbsp;&middot;&nbsp; '+p.odds+'</div>'+
+        '<div class="cal-det-pick-name">'+p.pick+(odds?' <span style="color:#64748b;font-weight:400;font-size:.65rem">'+odds+'</span>':'')+'</div>'+
+        '<div class="cal-det-game">'+p.game+'</div>'+
       '</div>'+
       '<div class="cal-det-lg">'+p.league+'</div>'+
       '<div class="cal-det-pnl" style="color:'+ppc+'">'+_ps(p.pnl)+'</div>'+
     '</div>';
   }).join('');
-  el.innerHTML='<div class="cal-det-hdr"><span>'+ds+' &nbsp;&middot;&nbsp; '+picks.length+' pick'+(picks.length!==1?'s':'')+'</span>'+
+  var w=picks.filter(function(p){return p.result==='W';}).length;
+  var l=picks.filter(function(p){return p.result==='L';}).length;
+  var pu=picks.filter(function(p){return p.result==='P';}).length;
+  var rec=w+'-'+l+(pu?'-'+pu:'');
+  el.innerHTML='<div class="cal-det-hdr"><span>'+ds+' &nbsp;&middot;&nbsp; <b style="color:#f1f5f9">'+rec+'</b> &nbsp;&middot;&nbsp; '+picks.length+' pick'+(picks.length!==1?'s':'')+'</span>'+
     '<span class="cal-det-hdr-pnl" style="color:'+pc+'">'+_ps(tot)+'</span></div>'+rows;
 }
 
