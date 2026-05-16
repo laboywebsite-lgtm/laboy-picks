@@ -5501,8 +5501,7 @@ function _renderDetail(ds,picks){
       url='https://a.espncdn.com/i/teamlogos/nba/500/'+_NBA[team]+'.png';
     }
     if(url){
-      return '<div style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden">'+
-        '<img src="'+url+'" style="width:30px;height:30px;object-fit:contain" onerror="this.parentNode.innerHTML=\''+team.slice(0,2)+'\'" /></div>';
+      return '<img src="'+url+'" style="width:36px;height:36px;object-fit:contain;flex-shrink:0" onerror="this.style.display=\'none\'" />';
     }
     // BSN or unknown → colored circle with initials
     var col=_BSN_COLORS[team]||'#f07820';
