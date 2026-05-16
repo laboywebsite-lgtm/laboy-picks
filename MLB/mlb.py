@@ -9805,10 +9805,13 @@ def export_log_pick_html(entry):
         with open(fpath, "w", encoding="utf-8") as f:
             f.write(html)
 
-        # Auto-generar JPG del mismo HTML (ancho 480 × escala 3 → 1440px — AI detail visible)
-        jpg_path = html_to_jpg(fpath, width=480, scale=3)
-        if jpg_path:
-            print(f"  🖼️  JPG: {os.path.basename(jpg_path)}")
+        # Auto-generar JPG usando PIL directo (Playwright no está disponible en Render)
+        try:
+            jpg_path = export_log_pick_jpg(entry)
+            if jpg_path:
+                print(f"  🖼️  JPG: {os.path.basename(jpg_path)}")
+        except Exception as _je:
+            print(f"  ⚠️  JPG PIL export: {_je}")
 
         return fpath
 
@@ -9852,15 +9855,30 @@ def export_log_pick_jpg(entry):
     PAD   = 52
     CARD_R = 18    # border-radius equivalent
 
-    # ── Font loader (reuse existing helper) ──────────────────────────────
+    # ── Font loader — custom fonts → Linux/Render fallback → default ─────
     def fnt(name, size):
+        # 1. Custom fonts (local dev)
         path = os.path.join(_FONTS_DIR, name)
         if os.path.exists(path):
             try: return ImageFont.truetype(path, size)
             except: pass
-        try: return ImageFont.truetype("/System/Library/Fonts/Helvetica.ttc", size)
-        except: pass
-        return ImageFont.load_default()
+        # 2. macOS fallback
+        for mac in ["/System/Library/Fonts/Helvetica.ttc",
+                    "/System/Library/Fonts/SFPro-Regular.ttf"]:
+            if os.path.exists(mac):
+                try: return ImageFont.truetype(mac, size)
+                except: pass
+        # 3. Linux/Render fallback (DejaVu always present on Ubuntu)
+        for linux in [
+            "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+            "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+            "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
+        ]:
+            if os.path.exists(linux):
+                try: return ImageFont.truetype(linux, size)
+                except: pass
+        try:    return ImageFont.load_default(size=size)
+        except: return ImageFont.load_default()
 
     F_TITLE  = fnt("BigShoulders-Bold.ttf", 52)
     F_PICK   = fnt("BigShoulders-Bold.ttf", 72)
