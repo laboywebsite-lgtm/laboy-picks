@@ -9219,53 +9219,74 @@ def export_html(results, odds={}):
 
 
 # ──────────────────────────────────────────────────────
-# HTML → JPG  (playwright)
+# HTML → JPG  (wkhtmltoimage primero, playwright como fallback)
 # ──────────────────────────────────────────────────────
 
 def html_to_jpg(html_path, width=800, scale=2):
     """
-    Convierte un HTML file a JPG usando playwright (Chromium headless).
-    Retorna el path del JPG o None si playwright no está disponible.
-
-    Instalación (una sola vez):
-      pip install playwright --break-system-packages
-      playwright install chromium
+    Convierte un HTML file a JPG.
+    Intenta en orden:
+      1. wkhtmltoimage  (disponible en Render/Linux con apt-get install wkhtmltopdf)
+      2. Playwright     (disponible en desarrollo local)
+    Retorna el path del JPG o None si ambos fallan.
     """
+    import subprocess as _sp
     jpg_path = html_path.replace(".html", ".jpg")
+
+    # ── 1. wkhtmltoimage ────────────────────────────────────────────
+    try:
+        _wk = _sp.run(["which", "wkhtmltoimage"], capture_output=True)
+        if _wk.returncode == 0:
+            _result = _sp.run([
+                "wkhtmltoimage",
+                "--width",  str(width),
+                "--quality", "92",
+                "--format",  "jpg",
+                "--enable-local-file-access",
+                "--javascript-delay", "500",   # deja cargar imágenes remotas
+                "--no-stop-slow-scripts",
+                "--quiet",
+                html_path,
+                jpg_path,
+            ], capture_output=True, timeout=90)
+            if _result.returncode == 0 and os.path.exists(jpg_path) and os.path.getsize(jpg_path) > 1000:
+                print("  🖼️  JPG via wkhtmltoimage ✅")
+                return jpg_path
+            else:
+                _err = _result.stderr.decode(errors="replace")
+                print(f"  ⚠️  wkhtmltoimage exit={_result.returncode}: {_err[:200]}")
+    except Exception as _we:
+        print(f"  ⚠️  wkhtmltoimage error: {_we}")
+
+    # ── 2. Playwright (fallback local) ──────────────────────────────
     try:
         from playwright.sync_api import sync_playwright
     except ImportError:
-        print("  💡 Para generar JPG: pip install playwright --break-system-packages && playwright install chromium")
+        print("  💡 Para generar JPG instala: wkhtmltopdf  o  playwright")
         return None
     try:
-        # Leer HTML como texto — evita el bug de '#' en filename con file:// URLs
         with open(html_path, "r", encoding="utf-8") as _f:
             html_content = _f.read()
-
         with sync_playwright() as pw:
             browser = pw.chromium.launch(args=["--no-sandbox","--disable-dev-shm-usage"])
-            # device_scale_factor=2 → doble resolución (Retina), texto e imágenes nítidos
             page    = browser.new_page(
                 viewport={"width": width, "height": 900},
                 device_scale_factor=scale
             )
             page.set_content(html_content, wait_until="domcontentloaded")
-            # Espera a que carguen imágenes remotas (logos de equipos)
             try:
                 page.wait_for_load_state("networkidle", timeout=6000)
             except Exception:
                 pass
-            # Ajusta la altura al contenido real
             height = page.evaluate("document.body.scrollHeight")
             page.set_viewport_size({"width": width, "height": max(height, 400)})
-            # Screenshot full-page → PNG en memoria → JPG guardado
             png_bytes = page.screenshot(full_page=True)
             browser.close()
-
         from PIL import Image
         import io
         img = Image.open(io.BytesIO(png_bytes)).convert("RGB")
         img.save(jpg_path, "JPEG", quality=95, optimize=True)
+        print("  🖼️  JPG via Playwright ✅")
         return jpg_path
     except Exception as e:
         print(f"  ⚠️  html_to_jpg falló: {e}")
@@ -9805,13 +9826,18 @@ def export_log_pick_html(entry):
         with open(fpath, "w", encoding="utf-8") as f:
             f.write(html)
 
-        # Auto-generar JPG usando PIL directo (Playwright no está disponible en Render)
+        # Auto-generar JPG: wkhtmltoimage (Render) o Playwright (local)
         try:
-            jpg_path = export_log_pick_jpg(entry)
+            jpg_path = html_to_jpg(fpath)
             if jpg_path:
                 print(f"  🖼️  JPG: {os.path.basename(jpg_path)}")
+            else:
+                # Fallback PIL si ambos fallan
+                _pil_jpg = export_log_pick_jpg(entry)
+                if _pil_jpg:
+                    print(f"  🖼️  JPG (PIL fallback): {os.path.basename(_pil_jpg)}")
         except Exception as _je:
-            print(f"  ⚠️  JPG PIL export: {_je}")
+            print(f"  ⚠️  JPG export: {_je}")
 
         return fpath
 
