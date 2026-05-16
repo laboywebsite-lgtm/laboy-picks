@@ -8035,13 +8035,8 @@ async function regenJpgs(){
   try{
     const r=await fetch('/api/regen-picks-jpg',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'});
     const d=await r.json();
-    if(d.count&&d.count>0){
-      alert('Regenerando '+d.count+' fotos en segundo plano.\n\nRecarga la galería en ~60 segundos para verlas.');
-    } else if(d.ok) {
-      alert('✅ Todas las fotos ya existen. Nada que regenerar.');
-    } else {
-      alert('Error: '+(d.error||'desconocido'));
-    }
+    alert(d.msg||'Hecho.');
+    if(d.count>0) setTimeout(()=>location.reload(),8000);
   }catch(e){alert('Error: '+e);}
 }
 
@@ -8098,53 +8093,29 @@ def handle_api(path, data):
     """Returns (status_code, json_dict)"""
     j = lambda ok, msg: {"ok": ok, "msg": msg}
 
-    # ── Regenerar JPGs faltantes para todos los picks ─────────────
+    # ── Regenerar JPGs de todos los picks de MLB de hoy ─────────
     if path == "/api/regen-picks-jpg":
-        try:
-            import glob as _rglob
-            _results = []
-            _cfg = [
-                ("MLB", MLB_LOG, MLB_DIR, "mlb.py",  "Laboy Pick"),
-                ("BSN", BSN_LOG, BSN_DIR, "bsn.py",  "Laboy Pick"),
-                ("NBA", NBA_LOG, NBA_DIR, "nba.py",   "Laboy NBA Pick"),
-            ]
-            for _lg_r, _log_r, _dir_r, _script_r, _pfx_r in _cfg:
+        import glob as _rglob
+        _today = date.today().strftime("%Y-%m-%d")
+        _all   = _rj(MLB_LOG) if os.path.exists(MLB_LOG) else []
+        _all   = _all if isinstance(_all, list) else []
+        _todo  = [e for e in _all if str(e.get("date","")) == _today]
+        # Borrar JPGs existentes de hoy (pueden ser corruptos/viejos)
+        for _old in _rglob.glob(os.path.join(MLB_DIR, f"Laboy Pick {_today} #*.jpg")):
+            try: os.remove(_old)
+            except Exception: pass
+        for _e in _todo:
+            def _do(_entry=_e):
                 try:
-                    _entries = _rj(_log_r) if os.path.exists(_log_r) else []
-                except Exception:
-                    _entries = []
-                if not isinstance(_entries, list):
-                    continue
-                for _e_r in _entries:
-                    try:
-                        _pid_r = _e_r.get("id", 0)
-                        _dt_r  = _e_r.get("date", "")
-                        if not _dt_r:
-                            continue
-                        _existing = _rglob.glob(
-                            os.path.join(_dir_r, f"{_pfx_r} {_dt_r} #{_pid_r}*.jpg"))
-                        if _existing:
-                            continue
-                        _script_path = os.path.join(_dir_r, _script_r)
-                        def _do_regen(_sp=_script_path, _cwd=_dir_r, _pid=_pid_r, _lg=_lg_r):
-                            try:
-                                _run(["python3", _sp, "--export-log", str(_pid)],
-                                     cwd=_cwd, timeout=90)
-                                print(f"  ✅ regen {_lg} #{_pid} done")
-                            except Exception as _re_e:
-                                print(f"  ⚠️  regen {_lg} #{_pid}: {_re_e}")
-                        threading.Thread(target=_do_regen, daemon=True).start()
-                        _results.append(f"{_lg_r} #{_pid_r} {_dt_r}")
-                    except Exception:
-                        continue
-            return 200, {
-                "ok": True,
-                "regenerating": _results,
-                "count": len(_results),
-                "msg": f"Regenerando {len(_results)} picks sin JPG..."
-            }
-        except Exception as _regen_err:
-            return 500, {"ok": False, "error": str(_regen_err)}
+                    _run(["python3", os.path.join(MLB_DIR,"mlb.py"),
+                          "--export-log", str(_entry.get("id",0))],
+                         cwd=MLB_DIR, timeout=90)
+                except Exception as _ex:
+                    print(f"  ⚠️  regen MLB #{_entry.get('id')}: {_ex}")
+            threading.Thread(target=_do, daemon=True).start()
+        return 200, {"ok": True, "count": len(_todo),
+                     "msg": f"Regenerando {len(_todo)} pick(s) MLB de hoy... recarga en ~30 seg." if _todo
+                            else "Sin picks de MLB para hoy."}
 
     # ── BSN ──────────────────────────────────────────────────────
     if path == "/api/bsn/log":
