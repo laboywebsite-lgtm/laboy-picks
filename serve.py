@@ -8526,42 +8526,52 @@ class Handler(BaseHTTPRequestHandler):
             return
 
         # ── /api/regen-picks-jpg — regenera JPGs faltantes para todos los picks ──
-        if self.path == "/api/regen-picks-jpg":
-            import glob as _rglob
-            _results = []
-            _cfg = [
-                ("MLB", MLB_LOG, MLB_DIR, "mlb.py",       "Laboy Pick"),
-                ("BSN", BSN_LOG, BSN_DIR, "bsn.py",       "Laboy Pick"),
-                ("NBA", NBA_LOG, NBA_DIR, "nba.py",        "Laboy NBA Pick"),
-            ]
-            for _lg_r, _log_r, _dir_r, _script_r, _pfx_r in _cfg:
-                _entries = _rj(_log_r) if os.path.exists(_log_r) else []
-                if not isinstance(_entries, list): continue
-                for _e_r in _entries:
-                    _pid_r  = _e_r.get("id", 0)
-                    _dt_r   = _e_r.get("date", "")
-                    # Check if JPG already exists
-                    _existing = _rglob.glob(os.path.join(_dir_r, f"{_pfx_r} {_dt_r} #{_pid_r}*.jpg"))
-                    if _existing:
-                        continue  # already has JPG
-                    # Run --export-log to generate HTML + JPG via PIL
-                    def _regen_one(script, cwd, pid, lg):
+        if self.path.startswith("/api/regen-picks-jpg"):
+            try:
+                import glob as _rglob
+                _results = []
+                _cfg = [
+                    ("MLB", MLB_LOG, MLB_DIR, "mlb.py",  "Laboy Pick"),
+                    ("BSN", BSN_LOG, BSN_DIR, "bsn.py",  "Laboy Pick"),
+                    ("NBA", NBA_LOG, NBA_DIR, "nba.py",   "Laboy NBA Pick"),
+                ]
+                for _lg_r, _log_r, _dir_r, _script_r, _pfx_r in _cfg:
+                    try:
+                        _entries = _rj(_log_r) if os.path.exists(_log_r) else []
+                    except Exception:
+                        _entries = []
+                    if not isinstance(_entries, list):
+                        continue
+                    for _e_r in _entries:
                         try:
-                            _run(["python3", script, "--export-log", str(pid)],
-                                 cwd=cwd, timeout=60)
-                        except Exception as _re_e:
-                            print(f"  ⚠️  regen {lg} #{pid}: {_re_e}")
-                    threading.Thread(
-                        target=_regen_one,
-                        args=(_script_r, _dir_r, _pid_r, _lg_r),
-                        daemon=True
-                    ).start()
-                    _results.append(f"{_lg_r} #{_pid_r} {_dt_r}")
-            self._send_json(200, {
-                "ok": True,
-                "regenerating": _results,
-                "msg": f"Regenerando {len(_results)} picks sin JPG..."
-            })
+                            _pid_r = _e_r.get("id", 0)
+                            _dt_r  = _e_r.get("date", "")
+                            if not _dt_r:
+                                continue
+                            _existing = _rglob.glob(
+                                os.path.join(_dir_r, f"{_pfx_r} {_dt_r} #{_pid_r}*.jpg"))
+                            if _existing:
+                                continue
+                            _script_path = os.path.join(_dir_r, _script_r)
+                            def _do_regen(_sp=_script_path, _cwd=_dir_r, _pid=_pid_r, _lg=_lg_r):
+                                try:
+                                    _run(["python3", _sp, "--export-log", str(_pid)],
+                                         cwd=_cwd, timeout=90)
+                                    print(f"  ✅ regen {_lg} #{_pid} done")
+                                except Exception as _re_e:
+                                    print(f"  ⚠️  regen {_lg} #{_pid}: {_re_e}")
+                            threading.Thread(target=_do_regen, daemon=True).start()
+                            _results.append(f"{_lg_r} #{_pid_r} {_dt_r}")
+                        except Exception:
+                            continue
+                self._send_json(200, {
+                    "ok": True,
+                    "regenerating": _results,
+                    "count": len(_results),
+                    "msg": f"Regenerando {len(_results)} picks sin JPG en background..."
+                })
+            except Exception as _regen_err:
+                self._send_json(500, {"ok": False, "error": str(_regen_err)})
             return
 
         # ── /api/test-autopush — diagnóstico del autopush ─────────────────
