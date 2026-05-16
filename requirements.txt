@@ -3,3 +3,4 @@ openpyxl
 numpy
 pandas
 Pillow
+playwright
